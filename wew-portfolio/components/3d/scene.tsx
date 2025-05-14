@@ -1,37 +1,10 @@
-const Scene = () => {
-  const [isHovered, setIsHovered] = useState(false);
-  
-  return (
-    <div className="h-64 w-full md:h-80">
-      <Canvas shadows dpr={[1, 2]}>
-        <Suspense fallback={null}>
-          <PerspectiveCamera makeDefault position={[0, 0, 4]} fov={40} />
-          <ambientLight intensity={0.5} />
-          <spotLight position={[5, 5, 5]} angle={0.15} penumbra={1} intensity={1} castShadow />
-          <spotLight position={[-5, 5, 5]} angle={0.15} penumbra={1} intensity={0.5} castShadow />
-          <Laptop isHovered={isHovered} setIsHovered={setIsHovered} />
-          <ContactShadows opacity={0.5} scale={10} blur={1} far={10} resolution={256} color="#000000" />
-          <Environment preset="city" />
-          <OrbitControls 
-            enablePan={false} 
-            enableZoom={false} 
-            minPolarAngle={Math.PI / 3} 
-            maxPolarAngle={Math.PI / 3}
-            rotateSpeed={0.3}
-          />
-        </Suspense>
-      </Canvas>
-    </div>
-  );
-};
+"use client";
 
-export default Scene;"use client";
-
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useGLTF, OrbitControls, PerspectiveCamera, Environment, ContactShadows } from '@react-three/drei';
+import { OrbitControls, PerspectiveCamera, Environment, ContactShadows } from '@react-three/drei';
 import { Suspense } from 'react';
-import { Group, Mesh, MathUtils } from 'three';
+import { Group ,MathUtils } from 'three';
 
 // Simplified laptop model
 const Laptop = ({ isHovered, setIsHovered }: { isHovered: boolean, setIsHovered: (hovered: boolean) => void }) => {
@@ -83,7 +56,7 @@ const Laptop = ({ isHovered, setIsHovered }: { isHovered: boolean, setIsHovered:
       {/* Screen display */}
       <mesh position={[0, 0.5, -0.47]} rotation={[Math.PI / 6, 0, 0]}>
         <planeGeometry args={[1.3, 0.7]} />
-        <meshBasicMaterial color="#1e40af" emissive="#3b82f6" emissiveIntensity={0.5} />
+        <meshStandardMaterial color="#1e40af" emissive="#3b82f6" emissiveIntensity={0.5} />
       </mesh>
       
       {/* Keyboard area */}
@@ -94,3 +67,32 @@ const Laptop = ({ isHovered, setIsHovered }: { isHovered: boolean, setIsHovered:
     </group>
   );
 };
+
+const Scene = () => {
+  const [isHovered, setIsHovered] = useState(false);
+  
+  return (
+    <div className="h-64 w-full md:h-80">
+      <Canvas shadows dpr={[1, 2]}>
+        <Suspense fallback={null}>
+          <PerspectiveCamera makeDefault position={[0, 0, 4]} fov={40} />
+          <ambientLight intensity={0.5} />
+          <spotLight position={[5, 5, 5]} angle={0.15} penumbra={1} intensity={1} castShadow />
+          <spotLight position={[-5, 5, 5]} angle={0.15} penumbra={1} intensity={0.5} castShadow />
+          <Laptop isHovered={isHovered} setIsHovered={setIsHovered} />
+          <ContactShadows opacity={0.5} scale={10} blur={1} far={10} resolution={256} color="#000000" />
+          <Environment preset="city" />
+          <OrbitControls 
+            enablePan={false} 
+            enableZoom={false} 
+            minPolarAngle={Math.PI / 3} 
+            maxPolarAngle={Math.PI / 3}
+            rotateSpeed={0.3}
+          />
+        </Suspense>
+      </Canvas>
+    </div>
+  );
+};
+
+export default Scene;
