@@ -1,6 +1,7 @@
+// components/effects/background.tsx
 "use client";
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
 interface AnimatedBackgroundProps {
@@ -32,14 +33,14 @@ export default function AnimatedBackground({
   const containerRef = useRef<HTMLDivElement>(null);
   
   // Get the intensity multiplier
-  const getIntensity = () => {
-    switch (intensity) {
-      case 'light': return 0.5;
-      case 'strong': return 1.5;
-      default: return 1;
-    }
-  };
-  
+  const getIntensity = useCallback(() => {
+  switch (intensity) {
+    case 'light': return 0.5;
+    case 'strong': return 1.5;
+    default: return 1;
+  }
+ }, [intensity]);
+
   // Get the primary color class
   const getColorClass = () => {
     switch (color) {
@@ -123,7 +124,8 @@ export default function AnimatedBackground({
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [variant, color, containerRef.current, intensity]);
+  }, [variant, color, intensity, getIntensity]);
+  
   
   // Render different background variants
   const renderBackground = () => {

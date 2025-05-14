@@ -1,21 +1,38 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 interface ImageLightboxProps {
   images: string[];
-  alt?: string;
+  alt?: string;  // Keeping this for API consistency, even if not used
   className?: string;
 }
 
 export default function ImageLightbox({ 
   images, 
-  alt = "Image", 
   className = "" 
 }: ImageLightboxProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  
+  // Wrap functions in useCallback to avoid recreation on every render
+  const openLightbox = useCallback((index: number) => {
+    setSelectedIndex(index);
+  }, []);
+  
+  const closeLightbox = useCallback(() => {
+    setSelectedIndex(null);
+  }, []);
+  
+  const navigateImage = useCallback((direction: number) => {
+    if (selectedIndex === null) return;
+    
+    const newIndex = selectedIndex + direction;
+    if (newIndex >= 0 && newIndex < images.length) {
+      setSelectedIndex(newIndex);
+    }
+  }, [selectedIndex, images.length]);
   
   // Handle keyboard events
   useEffect(() => {
@@ -46,24 +63,7 @@ export default function ImageLightbox({
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
     };
-  }, [selectedIndex]);
-  
-  const openLightbox = (index: number) => {
-    setSelectedIndex(index);
-  };
-  
-  const closeLightbox = () => {
-    setSelectedIndex(null);
-  };
-  
-  const navigateImage = (direction: number) => {
-    if (selectedIndex === null) return;
-    
-    const newIndex = selectedIndex + direction;
-    if (newIndex >= 0 && newIndex < images.length) {
-      setSelectedIndex(newIndex);
-    }
-  };
+  }, [selectedIndex, navigateImage, closeLightbox]);
   
   return (
     <div className={className}>
@@ -72,7 +72,7 @@ export default function ImageLightbox({
         {images.map((image, index) => (
           <div 
             key={index} 
-            className="overflow-hidden rounded-lg border border-gray-200 cursor-pointer dark:border-gray-700"
+            className="cursor-pointer overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700"
             onClick={() => openLightbox(index)}
           >
             <div className="aspect-video bg-gray-200 dark:bg-gray-700">

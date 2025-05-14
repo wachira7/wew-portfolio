@@ -87,7 +87,9 @@ export default function Button({
       className={buttonStyles}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
-      {...props}
+      onClick={props.onClick}
+      onMouseDown={props.onMouseDown}
+      onMouseUp={props.onMouseUp}
     >
       {buttonContent}
     </motion.button>

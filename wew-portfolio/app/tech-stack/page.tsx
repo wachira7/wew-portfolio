@@ -257,10 +257,10 @@ export default function TechStackPage() {
         {/* Learning Next Section */}
         <AnimatedSection className="mt-16">
           <div className="rounded-lg bg-blue-50 p-8 dark:bg-blue-900/20">
-            <h2 className="mb-4 text-2xl font-bold">What I'm Learning Next</h2>
+            <h2 className="mb-4 text-2xl font-bold">What I am Learning Next</h2>
             <p className="mb-6 text-lg text-gray-700 dark:text-gray-300">
-              I'm always looking to expand my skill set and stay current with the latest technologies.
-              Here are some technologies I'm currently learning or planning to learn:
+              I am always looking to expand my skill set and stay current with the latest technologies.
+              Here are some technologies I am currently learning or planning to learn:
             </p>
             
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">

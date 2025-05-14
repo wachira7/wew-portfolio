@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import ThemeToggle from './theme-toggle';
-import { Bars3Icon, XMarkIcon } from 'react-icons/hi2';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 const navItems = [
   { name: 'Home', path: '/' },
@@ -86,9 +86,9 @@ export default function Navbar() {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? (
-              <XMarkIcon className="h-6 w-6" />
+              <FaTimes className="h-6 w-6" />
             ) : (
-              <Bars3Icon className="h-6 w-6" />
+              <FaBars className="h-6 w-6" />
             )}
           </button>
         </div>

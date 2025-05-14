@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Button from '@/components/ui/button';
-import Link from 'next/link';
+//import Link from 'next/link';
 import { FaArrowRight, FaGithub, FaLinkedin } from 'react-icons/fa';
 import PageTransition from '@/components/ui/page-transition';
 import Scene from '@/components/3d/scene';
@@ -141,7 +141,7 @@ export default function Home() {
             >
               <h2 className="mb-4 text-3xl font-bold md:text-4xl">What Clients Say</h2>
               <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
-                Feedback from people I've worked with on various projects.
+                Feedback from people I have worked with on various projects.
               </p>
             </motion.div>
 

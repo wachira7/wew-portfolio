@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+//import { motion } from 'framer-motion';
 import AnimatedSection from '@/components/ui/animated-section';
 import Button from '@/components/ui/button';
 import { FaArrowLeft, FaCalendarAlt, FaClock, FaTag } from 'react-icons/fa';
@@ -188,7 +188,7 @@ export default function BlogPostPage() {
       <div className="flex min-h-screen flex-col items-center justify-center pt-24 text-center">
         <h1 className="mb-4 text-2xl font-bold">Blog Post Not Found</h1>
         <p className="mb-8 text-gray-600 dark:text-gray-300">
-          The blog post you're looking for doesn't exist or has been removed.
+          The blog post you are looking for does not exist or has been removed.
         </p>
         <Link href="/blog">
           <Button icon={<FaArrowLeft />}>Back to Blog</Button>
