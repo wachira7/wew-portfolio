@@ -4,11 +4,20 @@ import { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera, Environment, ContactShadows } from '@react-three/drei';
 import { Suspense } from 'react';
-import { Group ,MathUtils } from 'three';
+import * as THREE from 'three';
+
+// Loading component for Suspense fallback
+const Loader = () => {
+  return (
+    <div className="flex h-full w-full items-center justify-center">
+      <div className="h-16 w-16 animate-spin rounded-full border-b-2 border-t-2 border-blue-500"></div>
+    </div>
+  );
+};
 
 // Simplified laptop model
 const Laptop = ({ isHovered, setIsHovered }: { isHovered: boolean, setIsHovered: (hovered: boolean) => void }) => {
-  const groupRef = useRef<Group>(null);
+  const groupRef = useRef<THREE.Group>(null);
   
   // Animation for laptop
   useFrame((state) => {
@@ -19,14 +28,14 @@ const Laptop = ({ isHovered, setIsHovered }: { isHovered: boolean, setIsHovered:
     
     // Rotate more when hovered
     const targetRotationY = isHovered ? Math.PI * 0.15 : 0;
-    groupRef.current.rotation.y = MathUtils.lerp(
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(
       groupRef.current.rotation.y,
       targetRotationY,
       0.05
     );
     
     const targetRotationX = isHovered ? -Math.PI * 0.05 : 0;
-    groupRef.current.rotation.x = MathUtils.lerp(
+    groupRef.current.rotation.x = THREE.MathUtils.lerp(
       groupRef.current.rotation.x,
       targetRotationX,
       0.05
@@ -70,17 +79,52 @@ const Laptop = ({ isHovered, setIsHovered }: { isHovered: boolean, setIsHovered:
 
 const Scene = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  
+  if (hasError) {
+    return (
+      <div className="flex h-64 w-full items-center justify-center md:h-80">
+        <div className="text-center">
+          <p className="text-red-500">Failed to load 3D scene</p>
+          <button 
+            className="mt-2 rounded bg-blue-500 px-4 py-2 text-white"
+            onClick={() => setHasError(false)}
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
   
   return (
     <div className="h-64 w-full md:h-80">
-      <Canvas shadows dpr={[1, 2]}>
-        <Suspense fallback={null}>
+      <Canvas 
+        shadows 
+        dpr={[1, 2]}
+        gl={{ 
+          antialias: true,
+          alpha: true,
+          // Updated for newer Three.js - v0.176
+          outputColorSpace: THREE.SRGBColorSpace,
+          toneMapping: THREE.ACESFilmicToneMapping
+        }}
+        onError={() => setHasError(true)}
+      >
+        <Suspense fallback={<Loader />}>
           <PerspectiveCamera makeDefault position={[0, 0, 4]} fov={40} />
           <ambientLight intensity={0.5} />
           <spotLight position={[5, 5, 5]} angle={0.15} penumbra={1} intensity={1} castShadow />
           <spotLight position={[-5, 5, 5]} angle={0.15} penumbra={1} intensity={0.5} castShadow />
           <Laptop isHovered={isHovered} setIsHovered={setIsHovered} />
-          <ContactShadows opacity={0.5} scale={10} blur={1} far={10} resolution={256} color="#000000" />
+          <ContactShadows 
+            opacity={0.5} 
+            scale={10} 
+            blur={1} 
+            far={10} 
+            resolution={256} 
+            color="#000000" 
+          />
           <Environment preset="city" />
           <OrbitControls 
             enablePan={false} 

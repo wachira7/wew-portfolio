@@ -1,8 +1,10 @@
+// components/ui/button.tsx
 import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
-type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
+// Add 'link' to the ButtonVariant type
+type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'link' | 'white';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -32,6 +34,8 @@ export default function Button({
     secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700',
     outline: 'border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-50 focus:ring-gray-500 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800',
     ghost: 'bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-500 dark:text-gray-300 dark:hover:bg-gray-800',
+    link: 'bg-transparent text-blue-600 hover:text-blue-800 hover:underline p-0 h-auto focus:ring-blue-500 dark:text-blue-400 dark:hover:text-blue-300',
+    white: 'bg-white text-gray-900 hover:bg-gray-50 focus:ring-gray-500 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700',
   };
   
   const sizeStyles = {
@@ -49,7 +53,9 @@ export default function Button({
     </>
   );
 
-  const buttonStyles = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${widthStyles} ${className}`;
+  // Special case for link variant - remove padding if it's a link style
+  const finalSizeStyle = variant === 'link' ? '' : sizeStyles[size];
+  const buttonStyles = `${baseStyles} ${variantStyles[variant]} ${finalSizeStyle} ${widthStyles} ${className}`;
 
   // If href is provided, render as a link
   if (href) {
@@ -60,8 +66,8 @@ export default function Button({
           target="_blank"
           rel="noopener noreferrer"
           className={buttonStyles}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          whileHover={{ scale: variant === 'link' ? 1 : 1.02 }}
+          whileTap={{ scale: variant === 'link' ? 1 : 0.98 }}
         >
           {buttonContent}
         </motion.a>
@@ -72,8 +78,8 @@ export default function Button({
       <Link href={href} passHref>
         <motion.span
           className={buttonStyles}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          whileHover={{ scale: variant === 'link' ? 1 : 1.02 }}
+          whileTap={{ scale: variant === 'link' ? 1 : 0.98 }}
         >
           {buttonContent}
         </motion.span>
@@ -85,8 +91,8 @@ export default function Button({
   return (
     <motion.button
       className={buttonStyles}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      whileHover={{ scale: variant === 'link' ? 1 : 1.02 }}
+      whileTap={{ scale: variant === 'link' ? 1 : 0.98 }}
       onClick={props.onClick}
       onMouseDown={props.onMouseDown}
       onMouseUp={props.onMouseUp}
