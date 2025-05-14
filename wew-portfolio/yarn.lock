@@ -578,12 +578,15 @@
     fflate "~0.8.2"
     meshoptimizer "~0.18.1"
 
-"@types/three@^0.149.0":
-  version "0.149.0"
-  resolved "https://registry.yarnpkg.com/@types/three/-/three-0.149.0.tgz#f48c03ffcf35b2d196f3532b51bc845e96f6090e"
-  integrity sha512-fgNBm9LWc65ER/W0cvoXdC0iMy7Ke9e2CONmEr6Jt8sDSY3sw4DgOubZfmdZ747dkPhbQrgRQAWwDEr2S/7IEg==
+"@types/three@0.156.0":
+  version "0.156.0"
+  resolved "https://registry.yarnpkg.com/@types/three/-/three-0.156.0.tgz#cd49f2a12e858400962ea818d1e1c45e638141a8"
+  integrity sha512-733bXDSRdlrxqOmQuOmfC1UBRuJ2pREPk8sWnx9MtIJEVDQMx8U0NQO5MVVaOrjzDPyLI+cFPim2X/ss9v0+LQ==
   dependencies:
+    "@types/stats.js" "*"
     "@types/webxr" "*"
+    fflate "~0.6.10"
+    meshoptimizer "~0.18.1"
 
 "@types/webxr@*", "@types/webxr@^0.5.2":
   version "0.5.22"
@@ -1725,7 +1728,7 @@ fdir@^6.4.4:
   resolved "https://registry.yarnpkg.com/fdir/-/fdir-6.4.4.tgz#1cfcf86f875a883e19a8fab53622cfe992e8d2f9"
   integrity sha512-1NZP+GK4GfuAv3PqKvxQRDMjdSRZjnkq7KfhlNrCNNlZ0ygQFpebfrnfnq/W7fpUnAv9aGWmY1zKx7FYL3gwhg==
 
-fflate@^0.6.9:
+fflate@^0.6.9, fflate@~0.6.10:
   version "0.6.10"
   resolved "https://registry.yarnpkg.com/fflate/-/fflate-0.6.10.tgz#5f40f9659205936a2d18abf88b2e7781662b6d43"
   integrity sha512-IQrh3lEPM93wVCEczc9SaAOvkmcoQn/G8Bo1e8ZPlY3X3bnAxWaBdvTdvM1hP62iZp0BXWDy4vTAy4fF0+Dlpg==
@@ -3393,10 +3396,10 @@ three-stdlib@^2.35.6:
     fflate "^0.6.9"
     potpack "^1.0.1"
 
-three@^0.149.0:
-  version "0.149.0"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.149.0.tgz#a9cf78b17d02f063ffe6dfca1e300eff2eab2927"
-  integrity sha512-tohpUxPDht0qExRLDTM8sjRLc5d9STURNrdnK3w9A+V4pxaTBfKWWT/IqtiLfg23Vfc3Z+ImNfvRw1/0CtxrkQ==
+three@0.156.0:
+  version "0.156.0"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.156.0.tgz#1080781b8fbf191cd37b4c8e027bf74c18518bf8"
+  integrity sha512-r6meetGWDk3aYjDRh6NpKuUkzoPlI3yldDQe2SkwCcqTTB5NZn7vKQBUXyMExvlwZShaLmvAbsVWaFzp1rkk3A==
 
 three@^0.170.0:
   version "0.170.0"
