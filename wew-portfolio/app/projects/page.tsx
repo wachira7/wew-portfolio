@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from 'react';
-//import { motion } from 'framer-motion'; // This import is used via AnimatedSection
+import Image from 'next/image';
 import AnimatedSection from '@/components/ui/animated-section';
 import Button from '@/components/ui/button';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 
-// Project data based on your actual projects and upcoming ones
+// Project data with actual image paths
 const projects = [
   {
     id: 'logistics-app',
@@ -14,7 +14,7 @@ const projects = [
     description: 'A comprehensive logistics management system with authentication and role-based access control.',
     technologies: ['Python', 'SQLite', 'PostgreSQL', 'JWT', 'RBAC Security'],
     category: 'web',
-    image: '/placeholder.svg',
+    image: '/image/logisticsapp.png', 
     githubUrl: 'https://github.com/Fuata-tech/logistic_management_system',
     liveUrl: 'https://fuata-tech-client.onrender.com/',
   },
@@ -24,7 +24,7 @@ const projects = [
     description: 'Blockchain-based vehicle insurance platform with smart contracts and secure user authentication.',
     technologies: ['Solidity', 'Web3.js', 'Next.js', 'Hardhat', 'Firebase Auth'],
     category: 'blockchain',
-    image: '/placeholder.svg',
+    image: '/image/vehicleshield.png', 
     githubUrl: 'https://github.com/wachira7/vehicle-shield-insurance',
     liveUrl: 'https://vsi-app.vercel.app/',
   },
@@ -34,7 +34,7 @@ const projects = [
     description: 'Upcoming project: An application to showcase wildlife attractions and facilitate tourism bookings.',
     technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Google Maps API'],
     category: 'upcoming',
-    image: '/placeholder.svg',
+    image: '/images/projects/tourism-wildlife.jpg', // Update with actual path
     githubUrl: null,
     liveUrl: null,
   },
@@ -44,7 +44,7 @@ const projects = [
     description: 'Upcoming project: A platform for browsing, reviewing and tracking movies with personalized recommendations.',
     technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Movie Database API'],
     category: 'upcoming',
-    image: '/placeholder.svg',
+    image: '/images/projects/movie-website.jpg', // Update with actual path
     githubUrl: null,
     liveUrl: null,
   }
@@ -106,8 +106,21 @@ export default function ProjectsPage() {
               className="group overflow-hidden rounded-lg border border-gray-200 bg-white transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800"
             >
               <div className="relative h-48 overflow-hidden">
-                <div className="h-full w-full bg-gray-200 dark:bg-gray-700">
-                  {/* Project image placeholder */}
+                {/* Project image with fallback */}
+                <div className="h-full w-full">
+                  <Image
+                    src={project.image}
+                    alt={`${project.title} screenshot`}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    onError={(e) => {
+                      // Fallback to placeholder if image fails to load
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = '/placeholder.svg';
+                    }}
+                  />
                 </div>
                 <div className="absolute inset-0 bg-blue-600 bg-opacity-80 opacity-0 transition-opacity group-hover:opacity-100">
                   <div className="flex h-full items-center justify-center space-x-4">
