@@ -2,16 +2,16 @@
 
 import { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera, Environment, ContactShadows } from '@react-three/drei';
+import { OrbitControls, PerspectiveCamera, Environment, ContactShadows, Html } from '@react-three/drei';
 import { Suspense } from 'react';
 import * as THREE from 'three';
 
 // Loading component for Suspense fallback
 const Loader = () => {
   return (
-    <div className="flex h-full w-full items-center justify-center">
+    <Html center>
       <div className="h-16 w-16 animate-spin rounded-full border-b-2 border-t-2 border-blue-500"></div>
-    </div>
+    </Html>
   );
 };
 

@@ -19,7 +19,7 @@ export default function Footer() {
             </p>
             <div className="flex space-x-4">
               <motion.a
-                href="https://github.com/yourusername"
+                href="https://github.com/wachira7"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
@@ -30,7 +30,7 @@ export default function Footer() {
                 <span className="sr-only">GitHub</span>
               </motion.a>
               <motion.a
-                href="https://linkedin.com/in/yourusername"
+                href="https://www.linkedin.com/in/emmanuelwaruts77/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
@@ -41,7 +41,7 @@ export default function Footer() {
                 <span className="sr-only">LinkedIn</span>
               </motion.a>
               <motion.a
-                href="https://twitter.com/yourusername"
+                href="https://x.com/nationalist_ke"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
@@ -100,7 +100,7 @@ export default function Footer() {
               Feel free to reach out if you have any questions.
             </p>
             <p className="text-gray-600 dark:text-gray-300">
-              Email: <a href="mailto:your.email@example.com" className="text-primary hover:underline">your.email@example.com</a>
+              Email: <a href="mailto:your.email@example.com" className="text-primary hover:underline">wewaruts@gmail.com</a>
             </p>
           </div>
         </div>
@@ -108,7 +108,7 @@ export default function Footer() {
         {/* Copyright */}
         <div className="mt-8 border-t border-gray-200 pt-8 text-center dark:border-gray-800">
           <p className="text-gray-600 dark:text-gray-400">
-            © {currentYear} Your Name. All rights reserved.
+            © {currentYear} Warutere. All rights reserved.
           </p>
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
 export default function CustomCursor() {
@@ -9,22 +9,25 @@ export default function CustomCursor() {
   const [isHidden, setIsHidden] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+  // Use useCallback to memoize event handlers
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    // Batch state updates
+    requestAnimationFrame(() => {
       setPosition({ x: e.clientX, y: e.clientY });
 
       // Check if cursor is over a clickable element
       const target = e.target as HTMLElement;
       const computedStyle = window.getComputedStyle(target);
       setIsPointer(computedStyle.cursor === 'pointer');
-    };
+    });
+  }, []);
 
-    const handleMouseDown = () => setIsActive(true);
-    const handleMouseUp = () => setIsActive(false);
-    
-    const handleMouseLeave = () => setIsHidden(true);
-    const handleMouseEnter = () => setIsHidden(false);
+  const handleMouseDown = useCallback(() => setIsActive(true), []);
+  const handleMouseUp = useCallback(() => setIsActive(false), []);
+  const handleMouseLeave = useCallback(() => setIsHidden(true), []);
+  const handleMouseEnter = useCallback(() => setIsHidden(false), []);
 
+  useEffect(() => {
     // Add event listeners
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mousedown', handleMouseDown);
@@ -46,7 +49,7 @@ export default function CustomCursor() {
       // Restore native cursor
       document.documentElement.classList.remove('no-cursor');
     };
-  }, []);
+  }, [handleMouseMove, handleMouseDown, handleMouseUp, handleMouseLeave, handleMouseEnter]);
 
   // Only render on client-side
   if (typeof window === 'undefined') return null;

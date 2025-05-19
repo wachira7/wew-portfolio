@@ -3,7 +3,7 @@
 
 import { motion } from 'framer-motion';
 import Button from '@/components/ui/button';
-import { FaArrowRight, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaArrowRight, FaGithub, FaLinkedin, FaTwitter, FaDiscord } from 'react-icons/fa';
 import PageTransition from '@/components/ui/page-transition';
 import FloatingTechStack from '@/components/interactive/floating-tech-stack';
 import Testimonials from '@/components/interactive/testimonials';
@@ -18,30 +18,35 @@ const DynamicScene = dynamic(() => import('@/components/3d/scene'), {
     </div>
   ),
 });
+interface techItems {
+  name: string;
+  icon?: string;
+  color?: string;
+}
 
-// Tech Stack items for floating display
 const techItems = [
-  { name: 'React', icon: '⚛️', color: '#61DAFB' },
-  { name: 'TypeScript', icon: 'TS', color: '#3178C6' },
-  { name: 'Next.js', icon: '▲', color: '#000000' },
-  { name: 'Tailwind', icon: '🎨', color: '#38B2AC' },
-  { name: 'Node.js', icon: '⬢', color: '#339933' },
-  { name: 'Express', icon: '🚂', color: '#000000' },
-  { name: 'Docker', icon: '🐳', color: '#2496ED' },
-  { name: 'Jenkins', icon: '🔧', color: '#D33833' },
-  { name: 'Kubernetes', icon: '☸️', color: '#326CE5' },
-  { name: 'MongoDB', icon: '🍃', color: '#47A248' },
-  { name: 'AWS', icon: '☁️', color: '#FF9900' },
-  { name: 'Python', icon: '🐍', color: '#3776AB' },
-  { name: 'SQLite', icon: '🗃️', color: '#003B57' },
-  { name: 'Flask', icon: '🧪', color: '#000000' },
-  { name: 'PostgreSQL', icon: '🐘', color: '#336791' },
-  { name: 'Solidity', icon: '🔨', color: '#000000' },
-  { name: 'Git', icon: '📊', color: '#F05032' },
-  { name: 'GitHub', icon: '👨‍💻', color: '#181717' },
-  { name: 'Slack', icon: '👪', color: '#36A2EB' },
-  { name: 'Notion', icon: '📝', color: '#000000' },
-  { name: 'Figma', icon: '🎨', color: '#000000' },
+  { name: 'React' },
+  { name: 'TypeScript' },
+  { name: 'Next.js' },
+  { name: 'Tailwind' },
+  { name: 'Node.js' },
+  { name: 'Express' },
+  { name: 'Docker' },
+  { name: 'Jenkins' },
+  { name: 'Kubernetes' },
+  { name: 'MongoDB' },
+  { name: 'AWS' },
+  { name: 'Python' },
+  { name: 'SQLite' },
+  { name: 'Flask' },
+  { name: 'PostgreSQL' },
+  { name: 'React Native' },
+  { name: 'Solidity' },
+  { name: 'Git' },
+  { name: 'GitHub' },
+  { name: 'Slack' },
+  { name: 'Notion' },
+  { name: 'Figma' }
 ];
 
 export default function Home() {
@@ -82,7 +87,7 @@ export default function Home() {
                 
                 <div className="mt-8 flex space-x-4">
                   <motion.a
-                    href="https://github.com/yourusername"
+                    href="https://github.com/wachira7"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
@@ -93,7 +98,7 @@ export default function Home() {
                     <span className="sr-only">GitHub</span>
                   </motion.a>
                   <motion.a
-                    href="https://linkedin.com/in/yourusername"
+                    href="https://www.linkedin.com/in/emmanuelwaruts77/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
@@ -103,6 +108,29 @@ export default function Home() {
                     <FaLinkedin className="h-6 w-6" />
                     <span className="sr-only">LinkedIn</span>
                   </motion.a>
+                  <motion.a
+                    href="https://x.com/nationalist_ke"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <FaTwitter className="h-6 w-6" />
+                    <span className="sr-only">Twitter</span>
+                  </motion.a>
+                  <motion.a
+                    href="https://discord.com/users/EmmanuelWachira#0001"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <FaDiscord className="h-6 w-6" />
+                    <span className="sr-only">Discord</span>
+                  </motion.a>
+
                 </div>
               </motion.div>
               
@@ -258,7 +286,7 @@ export default function Home() {
                   I specialize in creating modern, responsive, and user-friendly interfaces with React, Next.js, and TypeScript.
                 </p>
                 <p className="mb-6 text-lg text-gray-600 dark:text-gray-300">
-                  On the backend, I am proficient with Python,Node.js, Express, and MongoDB, as well as SQL tech like SQlite and Postgress.
+                  On the backend, I am proficient with Python, Node.js, Express, and MongoDB, as well as SQL tech like SQLite and PostgreSQL.
                   I also have experience with DevOps tools like Docker, Jenkins, and Kubernetes.
                 </p>
                 <div>
@@ -302,7 +330,7 @@ export default function Home() {
               </p>
             </motion.div>
 
-            {/* Replace static tech icons with FloatingTechStack */}
+            {/* Using the improved FloatingTechStack with simplified tech items */}
             <FloatingTechStack items={techItems} className="min-h-[400px] mb-12" />
 
             <div className="mt-12 text-center">
@@ -343,9 +371,9 @@ export default function Home() {
               viewport={{ once: true }}
               className="rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 p-8 text-center text-white md:p-12"
             >
-              <h2 className="mb-4 text-3xl font-bold md:text-4xl">Let us Work Together</h2>
+              <h2 className="mb-4 text-3xl font-bold md:text-4xl">Let&apos;s Work Together</h2>
               <p className="mx-auto mb-8 max-w-2xl text-lg">
-                Have a project in mind? Let us discuss how I can help bring your ideas to life.
+                Have a project in mind? Let&apos;s discuss how I can help bring your ideas to life.
               </p>
               <Button href="/contact" variant="white" size="lg">
                 Get In Touch <FaArrowRight className="ml-2" />

@@ -55,7 +55,7 @@ export default function ContactPage() {
                 <h3 className="mb-4 text-lg font-medium">Connect With Me</h3>
                 <div className="flex space-x-4">
                   <motion.a
-                    href="https://github.com/yourusername"
+                    href="https://github.com/wachira7"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="rounded-full bg-gray-100 p-3 text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
@@ -66,7 +66,7 @@ export default function ContactPage() {
                     <span className="sr-only">GitHub</span>
                   </motion.a>
                   <motion.a
-                    href="https://linkedin.com/in/yourusername"
+                    href="https://www.linkedin.com/in/emmanuelwaruts77/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="rounded-full bg-gray-100 p-3 text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
@@ -77,7 +77,7 @@ export default function ContactPage() {
                     <span className="sr-only">LinkedIn</span>
                   </motion.a>
                   <motion.a
-                    href="https://twitter.com/yourusername"
+                    href="https://x.com/nationalist_ke"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="rounded-full bg-gray-100 p-3 text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"

@@ -15,8 +15,8 @@ const projects = [
     technologies: ['Python', 'SQLite', 'PostgreSQL', 'JWT', 'RBAC Security'],
     category: 'web',
     image: '/placeholder.svg',
-    githubUrl: 'https://github.com/yourusername/logistics-app',
-    liveUrl: null,
+    githubUrl: 'https://github.com/Fuata-tech/logistic_management_system',
+    liveUrl: 'https://fuata-tech-client.onrender.com/',
   },
   {
     id: 'vehicle-shield-insurance',
@@ -25,8 +25,8 @@ const projects = [
     technologies: ['Solidity', 'Web3.js', 'Next.js', 'Hardhat', 'Firebase Auth'],
     category: 'blockchain',
     image: '/placeholder.svg',
-    githubUrl: 'https://github.com/yourusername/vehicle-shield',
-    liveUrl: 'https://vehicle-shield-demo.com',
+    githubUrl: 'https://github.com/wachira7/vehicle-shield-insurance',
+    liveUrl: 'https://vsi-app.vercel.app/',
   },
   {
     id: 'tourism-wildlife-app',

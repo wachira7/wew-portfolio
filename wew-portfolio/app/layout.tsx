@@ -1,3 +1,5 @@
+// app/layout.tsx
+
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -7,7 +9,12 @@ import { ThemeProvider } from '@/context/theme-context';
 import CustomCursor from '@/components/effects/cursor';
 import BackToTop from '@/components/ui/back-to-top';
 
-const inter = Inter({ subsets: ['latin'] });
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap', 
+  variable: '--font-inter', 
+});
 
 export const metadata: Metadata = {
   title: 'My Portfolio | Web Developer & Designer',
@@ -21,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={inter.variable}>
       <body className={inter.className}>
         <ThemeProvider>
           <div className="flex min-h-screen flex-col">

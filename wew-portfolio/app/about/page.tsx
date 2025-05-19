@@ -1,8 +1,10 @@
+//app/about/page.tsx
 "use client";
 
 import { motion } from 'framer-motion';
 import Button from '@/components/ui/button';
 import { FaDownload, FaGraduationCap, FaBriefcase } from 'react-icons/fa';
+import Image from 'next/image';
 
 export default function AboutPage() {
   return (
@@ -32,7 +34,15 @@ export default function AboutPage() {
           >
             <div className="relative h-80 w-80 overflow-hidden rounded-lg bg-white p-2 shadow-lg dark:bg-gray-800">
               <div className="flex h-full w-full items-center justify-center bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400">
-                Profile Image
+                 <Image
+                    src="/image/CAPE.jpg" 
+                    alt="Emmanuel W. Wachira"
+                    width={300}
+                    height={300}
+                    className="h-full w-full object-cover"
+                    sizes="(max-width: 768px) 100vw, 320px"
+                    priority
+                  />
               </div>
             </div>
           </motion.div>
@@ -43,7 +53,7 @@ export default function AboutPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <h2 className="mb-4 text-2xl font-bold">Hi, I am Your Name</h2>
+            <h2 className="mb-4 text-2xl font-bold">Hi, I am Emmanuel W. Wachira</h2>
             <p className="mb-4 text-lg text-gray-600 dark:text-gray-300">
               I am a passionate Full-Stack Developer with 1+ years of experience building web applications
               with a focus on security and functional design.
@@ -96,7 +106,7 @@ export default function AboutPage() {
                 >
                   <h3 className="text-xl font-bold">Logistics Application</h3>
                   <p className="text-blue-600 dark:text-blue-400">Full Stack Developer</p>
-                  <p className="text-gray-600 dark:text-gray-300">2023</p>
+                  <p className="text-gray-600 dark:text-gray-300">2024</p>
                 </motion.div>
                 
                 <div className="absolute left-0 top-1 z-10 flex h-8 w-8 -translate-x-3 items-center justify-center rounded-full bg-blue-600 text-white md:left-1/2 md:-translate-x-4">
@@ -128,7 +138,7 @@ export default function AboutPage() {
                 >
                   <h3 className="text-xl font-bold">Vehicle Shield Insurance</h3>
                   <p className="text-blue-600 dark:text-blue-400">Blockchain Developer</p>
-                  <p className="text-gray-600 dark:text-gray-300">2024</p>
+                  <p className="text-gray-600 dark:text-gray-300">2025</p>
                 </motion.div>
                 
                 <div className="absolute left-0 top-1 z-10 flex h-8 w-8 -translate-x-3 items-center justify-center rounded-full bg-blue-600 text-white md:left-1/2 md:-translate-x-4">
@@ -159,9 +169,9 @@ export default function AboutPage() {
                   viewport={{ once: true }}
                   className="mb-8 md:mb-0 md:w-5/12 md:pr-8 md:text-right"
                 >
-                  <h3 className="text-xl font-bold">Computer Science Education</h3>
-                  <p className="text-blue-600 dark:text-blue-400">University Name</p>
-                  <p className="text-gray-600 dark:text-gray-300">Graduation Year</p>
+                  <h3 className="text-xl font-bold">Software Engineering</h3>
+                  <p className="text-blue-600 dark:text-blue-400">Moringa School</p>
+                  <p className="text-gray-600 dark:text-gray-300">Graduation Year:2024</p>
                 </motion.div>
                 
                 <div className="absolute left-0 top-1 z-10 flex h-8 w-8 -translate-x-3 items-center justify-center rounded-full bg-blue-600 text-white md:left-1/2 md:-translate-x-4">
@@ -176,7 +186,7 @@ export default function AboutPage() {
                   className="md:w-5/12 md:pl-8"
                 >
                   <p className="text-gray-600 dark:text-gray-300">
-                    Focused on software development fundamentals and web technologies.
+                    Focused on Mechatronics and web technologies.
                     Continuously expanding my knowledge through online courses and practical projects.
                   </p>
                 </motion.div>

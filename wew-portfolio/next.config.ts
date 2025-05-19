@@ -1,13 +1,17 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from 'next';
+import type { Configuration as WebpackConfig } from 'webpack';
+
+const nextConfig: NextConfig = {
   reactStrictMode: true,
   transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
-  webpack: (config) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  webpack: (config: WebpackConfig, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     // Important for Three.js
-    config.resolve.alias.three = require.resolve('three');
-    
+    if (config.resolve && config.resolve.alias) {
+       (config.resolve.alias as { [key: string]: string | false | string[] }).three = require.resolve('three');
+    }
     return config;
   },
 }
 
-module.exports = nextConfig;
+export default nextConfig;
