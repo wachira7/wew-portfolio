@@ -1,12 +1,14 @@
+//app/projects/[slug]/page.tsx
 "use client";
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import AnimatedSection from '@/components/ui/animated-section';
 import Button from '@/components/ui/button';
 import { FaGithub, FaExternalLinkAlt, FaClock } from 'react-icons/fa';
 
-// Project data without image paths for upcoming projects
+// Project data
 const projects = [
   {
     id: 'logistics-app',
@@ -14,7 +16,7 @@ const projects = [
     description: 'A comprehensive logistics management system with authentication and role-based access control.',
     technologies: ['Python', 'SQLite', 'PostgreSQL', 'JWT', 'RBAC Security'],
     category: 'web',
-    image: '/images/logisticsapp.png',
+    image: '/image/logisticsapp.png',
     githubUrl: 'https://github.com/Fuata-tech/logistic_management_system',
     liveUrl: 'https://fuata-tech-client.onrender.com/',
   },
@@ -24,7 +26,7 @@ const projects = [
     description: 'Blockchain-based vehicle insurance platform with smart contracts and secure user authentication.',
     technologies: ['Solidity', 'Web3.js', 'Next.js', 'Hardhat', 'Firebase Auth'],
     category: 'blockchain',
-    image: '/images/vehicleshield.png',
+    image: '/image/vehicleshield.png',
     githubUrl: 'https://github.com/wachira7/vehicle-shield-insurance',
     liveUrl: 'https://vsi-app.vercel.app/',
   },
@@ -114,42 +116,46 @@ export default function ProjectsPage() {
                     <p className="mt-2 text-center text-sm">Coming Soon</p>
                   </div>
                 ) : (
-                  // Image for completed projects
-                  <>
-                    <Image
-                      src={project.image}
-                      alt={`${project.title} screenshot`}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                    <div className="absolute inset-0 bg-blue-600 bg-opacity-80 opacity-0 transition-opacity group-hover:opacity-100">
-                      <div className="flex h-full items-center justify-center space-x-4">
-                        {project.githubUrl && (
-                          <Button
-                            href={project.githubUrl}
-                            variant="outline"
-                            className="bg-white hover:bg-gray-100"
-                            icon={<FaGithub />}
-                            external
-                          >
-                            Code
-                          </Button>
-                        )}
-                        {project.liveUrl && (
-                          <Button
-                            href={project.liveUrl}
-                            variant="outline"
-                            className="bg-white hover:bg-gray-100"
-                            icon={<FaExternalLinkAlt />}
-                            external
-                          >
-                            Demo
-                          </Button>
-                        )}
+                  // Image for completed projects with Link wrapper
+                  <Link href={`/projects/${project.id}`}>
+                    <div className="relative h-48 w-full">
+                      <Image
+                        src={project.image}
+                        alt={`${project.title} screenshot`}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                      <div className="absolute inset-0 bg-blue-600 bg-opacity-80 opacity-0 transition-opacity group-hover:opacity-100">
+                        <div className="flex h-full items-center justify-center space-x-4">
+                          {project.githubUrl && (
+                            <Button
+                              href={project.githubUrl}
+                              variant="outline"
+                              className="bg-white hover:bg-gray-100"
+                              icon={<FaGithub />}
+                              external
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              Code
+                            </Button>
+                          )}
+                          {project.liveUrl && (
+                            <Button
+                              href={project.liveUrl}
+                              variant="outline"
+                              className="bg-white hover:bg-gray-100"
+                              icon={<FaExternalLinkAlt />}
+                              external
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              Demo
+                            </Button>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </>
+                  </Link>
                 )}
               </div>
               <div className="p-5">
@@ -159,12 +165,12 @@ export default function ProjectsPage() {
                     <span>{project.title}</span>
                   ) : (
                     // Link for completed projects
-                    <a
+                    <Link
                       href={`/projects/${project.id}`}
                       className="hover:text-blue-600 dark:hover:text-blue-400"
                     >
                       {project.title}
-                    </a>
+                    </Link>
                   )}
                 </h3>
                 <p className="mb-4 text-gray-600 dark:text-gray-300">
