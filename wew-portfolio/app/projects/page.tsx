@@ -1,4 +1,4 @@
-//app/projects/[slug]/page.tsx
+//app/projects/page.tsx
 "use client";
 
 import { useState } from 'react';
@@ -8,8 +8,20 @@ import AnimatedSection from '@/components/ui/animated-section';
 import Button from '@/components/ui/button';
 import { FaGithub, FaExternalLinkAlt, FaClock } from 'react-icons/fa';
 
+// Define TypeScript interface for project structure
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  technologies: string[];
+  category: string;
+  image?: string;
+  githubUrl: string | null;
+  liveUrl: string | null;
+}
+
 // Project data
-const projects = [
+const projects: Project[] = [
   {
     id: 'logistics-app',
     title: 'Logistics Application',
@@ -36,7 +48,6 @@ const projects = [
     description: 'Upcoming project: An application to showcase wildlife attractions and facilitate tourism bookings.',
     technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Google Maps API'],
     category: 'upcoming',
-    // No image for upcoming projects
     githubUrl: null,
     liveUrl: null,
   },
@@ -46,7 +57,6 @@ const projects = [
     description: 'Upcoming project: A platform for browsing, reviewing and tracking movies with personalized recommendations.',
     technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Movie Database API'],
     category: 'upcoming',
-    // No image for upcoming projects
     githubUrl: null,
     liveUrl: null,
   }
@@ -119,13 +129,15 @@ export default function ProjectsPage() {
                   // Image for completed projects with Link wrapper
                   <Link href={`/projects/${project.id}`}>
                     <div className="relative h-48 w-full">
-                      <Image
-                        src={project.image}
-                        alt={`${project.title} screenshot`}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-110"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
+                      {project.image && (
+                        <Image
+                          src={project.image}
+                          alt={`${project.title} screenshot`}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      )}
                       <div className="absolute inset-0 bg-blue-600 bg-opacity-80 opacity-0 transition-opacity group-hover:opacity-100">
                         <div className="flex h-full items-center justify-center space-x-4">
                           {project.githubUrl && (

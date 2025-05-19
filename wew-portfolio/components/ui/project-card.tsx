@@ -12,8 +12,8 @@ interface ProjectCardProps {
   description: string;
   technologies: string[];
   image?: string;
-  githubUrl?: string;
-  liveUrl?: string;
+  githubUrl?: string | null;
+  liveUrl?: string | null;
   isUpcoming?: boolean;
   category: string;
 }
