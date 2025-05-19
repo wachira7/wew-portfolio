@@ -34,7 +34,7 @@ const projects = [
     description: 'Upcoming project: An application to showcase wildlife attractions and facilitate tourism bookings.',
     technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Google Maps API'],
     category: 'upcoming',
-    image: '/images/projects/tourism-wildlife.jpg', // Update with actual path
+    image: null, // Update with actual path
     githubUrl: null,
     liveUrl: null,
   },
@@ -44,7 +44,7 @@ const projects = [
     description: 'Upcoming project: A platform for browsing, reviewing and tracking movies with personalized recommendations.',
     technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Movie Database API'],
     category: 'upcoming',
-    image: '/images/projects/movie-website.jpg', // Update with actual path
+    image: null, // Update with actual path
     githubUrl: null,
     liveUrl: null,
   }
