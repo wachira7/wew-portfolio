@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import AnimatedSection from '@/components/ui/animated-section';
 import { FaStar, FaReact, FaNodeJs, FaDocker, FaAws, FaGit } from 'react-icons/fa';
 import { SiNextdotjs, SiTypescript, SiTailwindcss, SiFramer, SiExpress, 
-  SiMongodb, SiPostgresql, SiGithubactions, SiJest, SiD, SiSolidity, SiPython, SiRust, SiSvelte, SiNpm, SiYarn } from 'react-icons/si';
+  SiMongodb, SiPostgresql, SiGithubactions, SiJest, SiD, SiSolidity, SiPython, SiRust, SiSvelte, SiNpm, SiYarn, SiDjango } from 'react-icons/si';
 import { TbBrandReactNative } from 'react-icons/tb';
 
 // Tech stack data with react-icons
@@ -68,7 +68,7 @@ const technologies = [
       name: 'Solidity',
       description: 'A programming language for writing smart contracts on the Ethereum blockchain',
       category: 'backend',
-      proficiency: 2,
+      proficiency: 3,
       yearsOfExperience: 1,
       icon: <SiSolidity className="h-7 w-7 text-[#E535AB]" />
   },  
@@ -183,6 +183,14 @@ const technologies = [
     proficiency: 3,
     yearsOfExperience: 1,
     icon: <SiJest className="h-7 w-7 text-[#C21325]" />,
+  },
+  {
+    name: 'Django',
+    description: 'Python web framework',
+    category: 'backend',
+    proficiency: 3,
+    yearsOfExperience: 1,
+    icon: <SiDjango className="h-7 w-7 text-[#092E20]" />,
   },
 
 ];

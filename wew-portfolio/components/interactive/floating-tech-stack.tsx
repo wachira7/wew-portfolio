@@ -7,7 +7,7 @@ import {
   FaFlask, FaGit, FaGithub, FaSlack
 } from 'react-icons/fa';
 import { SiTypescript, SiNextdotjs, SiTailwindcss, SiExpress, SiKubernetes, 
-  SiMongodb, SiSqlite, SiPostgresql, SiSolidity, SiFigma, SiNotion } from 'react-icons/si';
+  SiMongodb, SiSqlite, SiPostgresql, SiSolidity, SiFigma, SiNotion, SiDjango } from 'react-icons/si';
 import { TbBrandReactNative } from 'react-icons/tb';
 
 interface TechItem {
@@ -45,6 +45,7 @@ const techIconsMap: Record<string, { icon: React.ReactNode, color: string }> = {
   'Slack': { icon: <FaSlack size={24} />, color: '#4A154B' },
   'Notion': { icon: <SiNotion size={24} />, color: '#000000' },
   'Figma': { icon: <SiFigma size={24} />, color: '#F24E1E' },
+  'Django': { icon: <SiDjango size={24} />, color: '#092E20' },
 };
 
 const FloatingTechStack: React.FC<FloatingTechStackProps> = ({ 

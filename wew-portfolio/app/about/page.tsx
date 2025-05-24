@@ -65,7 +65,7 @@ export default function AboutPage() {
               with Next.js for frontend and Firebase Auth for user management.
             </p>
             <p className="mb-6 text-lg text-gray-600 dark:text-gray-300">
-              I am continuously expanding my tech stack to include Node.js (Express), MongoDB, and DevOps tools 
+              I am continuously expanding my tech stack to include Node.js (Express), Django Rest Framework, MongoDB, and DevOps tools 
               like Docker, Jenkins, Kubernetes, and AWS. I am always eager to learn and take on new challenges.
             </p>
             <Button

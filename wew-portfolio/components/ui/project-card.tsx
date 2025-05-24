@@ -38,6 +38,8 @@ export default function ProjectCard({
       className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white transition-all duration-300 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800"
     >
       {/* Image Container with Link */}
+       {category === 'web' && <div>Web project</div>}
+       {category === 'blockchain' && <div>Blockchain project</div>}
       <Link href={isUpcoming ? '#' : `/projects/${id}`} className={isUpcoming ? 'cursor-default' : ''}>
         <div className="relative h-48 overflow-hidden">
           {isUpcoming ? (
