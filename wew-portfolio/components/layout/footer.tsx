@@ -102,6 +102,10 @@ export default function Footer() {
             <p className="text-gray-600 dark:text-gray-300">
               Email: <a href="mailto:your.email@example.com" className="text-primary hover:underline">wewaruts@gmail.com</a>
             </p>
+            <p className="text-gray-600 dark:text-gray-300">
+              Phone: <a href="tel:+254700000000" className="text-primary hover:underline">+254705274244/+254756126336</a>
+
+            </p>
           </div>
         </div>
 

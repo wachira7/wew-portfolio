@@ -2,6 +2,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import Button from '@/components/ui/button';
 import { FaArrowRight, FaGithub, FaLinkedin, FaTwitter, FaDiscord } from 'react-icons/fa';
 import PageTransition from '@/components/ui/page-transition';
@@ -18,6 +19,7 @@ const DynamicScene = dynamic(() => import('@/components/3d/scene'), {
     </div>
   ),
 });
+
 interface techItems {
   name: string;
   icon?: string;
@@ -46,7 +48,8 @@ const techItems = [
   { name: 'GitHub' },
   { name: 'Slack' },
   { name: 'Notion' },
-  { name: 'Figma' }
+  { name: 'Figma' },
+  { name: 'Django'}
 ];
 
 export default function Home() {
@@ -130,7 +133,6 @@ export default function Home() {
                     <FaDiscord className="h-6 w-6" />
                     <span className="sr-only">Discord</span>
                   </motion.a>
-
                 </div>
               </motion.div>
               
@@ -164,7 +166,7 @@ export default function Home() {
             </motion.div>
 
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {/* Project Card 1 */}
+              {/* Project Card 1 - Logistics App */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -172,11 +174,14 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="overflow-hidden rounded-lg bg-white shadow-lg transition-transform hover:scale-105 dark:bg-gray-800"
               >
-                <div className="aspect-w-16 aspect-h-9 relative h-48 bg-gray-200 dark:bg-gray-700">
-                  {/* Project Image Placeholder */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-2xl text-gray-500 dark:text-gray-400">Project Image</span>
-                  </div>
+                <div className="relative h-48 overflow-hidden">
+                  <Image
+                    src="/image/logisticsapp.png"
+                    alt="Logistics App - A comprehensive logistics management application"
+                    fill
+                    className="object-cover transition-transform duration-300 hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
                 </div>
                 <div className="p-6">
                   <h3 className="mb-2 text-xl font-bold">A logistics app</h3>
@@ -196,7 +201,7 @@ export default function Home() {
                 </div>
               </motion.div>
 
-              {/* Project Card 2 */}
+              {/* Project Card 2 - Vehicle Shield */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -204,11 +209,14 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="overflow-hidden rounded-lg bg-white shadow-lg transition-transform hover:scale-105 dark:bg-gray-800"
               >
-                <div className="aspect-w-16 aspect-h-9 relative h-48 bg-gray-200 dark:bg-gray-700">
-                  {/* Project Image Placeholder */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-2xl text-gray-500 dark:text-gray-400">Project Image</span>
-                  </div>
+                <div className="relative h-48 overflow-hidden">
+                  <Image
+                    src="/image/vehicleshield.png"
+                    alt="Vehicle Shield Insurance DApp - Decentralized insurance application"
+                    fill
+                    className="object-cover transition-transform duration-300 hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
                 </div>
                 <div className="p-6">
                   <h3 className="mb-2 text-xl font-bold">Vehicle-shield-Insurance Dapp</h3>
@@ -216,9 +224,10 @@ export default function Home() {
                     A comprehensive Vehicle shield Insurance Decentralized app built with React, Firebase, Tailwind, Solidity.
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    <span className="rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-800 dark:bg-blue-900 dark:text-blue-100">React</span>
+                    <span className="rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-800 dark:bg-blue-900 dark:text-blue-100">React/Nextjs</span>
                     <span className="rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-800 dark:bg-blue-900 dark:text-blue-100">Firebase</span>
                     <span className="rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-800 dark:bg-blue-900 dark:text-blue-100">Tailwind</span>
+                    <span className="rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-800 dark:bg-blue-900 dark:text-blue-100">Solidity</span>
                   </div>
                   <div className="mt-4">
                     <Button href="/projects/vehicle-shield" variant="link" size="sm">
@@ -228,7 +237,7 @@ export default function Home() {
                 </div>
               </motion.div>
 
-              {/* Project Card 3 */}
+              {/* Project Card 3 - 3D Portfolio */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -236,11 +245,14 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="overflow-hidden rounded-lg bg-white shadow-lg transition-transform hover:scale-105 dark:bg-gray-800"
               >
-                <div className="aspect-w-16 aspect-h-9 relative h-48 bg-gray-200 dark:bg-gray-700">
-                  {/* Project Image Placeholder */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-2xl text-gray-500 dark:text-gray-400">Project Image</span>
-                  </div>
+                <div className="relative h-48 overflow-hidden">
+                  <Image
+                    src="/image/project.png"
+                    alt="3D Portfolio Website - Interactive portfolio with Three.js"
+                    fill
+                    className="object-cover transition-transform duration-300 hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
                 </div>
                 <div className="p-6">
                   <h3 className="mb-2 text-xl font-bold">3D Portfolio Website</h3>
@@ -286,7 +298,7 @@ export default function Home() {
                   I specialize in creating modern, responsive, and user-friendly interfaces with React, Next.js, and TypeScript.
                 </p>
                 <p className="mb-6 text-lg text-gray-600 dark:text-gray-300">
-                  On the backend, I am proficient with Python, Node.js, Express, and MongoDB, as well as SQL tech like SQLite and PostgreSQL.
+                  On the backend, I am proficient with Python, Django,Node.js, Express, and MongoDB, as well as SQL tech like SQLite and PostgreSQL.
                   I also have experience with DevOps tools like Docker, Jenkins, and Kubernetes.
                 </p>
                 <div>
@@ -303,11 +315,14 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="order-1 md:order-2"
               >
-                <div className="aspect-w-4 aspect-h-3 overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-700">
-                  {/* About Image Placeholder */}
-                  <div className="flex h-full items-center justify-center">
-                    <span className="text-2xl text-gray-500 dark:text-gray-400">Profile Image</span>
-                  </div>
+                <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
+                  <Image
+                    src="/image/cape.jpg"
+                    alt="Emmanuel W. Wachira - Full-stack Developer"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                 </div>
               </motion.div>
             </div>

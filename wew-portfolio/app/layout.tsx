@@ -17,7 +17,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'My Portfolio | Web Developer & Designer',
+  title: 'My Portfolio | Web & Mobile Developer',
   description: 'Professional portfolio showcasing web development and design projects',
   keywords: 'web developer, frontend, portfolio, projects, react, nextjs',
 };
