@@ -110,7 +110,7 @@ export default function AboutPage() {
             <div className="relative h-80 w-80 overflow-hidden rounded-lg bg-white p-2 shadow-lg dark:bg-gray-800">
               <div className="flex h-full w-full items-center justify-center bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400">
                  <Image
-                    src="/image/cape.jpg" 
+                    src="/images/profile/cape.jpg" 
                     alt="Emmanuel W. Wachira"
                     width={300}
                     height={300}

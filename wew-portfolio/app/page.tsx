@@ -176,7 +176,7 @@ export default function Home() {
               >
                 <div className="relative h-48 overflow-hidden">
                   <Image
-                    src="/image/logisticsapp.png"
+                    src="/images/projects/logistics-app.jpg"
                     alt="Logistics App - A comprehensive logistics management application"
                     fill
                     className="object-cover transition-transform duration-300 hover:scale-110"
@@ -211,7 +211,7 @@ export default function Home() {
               >
                 <div className="relative h-48 overflow-hidden">
                   <Image
-                    src="/image/vehicleshield.png"
+                    src="/images/projects/vehicle-shield.jpg"
                     alt="Vehicle Shield Insurance DApp - Decentralized insurance application"
                     fill
                     className="object-cover transition-transform duration-300 hover:scale-110"
@@ -247,7 +247,7 @@ export default function Home() {
               >
                 <div className="relative h-48 overflow-hidden">
                   <Image
-                    src="/image/project.png"
+                    src="/images/projects/3d-portfolio.jpg"
                     alt="3D Portfolio Website - Interactive portfolio with Three.js"
                     fill
                     className="object-cover transition-transform duration-300 hover:scale-110"
@@ -317,7 +317,7 @@ export default function Home() {
               >
                 <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
                   <Image
-                    src="/image/cape.jpg"
+                    src="/images/profile/cape.jpg"
                     alt="Emmanuel W. Wachira - Full-stack Developer"
                     fill
                     className="object-cover"
