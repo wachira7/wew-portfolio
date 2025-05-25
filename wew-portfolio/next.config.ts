@@ -3,7 +3,17 @@ import type { Configuration as WebpackConfig } from 'webpack';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  
+  // Netlify deployment settings
+  output: 'export',
+  trailingSlash: true,
+  images: {
+    unoptimized: true
+  },
+  
+  // Three.js configuration
   transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
+  
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   webpack: (config: WebpackConfig, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     // Important for Three.js
