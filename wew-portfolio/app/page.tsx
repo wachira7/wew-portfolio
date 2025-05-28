@@ -49,7 +49,10 @@ const techItems = [
   { name: 'Slack' },
   { name: 'Notion' },
   { name: 'Figma' },
-  { name: 'Django'}
+  { name: 'Django'},
+  { name: 'Terraform' },
+  { name: 'Grafana' },
+  { name: 'Prometheus' },
 ];
 
 export default function Home() {

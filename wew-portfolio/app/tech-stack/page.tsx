@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import AnimatedSection from '@/components/ui/animated-section';
 import { FaStar, FaReact, FaNodeJs, FaDocker, FaAws, FaGit } from 'react-icons/fa';
 import { SiNextdotjs, SiTypescript, SiTailwindcss, SiFramer, SiExpress, 
-  SiMongodb, SiPostgresql, SiGithubactions, SiJest, SiD, SiSolidity, SiPython, SiRust, SiSvelte, SiNpm, SiYarn, SiDjango } from 'react-icons/si';
+  SiMongodb, SiPostgresql, SiGithubactions, SiJest, SiD, SiSolidity, SiPython, SiRust, SiSvelte, SiNpm, SiYarn, SiDjango, SiKubernetes, SiTerraform, SiGrafana, SiPrometheus } from 'react-icons/si';
 import { TbBrandReactNative } from 'react-icons/tb';
 
 // Tech stack data with react-icons
@@ -185,12 +185,44 @@ const technologies = [
     icon: <SiJest className="h-7 w-7 text-[#C21325]" />,
   },
   {
-    name: 'Django',
-    description: 'Python web framework',
+    name: 'Django REST Framework',
+    description: 'Python framework for building APIs',
     category: 'backend',
     proficiency: 3,
     yearsOfExperience: 1,
     icon: <SiDjango className="h-7 w-7 text-[#092E20]" />,
+  },
+  {
+    name: 'Terraform',
+    description: 'Infrastructure as Code (IaC) tool for provisioning and managing cloud resources',
+    category: 'devops',
+    proficiency: 3,
+    yearsOfExperience: 1,
+    icon: <SiTerraform className="h-7 w-7 text-[#623CEA]" />,
+  },
+  {
+    name: 'Kubernetes',
+    description: 'Open-source container orchestration platform',
+    category: 'devops',
+    proficiency: 3,
+    yearsOfExperience: 1,
+    icon: <SiKubernetes className="h-7 w-7 text-[#326CE5]" />,
+  },
+  {
+    name: 'Prometheus',
+    description: 'Open-source monitoring and alerting system',
+    category: 'devops',
+    proficiency: 3,
+    yearsOfExperience: 1,
+    icon: <SiPrometheus className="h-7 w-7 text-[#E6522C]" />,
+  },
+  {
+    name: 'Grafana',
+    description: 'Open-source monitoring and alerting platform',
+    category: 'devops',
+    proficiency: 3,
+    yearsOfExperience: 1,
+    icon: <SiGrafana className="h-7 w-7 text-[#F46800]" />,
   },
 
 ];
