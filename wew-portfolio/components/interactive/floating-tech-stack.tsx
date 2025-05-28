@@ -8,7 +8,7 @@ import {
 } from 'react-icons/fa';
 import { SiTypescript, SiNextdotjs, SiTailwindcss, SiExpress, SiKubernetes, 
   SiMongodb, SiSqlite, SiPostgresql, SiSolidity, SiFigma, SiNotion, SiDjango, 
-  SiGrafana, SiPrometheus, SiTerraform} from 'react-icons/si';
+  SiGrafana, SiPrometheus, SiTerraform, SiSupabase} from 'react-icons/si';
 import { TbBrandReactNative } from 'react-icons/tb';
 
 interface TechItem {
@@ -50,6 +50,7 @@ const techIconsMap: Record<string, { icon: React.ReactNode, color: string }> = {
   'Grafana': { icon: <SiGrafana size={24} />, color: '#F46800' },
   'Terraform': { icon: <SiTerraform size={24} />, color: '#000000' },
   'Prometheus': { icon: <SiPrometheus size={24} />, color: '#E6522C' },
+  'Supabase': { icon: <SiSupabase size={24} />, color: '#000000' },
 };
 
 const FloatingTechStack: React.FC<FloatingTechStackProps> = ({ 

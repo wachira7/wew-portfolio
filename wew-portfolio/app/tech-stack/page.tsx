@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import AnimatedSection from '@/components/ui/animated-section';
 import { FaStar, FaReact, FaNodeJs, FaDocker, FaAws, FaGit } from 'react-icons/fa';
 import { SiNextdotjs, SiTypescript, SiTailwindcss, SiFramer, SiExpress, 
-  SiMongodb, SiPostgresql, SiGithubactions, SiJest, SiD, SiSolidity, SiPython, SiRust, SiSvelte, SiNpm, SiYarn, SiDjango, SiKubernetes, SiTerraform, SiGrafana, SiPrometheus } from 'react-icons/si';
+  SiMongodb, SiPostgresql, SiGithubactions, SiJest, SiD, SiSolidity, SiPython, SiRust, SiSvelte, SiNpm, SiYarn, SiDjango, SiKubernetes, SiTerraform, SiGrafana, SiPrometheus, SiSupabase, SiSqlite } from 'react-icons/si';
 import { TbBrandReactNative } from 'react-icons/tb';
 
 // Tech stack data with react-icons
@@ -224,6 +224,22 @@ const technologies = [
     yearsOfExperience: 1,
     icon: <SiGrafana className="h-7 w-7 text-[#F46800]" />,
   },
+  {
+    name: 'Supabase',
+    description: 'Open-source backend-as-a-service platform',
+    category: 'backend',
+    proficiency: 3,
+    yearsOfExperience: 1.5,
+    icon: <SiSupabase className="h-7 w-7 text-[#3ECF8E]" />,
+  },
+  {
+    name: 'SQLite',
+    description: 'In-memory database',
+    category: 'database',
+    proficiency: 3,
+    yearsOfExperience: 2,
+    icon: <SiSqlite className="h-7 w-7 text-[#4285F4]" />,
+  }
 
 ];
 

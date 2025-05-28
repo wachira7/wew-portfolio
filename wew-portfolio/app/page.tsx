@@ -53,6 +53,7 @@ const techItems = [
   { name: 'Terraform' },
   { name: 'Grafana' },
   { name: 'Prometheus' },
+  { name: 'Supabase' },
 ];
 
 export default function Home() {
