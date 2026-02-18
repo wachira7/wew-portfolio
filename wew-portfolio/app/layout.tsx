@@ -8,6 +8,7 @@ import Footer from '@/components/layout/footer';
 import { ThemeProvider } from '@/context/theme-context';
 import CustomCursor from '@/components/effects/cursor';
 import BackToTop from '@/components/ui/back-to-top';
+import { Analytics } from '@vercel/analytics/next';
 
 
 const inter = Inter({
@@ -43,6 +44,7 @@ export default function RootLayout({
             <BackToTop />
           </div>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
