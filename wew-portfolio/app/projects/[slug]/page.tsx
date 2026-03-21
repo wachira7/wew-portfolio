@@ -1,3 +1,4 @@
+//app/projects/[slug]/page.tsx
 "use client";
 
 import { useEffect, useState } from 'react';
@@ -8,111 +9,141 @@ import AnimatedSection from '@/components/ui/animated-section';
 import { FaGithub, FaExternalLinkAlt, FaArrowLeft } from 'react-icons/fa';
 import Link from 'next/link';
 
-// Mock project data - in a real app, you would fetch this from an API or CMS
 const projectsData = [
   {
-    id: 'project-1',
-    title: 'E-Commerce Platform',
-    description: 'A full-featured e-commerce platform with product listings, shopping cart, user authentication, and payment processing.',
+    id: 'logiflow',
+    title: 'LogiFlow',
+    description: 'Multi-tenant logistics SaaS platform with inventory, warehousing, production, distribution, billing, and platform admin modules.',
     longDescription: `
-      This e-commerce platform provides a comprehensive solution for online stores. It features a responsive design
-      that works across all devices and a seamless shopping experience.
-      
+      LogiFlow is a production-grade multi-tenant logistics SaaS platform built to serve companies of varying scales.
+      Each tenant gets isolated data, custom branding, and role-based access for their teams.
+
       Key features include:
-      - User authentication and account management
-      - Product catalog with search and filtering
-      - Shopping cart and wishlist functionality
-      - Secure checkout process with Stripe integration
-      - Order history and tracking
-      - Admin dashboard for product and order management
-      
-      The application is built with a modern tech stack, focusing on performance, security, and scalability.
-      Server-side rendering ensures fast page loads and good SEO, while the database structure allows for 
-      efficient queries and data management.
+      - Multi-tenant architecture with full data isolation per company
+      - Inventory management with stock tracking, reorder points, and transaction history
+      - Warehousing module with stock transfers and approval workflows
+      - Production module with orders, steps, and materials tracking
+      - Distribution module with real-time route tracking via Leaflet.js and geocoding
+      - Billing system with automated trial expiration and recurring billing via Celery
+      - Platform Admin module for managing tenants, subscriptions, and system health
+      - Prometheus and Grafana monitoring stack
+
+      The backend is built with Django REST Framework and the frontend with Next.js and TypeScript,
+      using a services + hooks state management pattern without Redux or Zustand.
     `,
     challenges: `
-      Some of the key challenges in this project included:
-      - Implementing a secure payment processing system
-      - Creating a responsive design that works across all devices
-      - Building an efficient search and filtering system for products
-      - Setting up user authentication with proper security measures
-      - Optimizing database queries for performance
+      Building LogiFlow presented several interesting engineering challenges:
+      - Designing a clean multi-tenant architecture that scales without data leakage between tenants
+      - Implementing a centralized auth guard architecture using layout.tsx to avoid repetition across pages
+      - Fixing a critical auth bug where verifyAuth() hardcoded all role fields to false on token refresh
+      - Replacing mock SVG maps with real Leaflet.js maps using dynamic imports to avoid SSR issues
+      - Handling HTTP 204 empty responses that caused JSON parse errors in the API layer
+      - Building automated billing workflows with Celery including trial expiration and payment reminders
+      - Integrating Stripe, M-Pesa, and NOWPayments crypto into a unified billing experience
     `,
-    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'MongoDB', 'Stripe API'],
-    category: 'web',
-    image: '/placeholder.svg',
-    githubUrl: 'https://github.com/yourusername/project1',
-    liveUrl: 'https://project1-demo.com',
-    screenshots: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
+    technologies: ['Django', 'Django REST Framework', 'Next.js', 'TypeScript', 'PostgreSQL', 'Redis', 'Celery', 'Docker', 'Stripe', 'M-Pesa', 'NOWPayments', 'Leaflet.js', 'Prometheus', 'Grafana'],
+    category: 'saas',
+    image: '/images/projects/logistics-app.jpg',
+    githubUrl: 'https://github.com/wachira7/LogiFlow',
+    liveUrl: 'https://logi-flow-three.vercel.app/',
+    screenshots: [],
   },
   {
-    id: 'project-2',
-    title: 'Task Management App',
-    description: 'A collaborative task management application with real-time updates, task assignment, and progress tracking.',
+    id: 'flixvideo',
+    title: 'FlixVideo',
+    description: 'AI-powered movie and TV discovery platform with subscriptions, watch parties, real-time search, and multi-gateway payments.',
     longDescription: `
-      This task management application helps teams organize and track their work efficiently. It provides
-      real-time collaboration features and a clean, intuitive interface.
-      
+      FlixVideo is a full-featured AI-powered streaming and movie discovery platform. It combines
+      real-time content data from TMDB with AI recommendations and a rich social experience.
+
       Key features include:
-      - Project and task organization with custom categories
-      - Real-time updates using WebSockets
-      - Task assignment and deadline tracking
-      - Comment threads for task discussion
-      - File attachments and sharing
-      - Progress tracking and reporting
-      - Email notifications for important updates
-      
-      The app uses a modern architecture with a React frontend and Node.js backend, connected through
-      a RESTful API and WebSockets for real-time features.
+      - AI-powered movie and TV recommendations using Claude AI/OpenAI
+      - Real-time search with autocomplete and Redis caching
+      - Watch party system with WebSocket-based synchronized playback and live chat
+      - Subscription tiers (Free, Basic, Premium) with usage-based feature gating
+      - Multi-gateway payment support: Stripe (card), M-Pesa (mobile money), and NOWPayments (crypto)
+      - Social features: following, lists, ratings, and reviews with nested comments
+      - Admin dashboard with moderation tools, analytics, and user management
+      - Background job processing with BullMQ and Redis for async tasks
+      - Avatar storage on AWS S3 with presigned URLs
+      - Prometheus and Grafana monitoring deployed on Oracle Cloud Free Tier
+
+      The backend is Node.js/Express with a PostgreSQL + MongoDB hybrid database architecture.
+      The frontend is Next.js with TypeScript deployed on Vercel, backend on Render.
     `,
     challenges: `
-      Some of the key challenges in this project included:
-      - Implementing real-time updates across multiple clients
-      - Creating an intuitive drag-and-drop interface for task management
-      - Building a scalable backend to handle many concurrent users
-      - Designing a responsive UI that works well on desktop and mobile
-      - Setting up proper authentication and authorization systems
+      FlixVideo was built iteratively over several months with many interesting challenges:
+      - Migrating from Upstash Redis to Redis Cloud after hitting command limits in production
+      - Fixing ERR max number of clients reached by refactoring BullMQ to use two shared IORedis connections
+      - Resolving avatar hydration errors using a custom AvatarEventEmitter pattern
+      - Fixing PostgreSQL date timezone shifts using ::text and ::date casts
+      - Building a complete subscription system with real-time usage tracking across three payment providers
+      - Implementing watch party synchronization so all participants stay in sync during playback
+      - Setting up Prometheus metrics collection and Grafana dashboards on Oracle Cloud Free Tier VM
     `,
-    technologies: ['React', 'Redux', 'Node.js', 'Socket.io', 'PostgreSQL'],
-    category: 'web',
-    image: '/placeholder.svg',
-    githubUrl: 'https://github.com/yourusername/project2',
-    liveUrl: 'https://project2-demo.com',
-    screenshots: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
+    technologies: ['Node.js', 'Express', 'Next.js', 'TypeScript', 'PostgreSQL', 'MongoDB', 'Redis', 'BullMQ', 'Stripe', 'M-Pesa', 'NOWPayments', 'AWS S3', 'Socket.io', 'Prometheus', 'Grafana', 'Docker'],
+    category: 'saas',
+    image: '/images/projects/3d-portfolio.jpg',
+    githubUrl: 'https://github.com/wachira7/Flix-video',
+    liveUrl: 'https://flix-video-ten.vercel.app/',
+    screenshots: [],
   },
   {
-    id: 'project-3',
-    title: 'Portfolio Website',
-    description: 'A responsive portfolio website with animated sections, dark mode support, and contact form.',
+    id: 'logistics-app',
+    title: 'Logistics Application',
+    description: 'A comprehensive logistics management system with authentication and role-based access control.',
     longDescription: `
-      This portfolio website showcases my work and skills as a developer. It features a modern design with
-      smooth animations and a seamless user experience.
-      
+      This logistics management system provides core tools for managing shipments, routes, and users.
+      It features role-based access control to ensure the right people have the right permissions.
+
       Key features include:
-      - Responsive design that looks great on all devices
-      - Dark mode support with automatic detection of system preferences
-      - Animated sections and page transitions
-      - Project showcase with filtering options
-      - Contact form with email integration
-      - Performance optimized images and assets
-      
-      The site is built with Next.js and Tailwind CSS, providing a fast, responsive experience while
-      maintaining good SEO and accessibility.
+      - User authentication with JWT
+      - Role-based access control (RBAC)
+      - Shipment tracking and management
+      - Route planning and optimization
+      - PostgreSQL database with efficient query design
     `,
     challenges: `
-      Some of the key challenges in this project included:
-      - Creating smooth animations that enhance rather than distract from the content
-      - Implementing a theme system with proper color management
-      - Building a responsive layout that works across all screen sizes
-      - Optimizing performance to achieve high lighthouse scores
-      - Setting up a secure contact form with spam protection
+      Key challenges in this project included:
+      - Designing a flexible RBAC system that can accommodate different organizational structures
+      - Building efficient database queries for logistics data at scale
+      - Implementing secure JWT authentication with proper token management
     `,
-    technologies: ['Next.js', 'Tailwind CSS', 'Framer Motion', 'TypeScript'],
+    technologies: ['Python', 'SQLite', 'PostgreSQL', 'JWT', 'RBAC Security'],
     category: 'web',
-    image: '/placeholder.svg',
-    githubUrl: 'https://github.com/yourusername/portfolio',
-    liveUrl: 'https://your-portfolio.com',
-    screenshots: ['/placeholder.svg', '/placeholder.svg', '/placeholder.svg'],
+    image: '/images/projects/logistics-app.jpg',
+    githubUrl: 'https://github.com/Fuata-tech/logistic_management_system',
+    liveUrl: 'https://fuata-tech-client.onrender.com/',
+    screenshots: [],
+  },
+  {
+    id: 'vehicle-shield-insurance',
+    title: 'Vehicle Shield Insurance',
+    description: 'Blockchain-based vehicle insurance platform with smart contracts and secure user authentication.',
+    longDescription: `
+      Vehicle Shield Insurance leverages blockchain technology to create a transparent and secure
+      vehicle insurance platform. Smart contracts automate policy management and claims processing.
+
+      Key features include:
+      - Smart contract-based policy management on Ethereum
+      - Web3 wallet integration for secure transactions
+      - Automated claims processing via smart contracts
+      - Firebase authentication for user management
+      - Next.js frontend with real-time blockchain event listening
+    `,
+    challenges: `
+      Key challenges in this project included:
+      - Writing secure Solidity smart contracts to handle financial transactions
+      - Integrating Web3.js with a Next.js frontend for wallet connectivity
+      - Testing smart contracts thoroughly using Hardhat before deployment
+      - Managing blockchain transaction states and handling failures gracefully
+    `,
+    technologies: ['Solidity', 'Web3.js', 'Next.js', 'Hardhat', 'Firebase Auth'],
+    category: 'blockchain',
+    image: '/images/projects/vehicle-shield.jpg',
+    githubUrl: 'https://github.com/wachira7/vehicle-shield-insurance',
+    liveUrl: 'https://vsi-app.vercel.app/',
+    screenshots: [],
   },
 ];
 
@@ -120,17 +151,11 @@ export default function ProjectPage() {
   const params = useParams();
   const [project, setProject] = useState<typeof projectsData[0] | null>(null);
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
-    // In a real application, you would fetch this data from an API
-    // based on the slug parameter
     const slug = params.slug as string;
     const foundProject = projectsData.find(p => p.id === slug);
-    
-    if (foundProject) {
-      setProject(foundProject);
-    }
-    
+    if (foundProject) setProject(foundProject);
     setLoading(false);
   }, [params]);
 
@@ -147,7 +172,7 @@ export default function ProjectPage() {
       <div className="flex min-h-screen flex-col items-center justify-center pt-24 text-center">
         <h1 className="mb-4 text-2xl font-bold">Project Not Found</h1>
         <p className="mb-8 text-gray-600 dark:text-gray-300">
-          The project you're looking for doesn't exist or has been removed.
+          The project you&apos;re looking for doesn&apos;t exist or has been removed.
         </p>
         <Link href="/projects">
           <Button icon={<FaArrowLeft />}>Back to Projects</Button>
@@ -167,90 +192,70 @@ export default function ProjectPage() {
             </Button>
           </Link>
         </div>
-        
-        {/* Project Header */}
-        <AnimatedSection className="mb-12">
+
+        {/* Project Header — uses motion directly to fix unused import warning */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-12"
+        >
           <h1 className="mb-4 text-3xl font-bold md:text-4xl">{project.title}</h1>
-          <p className="mb-6 text-xl text-gray-600 dark:text-gray-300">
-            {project.description}
-          </p>
-          
+          <p className="mb-6 text-xl text-gray-600 dark:text-gray-300">{project.description}</p>
+
           <div className="mb-8 flex flex-wrap gap-2">
             {project.technologies.map((tech) => (
-              <span
-                key={tech}
-                className="rounded-full bg-blue-100 px-3 py-1 text-sm text-blue-800 dark:bg-blue-900 dark:text-blue-100"
-              >
+              <span key={tech} className="rounded-full bg-blue-100 px-3 py-1 text-sm text-blue-800 dark:bg-blue-900 dark:text-blue-100">
                 {tech}
               </span>
             ))}
           </div>
-          
+
           <div className="flex flex-wrap gap-3">
             {project.githubUrl && (
-              <Button
-                href={project.githubUrl}
-                variant="outline"
-                icon={<FaGithub />}
-                external
-              >
+              <Button href={project.githubUrl} variant="outline" icon={<FaGithub />} external>
                 View Code
               </Button>
             )}
             {project.liveUrl && (
-              <Button
-                href={project.liveUrl}
-                icon={<FaExternalLinkAlt />}
-                external
-              >
+              <Button href={project.liveUrl} icon={<FaExternalLinkAlt />} external>
                 Live Demo
               </Button>
             )}
           </div>
-        </AnimatedSection>
-        
-        {/* Project Image */}
-        <AnimatedSection className="mb-12 overflow-hidden rounded-lg border border-gray-200 shadow-md dark:border-gray-700" delay={0.1}>
-          <div className="aspect-video w-full bg-gray-200 dark:bg-gray-700">
-            {/* Main project image would go here */}
-          </div>
-        </AnimatedSection>
-        
+        </motion.div>
+
         {/* Project Details */}
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
           <AnimatedSection className="lg:col-span-2" delay={0.2}>
             <h2 className="mb-4 text-2xl font-bold">About This Project</h2>
             <div className="prose max-w-none text-gray-700 dark:text-gray-300">
               {project.longDescription.split('\n').map((paragraph, index) => (
-                <p key={index} className="mb-4">
-                  {paragraph.trim()}
-                </p>
+                <p key={index} className="mb-4">{paragraph.trim()}</p>
               ))}
             </div>
-            
+
             <h2 className="mb-4 mt-8 text-2xl font-bold">Challenges</h2>
             <div className="prose max-w-none text-gray-700 dark:text-gray-300">
               {project.challenges.split('\n').map((paragraph, index) => (
-                <p key={index} className="mb-4">
-                  {paragraph.trim()}
-                </p>
+                <p key={index} className="mb-4">{paragraph.trim()}</p>
               ))}
             </div>
           </AnimatedSection>
-          
+
           <AnimatedSection delay={0.3}>
             <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800">
               <h3 className="mb-4 text-xl font-bold">Project Details</h3>
-              
+
               <div className="mb-4">
                 <h4 className="font-medium text-gray-600 dark:text-gray-400">Category</h4>
                 <p className="capitalize">
-                  {project.category === 'web' ? 'Web Development' : 
-                   project.category === 'mobile' ? 'Mobile App' : 
-                   project.category === 'app' ? 'Application' : project.category}
+                  {project.category === 'saas' ? 'SaaS Platform' :
+                   project.category === 'web' ? 'Web Development' :
+                   project.category === 'blockchain' ? 'Blockchain' : project.category}
                 </p>
               </div>
-              
+
               <div className="mb-4">
                 <h4 className="font-medium text-gray-600 dark:text-gray-400">Technologies</h4>
                 <ul className="list-inside list-disc">
@@ -259,27 +264,19 @@ export default function ProjectPage() {
                   ))}
                 </ul>
               </div>
+
+              {project.liveUrl && (
+                <div className="mb-4">
+                  <h4 className="font-medium text-gray-600 dark:text-gray-400">Live URL</h4>
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline dark:text-blue-400 text-sm break-all">
+                    {project.liveUrl}
+                  </a>
+                </div>
+              )}
             </div>
           </AnimatedSection>
         </div>
-        
-        {/* Project Screenshots */}
-        <AnimatedSection className="mt-12" delay={0.4}>
-          <h2 className="mb-6 text-2xl font-bold">Screenshots</h2>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {project.screenshots.map((screenshot, index) => (
-              <div
-                key={index}
-                className="overflow-hidden rounded-lg border border-gray-200 shadow-md dark:border-gray-700"
-              >
-                <div className="aspect-video w-full bg-gray-200 dark:bg-gray-700">
-                  {/* Screenshot would go here */}
-                </div>
-              </div>
-            ))}
-          </div>
-        </AnimatedSection>
-        
+
         {/* Related Projects */}
         <AnimatedSection className="mt-16" delay={0.5}>
           <h2 className="mb-6 text-2xl font-bold">Related Projects</h2>
@@ -292,15 +289,10 @@ export default function ProjectPage() {
                   key={relatedProject.id}
                   className="overflow-hidden rounded-lg border border-gray-200 bg-white transition-all hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
                 >
-                  <div className="h-40 bg-gray-200 dark:bg-gray-700">
-                    {/* Project image placeholder */}
-                  </div>
+                  <div className="h-40 bg-gray-200 dark:bg-gray-700" />
                   <div className="p-4">
                     <h3 className="mb-2 text-lg font-bold">
-                      <Link
-                        href={`/projects/${relatedProject.id}`}
-                        className="hover:text-blue-600 dark:hover:text-blue-400"
-                      >
+                      <Link href={`/projects/${relatedProject.id}`} className="hover:text-blue-600 dark:hover:text-blue-400">
                         {relatedProject.title}
                       </Link>
                     </h3>

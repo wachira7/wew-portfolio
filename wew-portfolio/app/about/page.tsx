@@ -1,59 +1,68 @@
-//app/about/page.tsx
 "use client";
 
 import { motion } from 'framer-motion';
 import Button from '@/components/ui/button';
-import { FaDownload, FaGraduationCap, FaBriefcase,  FaCertificate } from 'react-icons/fa';
+import { FaDownload, FaGraduationCap, FaBriefcase, FaCertificate } from 'react-icons/fa';
 import Image from 'next/image';
 
-// Timeline data structure for easy future additions
 const timelineData = [
   {
     id: 1,
-    year: "2025",
-    month: "May - Jul",
-    title: "DevOps Engineering Learning Track",
-    subtitle: "Self-Directed Learning",
-    type: "education",
-    description: "Currently pursuing intensive DevOps training focusing on containerization, cloud infrastructure, CI/CD pipelines, and monitoring. Building expertise in modern deployment and operations practices.",
-    icon: FaGraduationCap,
-    technologies: ["Docker", "AWS", "Jenkins", "EC2", "Terraform", "Prometheus", "Grafana", "Bash Scripting", "Cron Jobs"]
+    year: "2025 - Present",
+    month: "",
+    title: "Full-Stack Developer",
+    subtitle: "WaruTech",
+    type: "project",
+    description: "Building production-grade SaaS platforms and DevOps portfolio projects. Developed LogiFlow (multi-tenant logistics SaaS) and FlixVideo (AI-powered streaming platform), both deployed to production with CI/CD pipelines, monitoring, and multi-gateway payment integrations.",
+    icon: FaBriefcase,
+    technologies: ["Django", "Next.js", "Node.js", "TypeScript", "PostgreSQL", "Redis", "Docker", "Celery", "BullMQ", "Stripe", "M-Pesa", "Prometheus", "Grafana"]
   },
   {
     id: 2,
     year: "2025",
-    month: "Mar",
-    title: "Blockchain & Smart Contract Development Certification",
-    subtitle: "3-Month Intensive Program",
+    month: "Nov",
+    title: "DevOps Certification",
+    subtitle: "Nairobi DevOps Community",
     type: "certification",
-    description: "Completed comprehensive blockchain development program covering smart contract development, decentralized applications, and modern Web3 technologies. Gained expertise in building secure and efficient blockchain solutions.",
+    description: "Completed DevOps certification covering containerization, CI/CD pipelines, cloud infrastructure, and monitoring. Applied skills immediately in production deployments of LogiFlow and FlixVideo.",
     icon: FaCertificate,
-    technologies: ["Solidity", "Next.js", "Ether.js", "Web3.js", "Thirdweb", "Smart Contracts", "DApp Development"]
+    technologies: ["Docker", "CI/CD", "GitHub Actions", "Prometheus", "Grafana", "Linux"]
   },
   {
     id: 3,
     year: "2025",
-    month: "Jan",
-    title: "Vehicle Shield Insurance DApp",
-    subtitle: "Blockchain Developer",
-    type: "project",
-    description: "Built a blockchain-based vehicle insurance platform using Solidity smart contracts. Integrated Web3.js and Hardhat for backend functionality, with Next.js for the frontend and Firebase Auth for user authentication.",
-    icon: FaBriefcase,
-    technologies: ["Solidity", "Web3.js", "Next.js", "Firebase", "Hardhat"]
+    month: "Jul",
+    title: "AWS Academy Graduate — Cloud Architecting",
+    subtitle: "Amazon Web Services (AWS)",
+    type: "certification",
+    description: "Completed AWS Academy Cloud Architecting program, covering advanced cloud architecture patterns, high availability, fault tolerance, and cost optimization across AWS services.",
+    icon: FaCertificate,
+    technologies: ["AWS", "EC2", "S3", "RDS", "VPC", "IAM", "CloudFormation", "Lambda"]
   },
   {
     id: 4,
-    year: "2024",
-    month: "Dec",
-    title: "Logistics Application",
-    subtitle: "Full Stack Developer",
-    type: "project",
-    description: "Developed a comprehensive logistics application using Python with SQLite and PostgreSQL. Implemented JWT authentication and Role-Based Access Control (RBAC) for enhanced security.",
-    icon: FaBriefcase,
-    technologies: ["Python", "SQLite", "PostgreSQL", "JWT", "RBAC"]
+    year: "2025",
+    month: "Jun",
+    title: "AWS Academy Graduate — Cloud Foundations",
+    subtitle: "Amazon Web Services (AWS)",
+    type: "certification",
+    description: "Completed AWS Academy Cloud Foundations program, gaining solid understanding of AWS core services, global infrastructure, security, and the Well-Architected Framework.",
+    icon: FaCertificate,
+    technologies: ["AWS", "Cloud Computing", "Security", "Well-Architected Framework"]
   },
   {
     id: 5,
+    year: "2025",
+    month: "Mar",
+    title: "Blockchain & Smart Contract Development",
+    subtitle: "3-Month Intensive Program",
+    type: "certification",
+    description: "Completed comprehensive blockchain development program covering smart contract development, decentralized applications, and Web3 technologies. Built Vehicle Shield Insurance DApp as capstone project.",
+    icon: FaCertificate,
+    technologies: ["Solidity", "Next.js", "Ether.js", "Web3.js", "Hardhat", "Smart Contracts"]
+  },
+  {
+    id: 6,
     year: "2024",
     month: "Nov",
     title: "Software Engineering Certification",
@@ -61,24 +70,39 @@ const timelineData = [
     type: "education",
     description: "Completed intensive software engineering bootcamp focused on full-stack web development, covering modern technologies and best practices in software development.",
     icon: FaGraduationCap,
-    technologies: ["Full-Stack Development", "Web Technologies", "Software Engineering Principles"]
-  }
-  
+    technologies: ["Full-Stack Development", "React", "Python", "PostgreSQL", "REST APIs"]
+  },
+  {
+    id: 7,
+    year: "2020 - 2026",
+    month: "",
+    title: "Service Engineer",
+    subtitle: "KOKO Networks",
+    type: "project",
+    description: "Managed deployment and maintenance of smart energy infrastructure across Nairobi. Coordinated field operations, troubleshot hardware/software issues, and ensured reliable service delivery for thousands of customers.",
+    icon: FaBriefcase,
+    technologies: ["Field Operations", "IoT Devices", "Infrastructure Management", "Customer Support"]
+  },
+  {
+    id: 8,
+    year: "2022",
+    month: "Aug",
+    title: "Google Project Management Certificate",
+    subtitle: "Coursera / Google",
+    type: "certification",
+    description: "Completed Google's Project Management Certificate program covering project planning, risk management, stakeholder communication, agile methodologies, and Scrum frameworks.",
+    icon: FaCertificate,
+    technologies: ["Project Management", "Agile", "Scrum", "Risk Management", "Stakeholder Communication"]
+  },
 ];
 
 export default function AboutPage() {
   const getTypeColor = (type: string) => {
     switch (type) {
-      case 'project':
-        return 'bg-blue-600';
-      case 'education':
-        return 'bg-green-600';
-      case 'certification':
-        return 'bg-purple-600';
-      case 'achievement':
-        return 'bg-orange-600';
-      default:
-        return 'bg-blue-600';
+      case 'project': return 'bg-blue-600';
+      case 'education': return 'bg-green-600';
+      case 'certification': return 'bg-purple-600';
+      default: return 'bg-blue-600';
     }
   };
 
@@ -108,17 +132,15 @@ export default function AboutPage() {
             className="flex justify-center"
           >
             <div className="relative h-80 w-80 overflow-hidden rounded-lg bg-white p-2 shadow-lg dark:bg-gray-800">
-              <div className="flex h-full w-full items-center justify-center bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400">
-                 <Image
-                    src="/images/profile/cape.jpg" 
-                    alt="Emmanuel W. Wachira"
-                    width={300}
-                    height={300}
-                    className="h-full w-full object-cover rounded"
-                    sizes="(max-width: 768px) 100vw, 320px"
-                    priority
-                  />
-              </div>
+              <Image
+                src="/images/profile/cape.jpg"
+                alt="Emmanuel W. Wachira"
+                width={300}
+                height={300}
+                className="h-full w-full object-cover rounded"
+                sizes="(max-width: 768px) 100vw, 320px"
+                priority
+              />
             </div>
           </motion.div>
 
@@ -130,31 +152,28 @@ export default function AboutPage() {
           >
             <h2 className="mb-4 text-2xl font-bold">Hi, I am Emmanuel W. Wachira</h2>
             <p className="mb-4 text-lg text-gray-600 dark:text-gray-300">
-              I am a passionate Full-Stack Developer with 1+ years of experience building web applications
-              with a focus on security and functional design.
+              I am a Full-Stack Developer and DevOps engineer building production-grade SaaS platforms
+              at WaruTech. With a background in field operations at KOKO Networks and formal training
+              from Moringa School, I bring both technical depth and real-world deployment experience.
             </p>
             <p className="mb-4 text-lg text-gray-600 dark:text-gray-300">
-              My development journey has led me to work on diverse projects including a logistics application 
-              using Python with SQL databases and implementing JWT authentication with RBAC security. I have also 
-              developed a blockchain-based vehicle shield insurance project using Solidity, Web3.js, and Hardhat, 
-              with Next.js for frontend and Firebase Auth for user management.
+              I recently shipped two full-scale platforms: <strong>LogiFlow</strong> — a multi-tenant logistics SaaS
+              built with Django and Next.js — and <strong>FlixVideo</strong> — an AI-powered streaming and movie
+              discovery platform built with Node.js and Next.js. Both are in production with CI/CD pipelines,
+              Prometheus + Grafana monitoring, and multi-gateway payment integrations (Stripe, M-Pesa, crypto).
             </p>
             <p className="mb-6 text-lg text-gray-600 dark:text-gray-300">
-              I am continuously expanding my tech stack to include Node.js (Express), Django Rest Framework, MongoDB, and DevOps tools 
-              like Docker, Jenkins, Kubernetes, and AWS. I am always eager to learn and take on new challenges.
+              I hold AWS Cloud Architecting and Cloud Foundations certifications, a Google Project Management
+              Certificate, and a DevOps certification from the Nairobi DevOps Community. I am actively
+              seeking software engineering and project management roles where I can drive impactful products.
             </p>
-            <Button
-              href="/resume.pdf"
-              variant="primary"
-              icon={<FaDownload />}
-              external={true}
-            >
+            <Button href="/resume.pdf" variant="primary" icon={<FaDownload />} external>
               Download Resume
             </Button>
           </motion.div>
         </div>
 
-        {/* Experience & Education Timeline */}
+        {/* Timeline */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -164,18 +183,15 @@ export default function AboutPage() {
         >
           <h2 className="mb-8 text-center text-3xl font-bold">Experience & Education</h2>
           <p className="mb-12 text-center text-gray-600 dark:text-gray-300">
-            My journey through projects, education, and professional development
+            My journey through projects, certifications, and professional experience
           </p>
-          
+
           <div className="relative mx-auto max-w-4xl">
-            {/* Timeline Line */}
             <div className="absolute left-8 top-0 h-full w-px bg-gray-200 dark:bg-gray-700 md:left-1/2 md:-ml-px"></div>
-            
-            {/* Timeline Items */}
+
             <div className="space-y-12">
               {timelineData.map((item, index) => (
                 <div key={item.id} className="relative md:flex md:items-start md:justify-between">
-                  {/* Left side content for desktop */}
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -187,11 +203,10 @@ export default function AboutPage() {
                       <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
                         {item.month} {item.year}
                       </span>
-                      <span className={`rounded-full px-2 py-1 text-xs text-white ${
+                      <span className={`rounded-full px-2 py-1 text-xs ${
                         item.type === 'project' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100' :
                         item.type === 'education' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100' :
-                        item.type === 'certification' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100' :
-                        'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-100'
+                        'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100'
                       }`}>
                         {item.type}
                       </span>
@@ -199,13 +214,11 @@ export default function AboutPage() {
                     <h3 className="text-xl font-bold">{item.title}</h3>
                     <p className="text-blue-600 dark:text-blue-400 font-medium">{item.subtitle}</p>
                   </motion.div>
-                  
-                  {/* Timeline Icon */}
+
                   <div className={`absolute left-8 top-2 z-10 flex h-12 w-12 -translate-x-6 items-center justify-center rounded-full text-white md:left-1/2 md:-translate-x-6 ${getTypeColor(item.type)}`}>
                     <item.icon className="h-5 w-5" />
                   </div>
-                  
-                  {/* Right side content for desktop */}
+
                   <motion.div
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -213,16 +226,11 @@ export default function AboutPage() {
                     viewport={{ once: true }}
                     className={`md:w-5/12 ${index % 2 === 0 ? 'md:pl-8' : 'md:pr-8 md:text-right'}`}
                   >
-                    <p className="mb-4 text-gray-600 dark:text-gray-300">
-                      {item.description}
-                    </p>
+                    <p className="mb-4 text-gray-600 dark:text-gray-300">{item.description}</p>
                     {item.technologies && (
                       <div className={`flex flex-wrap gap-2 ${index % 2 === 0 ? '' : 'md:justify-end'}`}>
                         {item.technologies.map((tech, techIndex) => (
-                          <span
-                            key={techIndex}
-                            className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-300"
-                          >
+                          <span key={techIndex} className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-300">
                             {tech}
                           </span>
                         ))}
@@ -233,19 +241,6 @@ export default function AboutPage() {
               ))}
             </div>
           </div>
-
-          {/* Add Achievement Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="mt-12 text-center"
-          >
-            <p className="text-gray-600 dark:text-gray-300 text-sm">
-              Timeline is continuously updated with new achievements and experiences
-            </p>
-          </motion.div>
         </motion.div>
 
         {/* Skills Section */}
@@ -257,86 +252,53 @@ export default function AboutPage() {
           className="mt-24"
         >
           <h2 className="mb-8 text-center text-3xl font-bold">Skills & Technologies</h2>
-          
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-            {/* Skill Category 1 */}
+
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
             <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800">
               <h3 className="mb-4 text-xl font-bold">Frontend</h3>
               <ul className="space-y-2">
-                <li className="flex items-center">
-                  <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                  <span>React / Next.js</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                  <span>TypeScript / JavaScript</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                  <span>Tailwind CSS</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                  <span>Framer Motion</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                  <span>Web3.js</span>
-                </li>
+                {['React / Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'React Native'].map(skill => (
+                  <li key={skill} className="flex items-center">
+                    <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
+                    <span>{skill}</span>
+                  </li>
+                ))}
               </ul>
             </div>
-            
-            {/* Skill Category 2 */}
+
             <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800">
               <h3 className="mb-4 text-xl font-bold">Backend</h3>
               <ul className="space-y-2">
-                <li className="flex items-center">
-                  <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                  <span>Python</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                  <span>Solidity</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                  <span>SQLite / PostgreSQL</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                  <span>JWT / RBAC Security</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                  <span>Firebase</span>
-                </li>
+                {['Django REST Framework', 'Node.js / Express', 'Python', 'PostgreSQL', 'MongoDB', 'Redis / BullMQ', 'Celery'].map(skill => (
+                  <li key={skill} className="flex items-center">
+                    <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
+                    <span>{skill}</span>
+                  </li>
+                ))}
               </ul>
             </div>
-            
-            {/* Skill Category 3 */}
+
             <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-4 text-xl font-bold">Learning & Tools</h3>
+              <h3 className="mb-4 text-xl font-bold">DevOps & Cloud</h3>
               <ul className="space-y-2">
-                <li className="flex items-center">
-                  <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                  <span>Git / GitHub</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                  <span>Hardhat</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                  <span>Node.js / Express (Learning)</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                  <span>MongoDB (Learning)</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                  <span>Docker / CI/CD (Learning)</span>
-                </li>
+                {['Docker', 'GitHub Actions', 'AWS (Certified)', 'Prometheus / Grafana', 'Kubernetes', 'Terraform', 'Linux / Bash'].map(skill => (
+                  <li key={skill} className="flex items-center">
+                    <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
+                    <span>{skill}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800">
+              <h3 className="mb-4 text-xl font-bold">Payments & Other</h3>
+              <ul className="space-y-2">
+                {['Stripe', 'M-Pesa (Daraja API)', 'NOWPayments (Crypto)', 'Solidity / Web3.js', 'Cloudinary / AWS S3', 'Sentry', 'Git / GitHub'].map(skill => (
+                  <li key={skill} className="flex items-center">
+                    <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
+                    <span>{skill}</span>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

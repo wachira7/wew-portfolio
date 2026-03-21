@@ -1,16 +1,15 @@
-//app/page.tsx
 "use client";
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 import Button from '@/components/ui/button';
-import { FaArrowRight, FaGithub, FaLinkedin, FaTwitter, FaDiscord } from 'react-icons/fa';
+import { FaArrowRight, FaGithub, FaLinkedin, FaTwitter, FaDiscord, FaExternalLinkAlt } from 'react-icons/fa';
 import PageTransition from '@/components/ui/page-transition';
 import FloatingTechStack from '@/components/interactive/floating-tech-stack';
 import Testimonials from '@/components/interactive/testimonials';
 import dynamic from 'next/dynamic';
 
-// Dynamically import Scene with SSR disabled to prevent React Three Fiber issues
 const DynamicScene = dynamic(() => import('@/components/3d/scene'), {
   ssr: false,
   loading: () => (
@@ -20,50 +19,56 @@ const DynamicScene = dynamic(() => import('@/components/3d/scene'), {
   ),
 });
 
-interface techItems {
-  name: string;
-  icon?: string;
-  color?: string;
-}
-
 const techItems = [
-  { name: 'React' },
-  { name: 'TypeScript' },
-  { name: 'Next.js' },
-  { name: 'Tailwind' },
-  { name: 'Node.js' },
-  { name: 'Express' },
-  { name: 'Docker' },
-  { name: 'Jenkins' },
-  { name: 'Kubernetes' },
-  { name: 'MongoDB' },
-  { name: 'AWS' },
-  { name: 'Python' },
-  { name: 'SQLite' },
-  { name: 'Flask' },
-  { name: 'PostgreSQL' },
-  { name: 'React Native' },
-  { name: 'Solidity' },
-  { name: 'Git' },
-  { name: 'GitHub' },
-  { name: 'Slack' },
-  { name: 'Notion' },
-  { name: 'Figma' },
-  { name: 'Django'},
-  { name: 'Terraform' },
-  { name: 'Grafana' },
-  { name: 'Prometheus' },
-  { name: 'Supabase' },
+  { name: 'React' }, { name: 'TypeScript' }, { name: 'Next.js' },
+  { name: 'Tailwind' }, { name: 'Node.js' }, { name: 'Express' },
+  { name: 'Docker' }, { name: 'Kubernetes' }, { name: 'MongoDB' },
+  { name: 'AWS' }, { name: 'Python' }, { name: 'Django' },
+  { name: 'PostgreSQL' }, { name: 'Redis' }, { name: 'Celery' },
+  { name: 'React Native' }, { name: 'Solidity' }, { name: 'Git' },
+  { name: 'GitHub Actions' }, { name: 'Grafana' }, { name: 'Prometheus' },
+  { name: 'Terraform' }, { name: 'Stripe' }, { name: 'Figma' },
+];
+
+const featuredProjects = [
+  {
+    id: 'logiflow',
+    title: 'LogiFlow',
+    description: 'Multi-tenant logistics SaaS with inventory, warehousing, production, distribution, billing, and platform admin — built with Django + Next.js.',
+    image: '/images/projects/logistics-app.jpg',
+    tags: ['Django', 'Next.js', 'PostgreSQL', 'Docker'],
+    githubUrl: 'https://github.com/wachira7/LogiFlow',
+    liveUrl: 'https://logi-flow-three.vercel.app/',
+  },
+  {
+    id: 'flixvideo',
+    title: 'FlixVideo',
+    description: 'AI-powered movie and TV discovery platform with watch parties, subscriptions, real-time search, and Stripe/M-Pesa/crypto payments.',
+    image: '/images/projects/3d-portfolio.jpg',
+    tags: ['Node.js', 'Next.js', 'Redis', 'BullMQ'],
+    githubUrl: 'https://github.com/wachira7/Flix-video',
+    liveUrl: 'https://flix-video-ten.vercel.app/',
+  },
+  {
+    id: 'vehicle-shield-insurance',
+    title: 'Vehicle Shield Insurance',
+    description: 'Blockchain-based vehicle insurance DApp with Solidity smart contracts, Web3.js integration, and Firebase Auth.',
+    image: '/images/projects/vehicle-shield.jpg',
+    tags: ['Solidity', 'Web3.js', 'Next.js', 'Hardhat'],
+    githubUrl: 'https://github.com/wachira7/vehicle-shield-insurance',
+    liveUrl: 'https://vsi-app.vercel.app/',
+  },
 ];
 
 export default function Home() {
   return (
     <PageTransition>
       <div className="relative min-h-screen">
-        {/* Hero Section with 3D element */}
+
+        {/* ── Hero ─────────────────────────────────────────── */}
         <section className="relative flex min-h-screen items-center justify-center overflow-hidden pt-16">
           <div className="absolute inset-0 -z-10 bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800"></div>
-          
+
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
               <motion.div
@@ -76,13 +81,14 @@ export default function Home() {
                   <span className="text-gradient">Emmanuel W. Wachira</span>
                 </h1>
                 <h2 className="mb-6 text-2xl font-medium text-gray-600 dark:text-gray-300 md:text-3xl">
-                  An enthusiastic Full-stack Developer.
+                  Full-Stack Developer & DevOps Engineer
                 </h2>
                 <p className="mb-8 max-w-lg text-lg text-gray-600 dark:text-gray-300">
-                  I build modern, responsive web applications with cutting-edge technologies. 
-                  Let&apos;s create something amazing together.
+                  I build production-grade SaaS platforms with modern stacks,
+                  CI/CD pipelines, and real-world payment integrations.
+                  Currently shipping at WaruTech.
                 </p>
-                
+
                 <div className="flex flex-wrap gap-4">
                   <Button href="/projects" size="lg">
                     View My Work <FaArrowRight className="ml-2" />
@@ -91,69 +97,43 @@ export default function Home() {
                     Get In Touch
                   </Button>
                 </div>
-                
+
                 <div className="mt-8 flex space-x-4">
-                  <motion.a
-                    href="https://github.com/wachira7"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <FaGithub className="h-6 w-6" />
-                    <span className="sr-only">GitHub</span>
-                  </motion.a>
-                  <motion.a
-                    href="https://www.linkedin.com/in/emmanuelwaruts77/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <FaLinkedin className="h-6 w-6" />
-                    <span className="sr-only">LinkedIn</span>
-                  </motion.a>
-                  <motion.a
-                    href="https://x.com/nationalist_ke"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <FaTwitter className="h-6 w-6" />
-                    <span className="sr-only">Twitter</span>
-                  </motion.a>
-                  <motion.a
-                    href="https://discord.com/users/EmmanuelWachira#0001"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <FaDiscord className="h-6 w-6" />
-                    <span className="sr-only">Discord</span>
-                  </motion.a>
+                  {[
+                    { href: 'https://github.com/wachira7', icon: <FaGithub className="h-6 w-6" />, label: 'GitHub' },
+                    { href: 'https://www.linkedin.com/in/emmanuelwaruts77/', icon: <FaLinkedin className="h-6 w-6" />, label: 'LinkedIn' },
+                    { href: 'https://x.com/nationalist_ke', icon: <FaTwitter className="h-6 w-6" />, label: 'Twitter' },
+                    { href: 'https://discord.com/users/EmmanuelWachira#0001', icon: <FaDiscord className="h-6 w-6" />, label: 'Discord' },
+                  ].map(({ href, icon, label }) => (
+                    <motion.a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {icon}
+                      <span className="sr-only">{label}</span>
+                    </motion.a>
+                  ))}
                 </div>
               </motion.div>
-              
+
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="flex justify-center"
               >
-                {/* Use dynamic import for Three.js scene */}
                 <DynamicScene />
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* Featured Projects Section */}
+        {/* ── Featured Projects ────────────────────────────── */}
         <section className="section-padding">
           <div className="container">
             <motion.div
@@ -165,116 +145,57 @@ export default function Home() {
             >
               <h2 className="mb-4 text-3xl font-bold md:text-4xl">Featured Projects</h2>
               <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
-                Check out some of my recent work that showcases my skills and expertise.
+                Production-grade platforms built end-to-end — from architecture to deployment.
               </p>
             </motion.div>
 
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {/* Project Card 1 - Logistics App */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                viewport={{ once: true }}
-                className="overflow-hidden rounded-lg bg-white shadow-lg transition-transform hover:scale-105 dark:bg-gray-800"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <Image
-                    src="/images/projects/logistics-app.jpg"
-                    alt="Logistics App - A comprehensive logistics management application"
-                    fill
-                    className="object-cover transition-transform duration-300 hover:scale-110"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="mb-2 text-xl font-bold">A logistics app</h3>
-                  <p className="mb-4 text-gray-600 dark:text-gray-300">
-                    A comprehensive logistics app built with python,flask,SQLite,postgres and React.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-800 dark:bg-blue-900 dark:text-blue-100">React</span>
-                    <span className="rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-800 dark:bg-blue-900 dark:text-blue-100">Python</span>
-                    <span className="rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-800 dark:bg-blue-900 dark:text-blue-100">Postgres</span>
+              {featuredProjects.map((project, index) => (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
+                  viewport={{ once: true }}
+                  className="group overflow-hidden rounded-lg bg-white shadow-lg transition-transform hover:scale-105 dark:bg-gray-800"
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-110"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
                   </div>
-                  <div className="mt-4">
-                    <Button href="/projects/logistics" variant="link" size="sm">
-                      View Details <FaArrowRight className="ml-2" />
-                    </Button>
+                  <div className="p-6">
+                    <h3 className="mb-2 text-xl font-bold">{project.title}</h3>
+                    <p className="mb-4 text-gray-600 dark:text-gray-300 text-sm">
+                      {project.description}
+                    </p>
+                    <div className="mb-4 flex flex-wrap gap-2">
+                      {project.tags.map(tag => (
+                        <span key={tag} className="rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-800 dark:bg-blue-900 dark:text-blue-100">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                        <Button variant="outline" size="sm" icon={<FaGithub />}>Code</Button>
+                      </a>
+                      {project.liveUrl && (
+                        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                          <Button variant="outline" size="sm" icon={<FaExternalLinkAlt />}>Demo</Button>
+                        </a>
+                      )}
+                      <Link href={`/projects/${project.id}`}>
+                        <Button variant="primary" size="sm">Details</Button>
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-
-              {/* Project Card 2 - Vehicle Shield */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="overflow-hidden rounded-lg bg-white shadow-lg transition-transform hover:scale-105 dark:bg-gray-800"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <Image
-                    src="/images/projects/vehicle-shield.jpg"
-                    alt="Vehicle Shield Insurance DApp - Decentralized insurance application"
-                    fill
-                    className="object-cover transition-transform duration-300 hover:scale-110"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="mb-2 text-xl font-bold">Vehicle-shield-Insurance Dapp</h3>
-                  <p className="mb-4 text-gray-600 dark:text-gray-300">
-                    A comprehensive Vehicle shield Insurance Decentralized app built with React, Firebase, Tailwind, Solidity.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-800 dark:bg-blue-900 dark:text-blue-100">React/Nextjs</span>
-                    <span className="rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-800 dark:bg-blue-900 dark:text-blue-100">Firebase</span>
-                    <span className="rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-800 dark:bg-blue-900 dark:text-blue-100">Tailwind</span>
-                    <span className="rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-800 dark:bg-blue-900 dark:text-blue-100">Solidity</span>
-                  </div>
-                  <div className="mt-4">
-                    <Button href="/projects/vehicle-shield" variant="link" size="sm">
-                      View Details <FaArrowRight className="ml-2" />
-                    </Button>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Project Card 3 - 3D Portfolio */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                viewport={{ once: true }}
-                className="overflow-hidden rounded-lg bg-white shadow-lg transition-transform hover:scale-105 dark:bg-gray-800"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <Image
-                    src="/images/projects/3d-portfolio.jpg"
-                    alt="3D Portfolio Website - Interactive portfolio with Three.js"
-                    fill
-                    className="object-cover transition-transform duration-300 hover:scale-110"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="mb-2 text-xl font-bold">3D Portfolio Website</h3>
-                  <p className="mb-4 text-gray-600 dark:text-gray-300">
-                    An interactive portfolio website with Three.js and React Three Fiber.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-800 dark:bg-blue-900 dark:text-blue-100">Three.js</span>
-                    <span className="rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-800 dark:bg-blue-900 dark:text-blue-100">React</span>
-                    <span className="rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-800 dark:bg-blue-900 dark:text-blue-100">Next.js</span>
-                  </div>
-                  <div className="mt-4">
-                    <Button href="/projects/3d-portfolio" variant="link" size="sm">
-                      View Details <FaArrowRight className="ml-2" />
-                    </Button>
-                  </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              ))}
             </div>
 
             <div className="mt-12 text-center">
@@ -285,7 +206,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* About Section */}
+        {/* ── About ────────────────────────────────────────── */}
         <section className="section-padding bg-gray-50 dark:bg-gray-800/50">
           <div className="container">
             <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
@@ -298,20 +219,20 @@ export default function Home() {
               >
                 <h2 className="mb-6 text-3xl font-bold md:text-4xl">About Me</h2>
                 <p className="mb-4 text-lg text-gray-600 dark:text-gray-300">
-                  I am a passionate full-stack developer with over 1+ years of experience building web applications.
-                  I specialize in creating modern, responsive, and user-friendly interfaces with React, Next.js, and TypeScript.
+                  Full-Stack Developer and DevOps engineer with a background in field operations at
+                  KOKO Networks and formal training from Moringa School. I build complete, deployable
+                  products — not just prototypes.
                 </p>
                 <p className="mb-6 text-lg text-gray-600 dark:text-gray-300">
-                  On the backend, I am proficient with Python, Django,Node.js, Express, and MongoDB, as well as SQL tech like SQLite and PostgreSQL.
-                  I also have experience with DevOps tools like Docker, Jenkins, and Kubernetes.
+                  I hold AWS Cloud Architecting and Cloud Foundations certifications, a Google Project
+                  Management Certificate, and a DevOps certification. Currently building SaaS platforms
+                  at WaruTech and preparing for software engineering and junior PM roles.
                 </p>
-                <div>
-                  <Button href="/about">
-                    More About Me <FaArrowRight className="ml-2" />
-                  </Button>
-                </div>
+                <Button href="/about">
+                  More About Me <FaArrowRight className="ml-2" />
+                </Button>
               </motion.div>
-              
+
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -333,7 +254,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Tech Stack Section with Floating Tech Stack */}
+        {/* ── Tech Stack ───────────────────────────────────── */}
         <section className="section-padding">
           <div className="container">
             <motion.div
@@ -345,11 +266,10 @@ export default function Home() {
             >
               <h2 className="mb-4 text-3xl font-bold md:text-4xl">My Tech Stack</h2>
               <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
-                These are the technologies I work with to build modern, responsive, and scalable applications.
+                Technologies I use to build modern, scalable, production-ready applications.
               </p>
             </motion.div>
 
-            {/* Using the improved FloatingTechStack with simplified tech items */}
             <FloatingTechStack items={techItems} className="min-h-[400px] mb-12" />
 
             <div className="mt-12 text-center">
@@ -360,7 +280,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Testimonials Section */}
+        {/* ── Testimonials ─────────────────────────────────── */}
         <section className="section-padding bg-gray-50 dark:bg-gray-800/50">
           <div className="container">
             <motion.div
@@ -370,17 +290,16 @@ export default function Home() {
               viewport={{ once: true }}
               className="mb-12 text-center"
             >
-              <h2 className="mb-4 text-3xl font-bold md:text-4xl">What Clients Say</h2>
+              <h2 className="mb-4 text-3xl font-bold md:text-4xl">What People Say</h2>
               <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
                 Feedback from people I have worked with on various projects.
               </p>
             </motion.div>
-
-            <Testimonials testimonials={[]} /* Will use default testimonials */ />
+            <Testimonials testimonials={[]} />
           </div>
         </section>
 
-        {/* Contact CTA Section */}
+        {/* ── CTA ──────────────────────────────────────────── */}
         <section className="section-padding">
           <div className="container">
             <motion.div
@@ -392,7 +311,7 @@ export default function Home() {
             >
               <h2 className="mb-4 text-3xl font-bold md:text-4xl">Let&apos;s Work Together</h2>
               <p className="mx-auto mb-8 max-w-2xl text-lg">
-                Have a project in mind? Let&apos;s discuss how I can help bring your ideas to life.
+                Have a project in mind or an open role? Let&apos;s talk.
               </p>
               <Button href="/contact" variant="white" size="lg">
                 Get In Touch <FaArrowRight className="ml-2" />
@@ -400,6 +319,7 @@ export default function Home() {
             </motion.div>
           </div>
         </section>
+
       </div>
     </PageTransition>
   );

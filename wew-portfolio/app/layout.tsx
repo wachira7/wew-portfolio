@@ -32,7 +32,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider>
           <div className="flex min-h-screen flex-col">
-            {/* Custom Cursor - Uncomment to enable */}
+            {/* Custom Cursor */}
             <CustomCursor /> 
             
             <Navbar />
