@@ -44,6 +44,12 @@ interface StackProps {
 const LABEL_ANCHOR = new THREE.Vector3(GLASS / 2 + 0.45, 0.05, -GLASS / 2 - 0.45);
 
 const smooth = (t: number) => t * t * (3 - 2 * t);
+
+/** Deterministic 0–1 generator, so the layout is identical on every load. */
+function seededRandom(seed: number) {
+  let state = seed;
+  return () => (state = (state * 9301 + 49297) % 233280) / 233280;
+}
 const clamp01 = (t: number) => Math.min(1, Math.max(0, t));
 
 /** Additive shader that sends a ripple of light outwards along the traces. */
@@ -87,11 +93,13 @@ function SignalMaterial({ glow, offset }: { glow: THREE.Texture; offset: number 
     [glow, offset]
   );
 
+  const ref = useRef<THREE.ShaderMaterial>(null);
+
   useFrame((state) => {
-    material.uniforms.uTime.value = state.clock.elapsedTime;
+    if (ref.current) ref.current.uniforms.uTime.value = state.clock.elapsedTime;
   });
 
-  return <primitive object={material} attach="material" />;
+  return <primitive ref={ref} object={material} attach="material" />;
 }
 
 function Chips({ seed, chip }: { seed: number; chip: number }) {
@@ -101,8 +109,7 @@ function Chips({ seed, chip }: { seed: number; chip: number }) {
   useEffect(() => {
     const mesh = ref.current;
     if (!mesh) return;
-    let s = seed * 9301;
-    const random = () => ((s = (s * 9301 + 49297) % 233280) / 233280);
+    const random = seededRandom(seed * 9301);
     const m = new THREE.Matrix4();
     const keepOut = (BOARD * chip) / 2 + 0.18;
     for (let i = 0; i < count; i++) {
@@ -228,8 +235,7 @@ function DataColumns({ spanRef, animate }: { spanRef: React.RefObject<[number, n
   const pulses = useRef<THREE.InstancedMesh>(null);
 
   const data = useMemo(() => {
-    let s = 7;
-    const random = () => ((s = (s * 9301 + 49297) % 233280) / 233280);
+    const random = seededRandom(7);
     const cols = Array.from({ length: 34 }, (_, i) => {
       const inner = i < 24;
       const r = inner ? 0.42 : 1.25;

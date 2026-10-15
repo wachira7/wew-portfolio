@@ -1,26 +1,21 @@
 "use client";
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { navItems, site } from '@/lib/site';
 
+const formatTime = () =>
+  new Intl.DateTimeFormat('en-GB', { timeZone: site.timeZone, hour: '2-digit', minute: '2-digit' }).format(new Date());
+
+const subscribeClock = (tick: () => void) => {
+  const id = setInterval(tick, 30_000);
+  return () => clearInterval(id);
+};
+
 function LocalTime() {
-  const [time, setTime] = useState<string | null>(null);
-
-  useEffect(() => {
-    const format = () =>
-      new Intl.DateTimeFormat('en-GB', {
-        timeZone: site.timeZone,
-        hour: '2-digit',
-        minute: '2-digit',
-      }).format(new Date());
-    setTime(format());
-    const id = setInterval(() => setTime(format()), 30_000);
-    return () => clearInterval(id);
-  }, []);
-
-  return <span suppressHydrationWarning>{time ?? '--:--'} EAT</span>;
+  const time = useSyncExternalStore(subscribeClock, formatTime, () => null);
+  return <span>{time ?? '--:--'} EAT</span>;
 }
 
 const socials = [
