@@ -4,10 +4,9 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import Button from '@/components/ui/button';
-import { FaArrowRight, FaGithub, FaLinkedin, FaTwitter, FaDiscord, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaArrowRight, FaGithub, FaLinkedin, FaExternalLinkAlt } from 'react-icons/fa';
 import PageTransition from '@/components/ui/page-transition';
 import FloatingTechStack from '@/components/interactive/floating-tech-stack';
-import Testimonials from '@/components/interactive/testimonials';
 import dynamic from 'next/dynamic';
 
 const DynamicScene = dynamic(() => import('@/components/3d/scene'), {
@@ -28,14 +27,25 @@ const techItems = [
   { name: 'React Native' }, { name: 'Solidity' }, { name: 'Git' },
   { name: 'GitHub Actions' }, { name: 'Grafana' }, { name: 'Prometheus' },
   { name: 'Terraform' }, { name: 'Stripe' }, { name: 'Figma' },
+  { name: 'PyTorch' }, { name: 'Hugging Face' }, { name: 'LangGraph' },
+  { name: 'LangChain' }, { name: 'Qdrant' }, { name: 'OpenAI' },
 ];
 
 const featuredProjects = [
   {
+    id: 'the-pour-is-right',
+    title: 'The Pour Is Right',
+    description: 'LLM wine pricer and deal-hunting agents: a QLoRA fine-tuned Qwen model served on Modal, RAG with Qdrant, an ensemble, and LangGraph agents that send Telegram alerts.',
+    image: '/images/projects/wine-pricer.jpg',
+    tags: ['PyTorch', 'Hugging Face', 'LangGraph', 'Qdrant'],
+    githubUrl: null,
+    liveUrl: null,
+  },
+  {
     id: 'logiflow',
     title: 'LogiFlow',
     description: 'Multi-tenant logistics SaaS with inventory, warehousing, production, distribution, billing, and platform admin — built with Django + Next.js.',
-    image: '/images/projects/logistics-app.jpg',
+    image: '/images/projects/logiflow-app.png',
     tags: ['Django', 'Next.js', 'PostgreSQL', 'Docker'],
     githubUrl: 'https://github.com/wachira7/LogiFlow',
     liveUrl: 'https://logi-flow-three.vercel.app/',
@@ -44,19 +54,10 @@ const featuredProjects = [
     id: 'flixvideo',
     title: 'FlixVideo',
     description: 'AI-powered movie and TV discovery platform with watch parties, subscriptions, real-time search, and Stripe/M-Pesa/crypto payments.',
-    image: '/images/projects/3d-portfolio.jpg',
+    image: '/images/projects/flix-video.png',
     tags: ['Node.js', 'Next.js', 'Redis', 'BullMQ'],
     githubUrl: 'https://github.com/wachira7/Flix-video',
     liveUrl: 'https://flix-video-ten.vercel.app/',
-  },
-  {
-    id: 'vehicle-shield-insurance',
-    title: 'Vehicle Shield Insurance',
-    description: 'Blockchain-based vehicle insurance DApp with Solidity smart contracts, Web3.js integration, and Firebase Auth.',
-    image: '/images/projects/vehicle-shield.jpg',
-    tags: ['Solidity', 'Web3.js', 'Next.js', 'Hardhat'],
-    githubUrl: 'https://github.com/wachira7/vehicle-shield-insurance',
-    liveUrl: 'https://vsi-app.vercel.app/',
   },
 ];
 
@@ -81,12 +82,12 @@ export default function Home() {
                   <span className="text-gradient">Emmanuel W. Wachira</span>
                 </h1>
                 <h2 className="mb-6 text-2xl font-medium text-gray-600 dark:text-gray-300 md:text-3xl">
-                  Full-Stack Developer & DevOps Engineer
+                  Full-Stack &amp; AI Engineer · DevOps
                 </h2>
                 <p className="mb-8 max-w-lg text-lg text-gray-600 dark:text-gray-300">
-                  I build production-grade SaaS platforms with modern stacks,
-                  CI/CD pipelines, and real-world payment integrations.
-                  Currently shipping at WaruTech.
+                  I build and ship production systems end to end: SaaS platforms with
+                  CI/CD and real-world payments, and LLM applications with fine-tuned
+                  models, RAG and agents.
                 </p>
 
                 <div className="flex flex-wrap gap-4">
@@ -102,8 +103,6 @@ export default function Home() {
                   {[
                     { href: 'https://github.com/wachira7', icon: <FaGithub className="h-6 w-6" />, label: 'GitHub' },
                     { href: 'https://www.linkedin.com/in/emmanuelwaruts77/', icon: <FaLinkedin className="h-6 w-6" />, label: 'LinkedIn' },
-                    { href: 'https://x.com/nationalist_ke', icon: <FaTwitter className="h-6 w-6" />, label: 'Twitter' },
-                    { href: 'https://discord.com/users/EmmanuelWachira#0001', icon: <FaDiscord className="h-6 w-6" />, label: 'Discord' },
                   ].map(({ href, icon, label }) => (
                     <motion.a
                       key={label}
@@ -145,7 +144,7 @@ export default function Home() {
             >
               <h2 className="mb-4 text-3xl font-bold md:text-4xl">Featured Projects</h2>
               <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
-                Production-grade platforms built end-to-end — from architecture to deployment.
+                Systems built end to end — from data and models to architecture and deployment.
               </p>
             </motion.div>
 
@@ -181,9 +180,11 @@ export default function Home() {
                       ))}
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                        <Button variant="outline" size="sm" icon={<FaGithub />}>Code</Button>
-                      </a>
+                      {project.githubUrl && (
+                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                          <Button variant="outline" size="sm" icon={<FaGithub />}>Code</Button>
+                        </a>
+                      )}
                       {project.liveUrl && (
                         <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                           <Button variant="outline" size="sm" icon={<FaExternalLinkAlt />}>Demo</Button>
@@ -219,14 +220,15 @@ export default function Home() {
               >
                 <h2 className="mb-6 text-3xl font-bold md:text-4xl">About Me</h2>
                 <p className="mb-4 text-lg text-gray-600 dark:text-gray-300">
-                  Full-Stack Developer and DevOps engineer with a background in field operations at
-                  KOKO Networks and formal training from Moringa School. I build complete, deployable
-                  products — not just prototypes.
+                  Full-Stack and AI Engineer with a background in field operations at KOKO Networks and
+                  formal training from Moringa School. I build complete, deployable products — not just
+                  prototypes.
                 </p>
                 <p className="mb-6 text-lg text-gray-600 dark:text-gray-300">
-                  I hold AWS Cloud Architecting and Cloud Foundations certifications, a Google Project
-                  Management Certificate, and a DevOps certification. Currently building SaaS platforms
-                  at WaruTech and preparing for software engineering and junior PM roles.
+                  I completed Ed Donner&apos;s AI Engineer Core Track (LLM engineering, RAG, QLoRA and agents),
+                  and hold AWS Cloud Architecting and Cloud Foundations certifications, a Google Project
+                  Management Certificate, and a DevOps certification. Open to full-stack, DevOps and AI
+                  engineering roles.
                 </p>
                 <Button href="/about">
                   More About Me <FaArrowRight className="ml-2" />
@@ -277,25 +279,6 @@ export default function Home() {
                 Explore My Tech Stack <FaArrowRight className="ml-2" />
               </Button>
             </div>
-          </div>
-        </section>
-
-        {/* ── Testimonials ─────────────────────────────────── */}
-        <section className="section-padding bg-gray-50 dark:bg-gray-800/50">
-          <div className="container">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="mb-12 text-center"
-            >
-              <h2 className="mb-4 text-3xl font-bold md:text-4xl">What People Say</h2>
-              <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
-                Feedback from people I have worked with on various projects.
-              </p>
-            </motion.div>
-            <Testimonials testimonials={[]} />
           </div>
         </section>
 

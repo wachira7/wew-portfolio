@@ -7,6 +7,17 @@ import Image from 'next/image';
 
 const timelineData = [
   {
+    id: 9,
+    year: "2026",
+    month: "Sep",
+    title: "AI Engineer Core Track: LLM Engineering, RAG, QLoRA, Agents",
+    subtitle: "Udemy — Ed Donner",
+    type: "certification",
+    description: "Completed an 8-week AI engineering course covering LLM APIs, RAG, fine-tuning and agents. Built The Pour Is Right as my capstone: a QLoRA fine-tuned Qwen model served on Modal, RAG with Qdrant, an ensemble, and LangGraph agents that send Telegram alerts.",
+    icon: FaCertificate,
+    technologies: ["Python", "PyTorch", "Hugging Face", "QLoRA", "RAG", "Qdrant", "LangChain", "LangGraph", "Modal"]
+  },
+  {
     id: 1,
     year: "2025 - Present",
     month: "",
@@ -152,20 +163,22 @@ export default function AboutPage() {
           >
             <h2 className="mb-4 text-2xl font-bold">Hi, I am Emmanuel W. Wachira</h2>
             <p className="mb-4 text-lg text-gray-600 dark:text-gray-300">
-              I am a Full-Stack Developer and DevOps engineer building production-grade SaaS platforms
-              at WaruTech. With a background in field operations at KOKO Networks and formal training
-              from Moringa School, I bring both technical depth and real-world deployment experience.
+              I am a Full-Stack and AI Engineer who builds and ships production systems end to end. With a
+              background in field operations at KOKO Networks and formal training from Moringa School, I bring
+              both technical depth and real-world deployment experience.
             </p>
             <p className="mb-4 text-lg text-gray-600 dark:text-gray-300">
               I recently shipped two full-scale platforms: <strong>LogiFlow</strong> — a multi-tenant logistics SaaS
               built with Django and Next.js — and <strong>FlixVideo</strong> — an AI-powered streaming and movie
               discovery platform built with Node.js and Next.js. Both are in production with CI/CD pipelines,
               Prometheus + Grafana monitoring, and multi-gateway payment integrations (Stripe, M-Pesa, crypto).
+              Most recently I built <strong>The Pour Is Right</strong>, an LLM application that prices wine with a
+              fine-tuned open-source model, RAG and an ensemble, with LangGraph agents that hunt for real deals.
             </p>
             <p className="mb-6 text-lg text-gray-600 dark:text-gray-300">
-              I hold AWS Cloud Architecting and Cloud Foundations certifications, a Google Project Management
-              Certificate, and a DevOps certification from the Nairobi DevOps Community. I am actively
-              seeking software engineering and project management roles where I can drive impactful products.
+              I completed Ed Donner&apos;s AI Engineer Core Track, and hold AWS Cloud Architecting and Cloud
+              Foundations certifications, a Google Project Management Certificate, and a DevOps certification
+              from the Nairobi DevOps Community. I am open to full-stack, DevOps and AI engineering roles.
             </p>
             <Button href="/resume.pdf" variant="primary" icon={<FaDownload />} external>
               Download Resume

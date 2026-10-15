@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import ContactForm from '@/components/contact-form';
-import { FaEnvelope, FaMapMarkerAlt, FaLinkedin, FaGithub, FaTwitter } from 'react-icons/fa';
+import { FaEnvelope, FaMapMarkerAlt, FaLinkedin, FaGithub } from 'react-icons/fa';
 
 export default function ContactPage() {
   return (
@@ -75,17 +75,6 @@ export default function ContactPage() {
                   >
                     <FaLinkedin className="h-6 w-6" />
                     <span className="sr-only">LinkedIn</span>
-                  </motion.a>
-                  <motion.a
-                    href="https://x.com/nationalist_ke"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-full bg-gray-100 p-3 text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <FaTwitter className="h-6 w-6" />
-                    <span className="sr-only">Twitter</span>
                   </motion.a>
                 </div>
               </div>
