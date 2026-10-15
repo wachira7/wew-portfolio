@@ -190,6 +190,7 @@ export default async function ProjectPage({ params }: Params) {
                   <span className="text-muted">{b}</span>
                 </li>
               ))}
+              {about.bullets.length % 2 === 1 && <li aria-hidden className="hidden bg-bg md:block" />}
             </ul>
           </Section>
         )}

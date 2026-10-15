@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { animate, motion, useInView, useReducedMotion } from 'motion/react';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { projects } from '@/content/projects';
+import { certifications } from '@/content/experience';
 import { ease } from '@/lib/motion';
 
 const principles = [
@@ -27,7 +28,7 @@ const stats = [
   { value: projects.length, suffix: '', label: 'projects shipped' },
   { value: 3, suffix: '', label: 'payment gateways in production' },
   { value: 63, suffix: '%', label: 'lower error with my LLM ensemble' },
-  { value: 5, suffix: '', label: 'certifications, AWS to AI engineering' },
+  { value: certifications.length, suffix: '', label: 'certifications, AWS to AI engineering' },
 ];
 
 function Counter({ value, suffix }: { value: number; suffix: string }) {

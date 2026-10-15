@@ -1,103 +1,87 @@
-"use client";
+import type { Metadata } from 'next';
+import { FiArrowUpRight, FiFileText, FiGithub, FiLinkedin } from 'react-icons/fi';
+import Reveal from '@/components/ui/reveal';
+import ContactForm from '@/components/contact/contact-form';
+import CopyEmail from '@/components/contact/copy-email';
+import { site } from '@/lib/site';
 
-import { motion } from 'motion/react';
-import ContactForm from '@/components/contact-form';
-import { FaEnvelope, FaMapMarkerAlt, FaLinkedin, FaGithub } from 'react-icons/fa';
+export const metadata: Metadata = {
+  title: 'Contact | Emmanuel W. Wachira',
+  description: 'Get in touch about full-stack, DevOps and AI engineering roles or projects.',
+};
+
+const links = [
+  { label: 'GitHub', handle: 'wachira7', href: site.github, icon: FiGithub },
+  { label: 'LinkedIn', handle: 'emmanuelwaruts77', href: site.linkedin, icon: FiLinkedin },
+  { label: 'Résumé', handle: 'resume.pdf', href: site.resume, icon: FiFileText },
+];
 
 export default function ContactPage() {
   return (
-    <div className="pt-24">
-      <div className="container mx-auto px-4 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mx-auto max-w-3xl text-center"
-        >
-          <h1 className="mb-4 text-3xl font-bold md:text-4xl">Get In Touch</h1>
-          <p className="mb-8 text-lg text-gray-600 dark:text-gray-300">
-            Have a question or want to work together? Drop me a message!
-          </p>
-        </motion.div>
+    <div className="pb-24 pt-36 md:pt-44">
+      <div className="container">
+        <div className="grid gap-16 lg:grid-cols-12">
+          <div className="lg:col-span-6">
+            <Reveal>
+              <p className="eyebrow mb-6 flex items-center gap-3">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+                </span>
+                <span className="text-accent">Open to opportunities</span>
+              </p>
+              <h1 className="text-5xl font-semibold leading-[1.02] tracking-tightest text-fg md:text-7xl">
+                Let&apos;s build something real<span className="text-accent">.</span>
+              </h1>
+              <p className="mt-8 max-w-md text-lg leading-relaxed text-muted">
+                I&apos;m open to full-stack, DevOps and AI engineering roles, and to interesting projects. Tell me what
+                you&apos;re working on; I reply within 24–48 hours.
+              </p>
+            </Reveal>
 
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
-          <div>
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <h2 className="mb-6 text-2xl font-semibold">Contact Information</h2>
-              
-              <div className="mb-6 space-y-4">
-                <div className="flex items-start">
-                  <div className="mr-4 mt-1 rounded-full bg-blue-100 p-2 text-blue-600 dark:bg-blue-900/30 dark:text-blue-300">
-                    <FaEnvelope />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-medium">Email</h3>
-                    <p className="text-gray-600 dark:text-gray-300">your.email@example.com</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="mr-4 mt-1 rounded-full bg-blue-100 p-2 text-blue-600 dark:bg-blue-900/30 dark:text-blue-300">
-                    <FaMapMarkerAlt />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-medium">Location</h3>
-                    <p className="text-gray-600 dark:text-gray-300">Nairobi, Kenya</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mb-8">
-                <h3 className="mb-4 text-lg font-medium">Connect With Me</h3>
-                <div className="flex space-x-4">
-                  <motion.a
-                    href="https://github.com/wachira7"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-full bg-gray-100 p-3 text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <FaGithub className="h-6 w-6" />
-                    <span className="sr-only">GitHub</span>
-                  </motion.a>
-                  <motion.a
-                    href="https://www.linkedin.com/in/emmanuelwaruts77/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-full bg-gray-100 p-3 text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <FaLinkedin className="h-6 w-6" />
-                    <span className="sr-only">LinkedIn</span>
-                  </motion.a>
-                </div>
-              </div>
-              
-              <div>
-                <h3 className="mb-4 text-lg font-medium">Availability</h3>
-                <p className="mb-2 text-gray-600 dark:text-gray-300">
-                  Available for freelance and full-time opportunities
-                </p>
-                <p className="text-gray-600 dark:text-gray-300">
-                  I will get back to you within 24-48 hours.
-                </p>
-              </div>
-            </motion.div>
+            <Reveal delay={0.1} className="mt-14">
+              <p className="eyebrow mb-4">Email</p>
+              <CopyEmail />
+            </Reveal>
+
+            <Reveal delay={0.2} className="mt-14">
+              <p className="eyebrow mb-4">Elsewhere</p>
+              <ul className="border-t border-line/[0.08]">
+                {links.map((l) => (
+                  <li key={l.label}>
+                    <a
+                      href={l.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center justify-between border-b border-line/[0.08] py-4 transition-colors hover:text-accent"
+                    >
+                      <span className="flex items-center gap-4 text-fg transition-colors group-hover:text-accent">
+                        <l.icon className="h-4 w-4 text-subtle transition-colors group-hover:text-accent" />
+                        {l.label}
+                      </span>
+                      <span className="flex items-center gap-2 font-mono text-xs text-subtle">
+                        {l.handle}
+                        <FiArrowUpRight className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+
+            <Reveal delay={0.25} className="mt-10 flex flex-wrap gap-x-10 gap-y-4 font-mono text-xs text-subtle">
+              <span>
+                <span className="text-muted">Based in</span> Nairobi, Kenya
+              </span>
+              <span>
+                <span className="text-muted">Time zone</span> EAT · UTC+3
+              </span>
+            </Reveal>
           </div>
-          
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
+
+          <Reveal delay={0.15} className="lg:col-span-6">
             <ContactForm />
-          </motion.div>
+          </Reveal>
         </div>
       </div>
     </div>

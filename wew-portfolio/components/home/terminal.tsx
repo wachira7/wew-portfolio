@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion, useInView, useReducedMotion } from 'motion/react';
 import { projects } from '@/content/projects';
+import { certifications } from '@/content/experience';
 import { site } from '@/lib/site';
 import { ease } from '@/lib/motion';
 
@@ -19,13 +20,6 @@ const stack: [string, string][] = [
   ['payments', 'Stripe · M-Pesa (Daraja) · NOWPayments'],
 ];
 
-const certs = [
-  'AI Engineer Core Track: LLMs, RAG, QLoRA, Agents (Ed Donner)',
-  'AWS Cloud Architecting',
-  'AWS Cloud Foundations',
-  'Google Project Management Certificate',
-  'DevOps, Nairobi DevOps Community',
-];
 
 const suggestions = ['whoami', 'projects', 'stack', 'certs', 'contact', 'resume', 'help'];
 
@@ -136,9 +130,9 @@ const commands: Record<string, { description: string; run: Run }> = {
     description: 'certifications',
     run: () => (
       <ul className="space-y-0.5">
-        {certs.map((c) => (
-          <li key={c} className="text-muted">
-            <Hi>✓</Hi> {c}
+        {certifications.map((c) => (
+          <li key={c.title} className="text-muted">
+            <Hi>✓</Hi> {c.title} <Dim>· {c.subtitle}, {c.month} {c.year}</Dim>
           </li>
         ))}
       </ul>
