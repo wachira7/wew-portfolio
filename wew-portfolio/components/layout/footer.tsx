@@ -1,109 +1,118 @@
-//components/layout/footer.tsx
 "use client";
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { FiArrowUpRight } from 'react-icons/fi';
+import { navItems, site } from '@/lib/site';
+
+function LocalTime() {
+  const [time, setTime] = useState<string | null>(null);
+
+  useEffect(() => {
+    const format = () =>
+      new Intl.DateTimeFormat('en-GB', {
+        timeZone: site.timeZone,
+        hour: '2-digit',
+        minute: '2-digit',
+      }).format(new Date());
+    setTime(format());
+    const id = setInterval(() => setTime(format()), 30_000);
+    return () => clearInterval(id);
+  }, []);
+
+  return <span suppressHydrationWarning>{time ?? '--:--'} EAT</span>;
+}
+
+const socials = [
+  { name: 'GitHub', href: site.github },
+  { name: 'LinkedIn', href: site.linkedin },
+  { name: 'Résumé', href: site.resume },
+];
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-  
   return (
-    <footer className="mt-auto border-t border-gray-200 bg-white py-8 dark:border-gray-800 dark:bg-gray-900">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          {/* Column 1: About */}
+    <footer className="relative mt-auto overflow-hidden border-t border-line/[0.08]">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[420px] bg-[radial-gradient(ellipse_at_bottom,rgb(var(--accent)/0.08),transparent_70%)]" />
+
+      <div className="container relative">
+        {/* Closing call to action */}
+        <div className="flex flex-col gap-10 py-20 md:flex-row md:items-end md:justify-between md:py-28">
           <div>
-            <h3 className="mb-4 text-xl font-bold">My Portfolio</h3>
-            <p className="mb-4 text-gray-600 dark:text-gray-300">
-              Full-Stack &amp; AI Engineer based in Nairobi, Kenya.
+            <p className="eyebrow mb-6 flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+              Have something in mind?
             </p>
-            <div className="flex space-x-4">
-              <motion.a
-                href="https://github.com/wachira7"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <FaGithub className="h-6 w-6" />
-                <span className="sr-only">GitHub</span>
-              </motion.a>
-              <motion.a
-                href="https://www.linkedin.com/in/emmanuelwaruts77/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <FaLinkedin className="h-6 w-6" />
-                <span className="sr-only">LinkedIn</span>
-              </motion.a>
-            </div>
+            <h2 className="max-w-2xl text-4xl font-medium leading-[1.05] tracking-tight text-fg md:text-6xl">
+              Good things start with a <span className="text-accent">conversation.</span>
+            </h2>
+          </div>
+          <div className="flex flex-col items-start gap-4 md:items-end">
+            <Link
+              href="/contact"
+              className="group inline-flex items-center gap-2 rounded-md bg-accent px-6 py-3.5 font-medium text-accent-fg transition-[filter] hover:brightness-110"
+            >
+              Start a conversation
+              <FiArrowUpRight className="transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </Link>
+            <a
+              href={`mailto:${site.email}`}
+              className="font-mono text-sm text-muted transition-colors hover:text-fg"
+            >
+              {site.email}
+            </a>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="grid grid-cols-2 gap-8 border-t border-line/[0.08] py-10 md:grid-cols-4">
+          <div className="col-span-2 md:col-span-1">
+            <p className="text-sm font-medium text-fg">{site.name}</p>
+            <p className="mt-1 text-sm text-muted">{site.role}</p>
           </div>
 
-          {/* Column 2: Quick Links */}
           <div>
-            <h3 className="mb-4 text-xl font-bold">Quick Links</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link 
-                  href="/"
-                  className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href="/about"
-                  className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                >
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href="/projects"
-                  className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                >
-                  Projects
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href="/contact"
-                  className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                >
-                  Contact
-                </Link>
-              </li>
+            <p className="eyebrow mb-4">Navigate</p>
+            <ul className="space-y-2 text-sm">
+              {[...navItems, { name: 'Contact', path: '/contact' }].map((item) => (
+                <li key={item.path}>
+                  <Link href={item.path} className="text-muted transition-colors hover:text-fg">
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Column 3: Contact */}
           <div>
-            <h3 className="mb-4 text-xl font-bold">Contact</h3>
-            <p className="mb-2 text-gray-600 dark:text-gray-300">
-              Feel free to reach out if you have any questions.
-            </p>
-            <p className="text-gray-600 dark:text-gray-300">
-              Email: <a href="mailto:your.email@example.com" className="text-primary hover:underline">wewaruts@gmail.com</a>
-            </p>
-            <p className="text-gray-600 dark:text-gray-300">
-              Phone: <a href="tel:+254700000000" className="text-primary hover:underline">+254705274244/+254756126336</a>
+            <p className="eyebrow mb-4">Elsewhere</p>
+            <ul className="space-y-2 text-sm">
+              {socials.map((s) => (
+                <li key={s.name}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-1 text-muted transition-colors hover:text-fg"
+                  >
+                    {s.name}
+                    <FiArrowUpRight className="h-3 w-3 opacity-60 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
+          <div className="col-span-2 md:col-span-1">
+            <p className="eyebrow mb-4">Local time</p>
+            <p className="font-mono text-sm text-muted">
+              Nairobi · <LocalTime />
             </p>
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="mt-8 border-t border-gray-200 pt-8 text-center dark:border-gray-800">
-          <p className="text-gray-600 dark:text-gray-400">
-            © {currentYear} Warutere. All rights reserved.
-          </p>
+        <div className="flex flex-col justify-between gap-2 border-t border-line/[0.08] py-6 font-mono text-[11px] text-subtle sm:flex-row">
+          <span>© {new Date().getFullYear()} {site.name}</span>
+          <span>Designed &amp; built in Nairobi</span>
         </div>
       </div>
     </footer>

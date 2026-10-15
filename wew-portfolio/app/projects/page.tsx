@@ -5,67 +5,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import AnimatedSection from '@/components/ui/animated-section';
 import Button from '@/components/ui/button';
-import { FaGithub, FaExternalLinkAlt, FaClock } from 'react-icons/fa';
-
-const projects = [
-  {
-    id: 'the-pour-is-right',
-    title: 'The Pour Is Right',
-    description: 'LLM wine pricer and deal-hunting agents: QLoRA fine-tuning, RAG with Qdrant, an ensemble, and LangGraph agents that send Telegram alerts.',
-    technologies: ['Python', 'PyTorch', 'Hugging Face', 'QLoRA', 'Qdrant', 'LangGraph', 'Modal', 'Claude', 'Gradio'],
-    category: 'ai',
-    image: '/images/projects/wine-pricer.jpg',
-    githubUrl: null,
-    liveUrl: null,
-  },
-  {
-    id: 'logiflow',
-    title: 'LogiFlow',
-    description: 'Multi-tenant logistics SaaS platform with inventory, warehousing, production, distribution, billing, and platform admin modules.',
-    technologies: ['Django', 'Next.js', 'TypeScript', 'PostgreSQL', 'Docker', 'Celery', 'Stripe', 'M-Pesa'],
-    category: 'saas',
-    image: '/images/projects/logiflow-app.png',
-    githubUrl: 'https://github.com/wachira7/LogiFlow',
-    liveUrl: 'https://logi-flow-three.vercel.app/',
-  },
-  {
-    id: 'flixvideo',
-    title: 'FlixVideo',
-    description: 'AI-powered movie and TV discovery platform with subscriptions, watch parties, real-time search, and multi-gateway payments.',
-    technologies: ['Node.js', 'Next.js', 'TypeScript', 'PostgreSQL', 'MongoDB', 'Redis', 'BullMQ', 'Stripe', 'M-Pesa'],
-    category: 'saas',
-    image: '/images/projects/flix-video.png',
-    githubUrl: 'https://github.com/wachira7/Flix-video',
-    liveUrl: 'https://flix-video-ten.vercel.app/',
-  },
-  {
-    id: 'logistics-app',
-    title: 'Logistics Application',
-    description: 'A comprehensive logistics management system with authentication and role-based access control.',
-    technologies: ['Python', 'SQLite', 'PostgreSQL', 'JWT', 'RBAC Security'],
-    category: 'web',
-    image: '/images/projects/logistics-app.jpg',
-    githubUrl: 'https://github.com/Fuata-tech/logistic_management_system',
-    liveUrl: 'https://fuata-tech-client.onrender.com/',
-  },
-  {
-    id: 'vehicle-shield-insurance',
-    title: 'Vehicle Shield Insurance',
-    description: 'Blockchain-based vehicle insurance platform with smart contracts and secure user authentication.',
-    technologies: ['Solidity', 'Web3.js', 'Next.js', 'Hardhat', 'Firebase Auth'],
-    category: 'blockchain',
-    image: '/images/projects/vehicle-shield.jpg',
-    githubUrl: 'https://github.com/wachira7/vehicle-shield-insurance',
-    liveUrl: 'https://vsi-app.vercel.app/',
-  },
-];
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import { projects, categoryLabels } from '@/content/projects';
 
 const categories = [
   { id: 'all', name: 'All Projects' },
-  { id: 'ai', name: 'AI & LLM' },
-  { id: 'saas', name: 'SaaS Platforms' },
-  { id: 'web', name: 'Web Development' },
-  { id: 'blockchain', name: 'Blockchain' },
+  ...Object.entries(categoryLabels).map(([id, name]) => ({ id, name })),
 ];
 
 export default function ProjectsPage() {
@@ -112,15 +57,7 @@ export default function ProjectsPage() {
               className="group overflow-hidden rounded-lg border border-gray-200 bg-white transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800"
             >
               <div className="relative h-48 overflow-hidden">
-                {project.category === 'upcoming' ? (
-                  <div className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 p-4 text-white">
-                    <FaClock className="mb-2 h-10 w-10" />
-                    <h3 className="text-xl font-bold">{project.title}</h3>
-                    <p className="mt-2 text-center text-sm">Coming Soon</p>
-                  </div>
-                ) : (
-                  <>
-                    <Image
+                                    <Image
                       src={project.image ?? '/placeholder.svg'}
                       alt={`${project.title} screenshot`}
                       fill
@@ -146,15 +83,10 @@ export default function ProjectsPage() {
                         )}
                       </div>
                     </div>
-                  </>
-                )}
               </div>
 
               <div className="p-5">
-                {project.category === 'upcoming' ? (
-                  <h3 className="mb-2 text-xl font-bold">{project.title}</h3>
-                ) : (
-                  <h3 className="mb-2 text-xl font-bold">
+                                  <h3 className="mb-2 text-xl font-bold">
                     <Link
                       href={`/projects/${project.id}`}
                       className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
@@ -162,7 +94,6 @@ export default function ProjectsPage() {
                       {project.title}
                     </Link>
                   </h3>
-                )}
 
                 <p className="mb-4 text-gray-600 dark:text-gray-300">{project.description}</p>
 
@@ -179,7 +110,7 @@ export default function ProjectsPage() {
                   )}
                 </div>
 
-                {project.category !== 'upcoming' && (
+                {(
                   <div className="flex flex-wrap gap-2">
                     {project.githubUrl && (
                       <Button href={project.githubUrl} variant="outline" size="sm" icon={<FaGithub />} external>

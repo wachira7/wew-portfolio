@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import AnimatedSection from '@/components/ui/animated-section';
 import { FaStar, FaReact, FaNodeJs, FaDocker, FaAws, FaGit, FaCloud, FaDatabase } from 'react-icons/fa';
 import {
