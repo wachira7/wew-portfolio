@@ -2,6 +2,8 @@ export const site = {
   name: 'Emmanuel W. Wachira',
   shortName: 'Emmanuel',
   role: 'Full-Stack & AI Engineer',
+  /** Canonical URL for metadata and social previews; override with NEXT_PUBLIC_SITE_URL for a custom domain. */
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://wew-portfolio.vercel.app',
   location: 'Nairobi, KE',
   timeZone: 'Africa/Nairobi',
   email: 'wewaruts@gmail.com',

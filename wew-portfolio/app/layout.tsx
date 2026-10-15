@@ -7,6 +7,7 @@ import Navbar from '@/components/layout/navbar';
 import Footer from '@/components/layout/footer';
 import SmoothScroll from '@/components/providers/smooth-scroll';
 import BackToTop from '@/components/ui/back-to-top';
+import { site } from '@/lib/site';
 
 const geist = Geist({
   subsets: ['latin'],
@@ -21,7 +22,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
+  metadataBase: new URL(site.url),
   title: 'Emmanuel W. Wachira | Full-Stack & AI Engineer',
   description: 'Full-Stack and AI Engineer in Nairobi. Production SaaS platforms with CI/CD and payments, and LLM applications with fine-tuning, RAG and agents.',
   keywords: 'full-stack developer, AI engineer, LLM, RAG, LangGraph, DevOps, Next.js, Django, Python, Nairobi',
