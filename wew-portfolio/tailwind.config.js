@@ -36,6 +36,9 @@ module.exports = {
           from: { transform: 'translateX(0)' },
           to: { transform: 'translateX(-50%)' },
         },
+        dash: {
+          to: { strokeDashoffset: '-24' },
+        },
       },
       animation: {
         marquee: 'marquee 40s linear infinite',

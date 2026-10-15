@@ -1,173 +1,249 @@
-//app/projects/[slug]/page.tsx
-"use client";
-
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
-import { motion } from 'motion/react';
-import Button from '@/components/ui/button';
-import AnimatedSection from '@/components/ui/animated-section';
-import { FaGithub, FaExternalLinkAlt, FaArrowLeft } from 'react-icons/fa';
+import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import { projects as projectsData, getProject, categoryLabels, type Project } from '@/content/projects';
+import { notFound } from 'next/navigation';
+import { FiArrowLeft, FiArrowUpRight, FiGithub } from 'react-icons/fi';
+import { categoryLabels, getProject, projects } from '@/content/projects';
+import { architectures } from '@/content/architecture';
+import ArchitectureDiagram from '@/components/work/architecture-diagram';
+import Reveal from '@/components/ui/reveal';
+import Button from '@/components/ui/button';
 
-export default function ProjectPage() {
-  const params = useParams();
-  const [project, setProject] = useState<Project | null>(null);
-  const [loading, setLoading] = useState(true);
+type Params = { params: Promise<{ slug: string }> };
 
-  useEffect(() => {
-    const slug = params.slug as string;
-    const foundProject = getProject(slug);
-    if (foundProject) setProject(foundProject);
-    setLoading(false);
-  }, [params]);
+export function generateStaticParams() {
+  return projects.map((p) => ({ slug: p.id }));
+}
 
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center pt-24">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"></div>
-      </div>
-    );
-  }
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const project = getProject((await params).slug);
+  if (!project) return {};
+  return {
+    title: `${project.title} · Case study | Emmanuel W. Wachira`,
+    description: project.description,
+    openGraph: { images: [project.image] },
+  };
+}
 
-  if (!project) {
-    return (
-      <div className="flex min-h-screen flex-col items-center justify-center pt-24 text-center">
-        <h1 className="mb-4 text-2xl font-bold">Project Not Found</h1>
-        <p className="mb-8 text-gray-600 dark:text-gray-300">
-          The project you&apos;re looking for doesn&apos;t exist or has been removed.
+/** Splits a write-up into the prose before the bullets, the "- " bullets, and the prose after. */
+function parse(text: string) {
+  const lines = text.split('\n').map((l) => l.trim()).filter(Boolean);
+  const isBullet = (l: string) => l.startsWith('- ');
+  const first = lines.findIndex(isBullet);
+  const last = lines.findLastIndex(isBullet);
+  const prose = (ls: string[]) => {
+    const kept = ls.filter((l) => !l.endsWith(':'));
+    return kept.length ? [kept.join(' ')] : [];
+  };
+  if (first === -1) return { intro: prose(lines), bullets: [], outro: [] };
+  return {
+    intro: prose(lines.slice(0, first)),
+    bullets: lines.filter(isBullet).map((l) => l.slice(2)),
+    outro: prose(lines.slice(last + 1)),
+  };
+}
+
+function Section({ index, label, children }: { index: number; label: string; children: ReactNode }) {
+  return (
+    <section className="grid gap-8 border-t border-line/[0.08] py-16 md:py-24 lg:grid-cols-12">
+      <div className="lg:col-span-3">
+        <p className="eyebrow lg:sticky lg:top-28">
+          <span className="text-accent">0{index}</span> — {label}
         </p>
-        <Link href="/projects">
-          <Button icon={<FaArrowLeft />}>Back to Projects</Button>
-        </Link>
       </div>
-    );
-  }
+      <div className="min-w-0 lg:col-span-9">{children}</div>
+    </section>
+  );
+}
+
+export default async function ProjectPage({ params }: Params) {
+  const { slug } = await params;
+  const project = getProject(slug);
+  if (!project) notFound();
+
+  const about = parse(project.longDescription);
+  const challenges = parse(project.challenges);
+  const arch = architectures[project.id];
+  const index = projects.findIndex((p) => p.id === project.id);
+  const next = projects[(index + 1) % projects.length];
+  let section = 0;
 
   return (
-    <div className="pt-24">
-      <div className="container mx-auto px-4 py-12">
-        {/* Back Button */}
-        <div className="mb-8">
-          <Link href="/projects">
-            <Button variant="outline" icon={<FaArrowLeft />}>
-              Back to Projects
-            </Button>
+    <article className="pt-32">
+      <div className="container">
+        {/* Header */}
+        <Reveal>
+          <Link href="/projects" className="group inline-flex items-center gap-2 font-mono text-xs text-subtle transition-colors hover:text-fg">
+            <FiArrowLeft className="transition-transform group-hover:-translate-x-0.5" /> All work
           </Link>
-        </div>
+        </Reveal>
 
-        {/* Project Header — uses motion directly to fix unused import warning */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-12"
-        >
-          <h1 className="mb-4 text-3xl font-bold md:text-4xl">{project.title}</h1>
-          <p className="mb-6 text-xl text-gray-600 dark:text-gray-300">{project.description}</p>
-
-          <div className="mb-8 flex flex-wrap gap-2">
-            {project.technologies.map((tech) => (
-              <span key={tech} className="rounded-full bg-blue-100 px-3 py-1 text-sm text-blue-800 dark:bg-blue-900 dark:text-blue-100">
-                {tech}
-              </span>
-            ))}
-          </div>
-
-          <div className="flex flex-wrap gap-3">
-            {project.githubUrl && (
-              <Button href={project.githubUrl} variant="outline" icon={<FaGithub />} external>
-                View Code
-              </Button>
-            )}
-            {project.liveUrl && (
-              <Button href={project.liveUrl} icon={<FaExternalLinkAlt />} external>
-                Live Demo
-              </Button>
-            )}
-          </div>
-        </motion.div>
-
-        {/* Project Details */}
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
-          <AnimatedSection className="lg:col-span-2" delay={0.2}>
-            <h2 className="mb-4 text-2xl font-bold">About This Project</h2>
-            <div className="prose max-w-none text-gray-700 dark:text-gray-300">
-              {project.longDescription.split('\n').map((paragraph, index) => (
-                <p key={index} className="mb-4">{paragraph.trim()}</p>
-              ))}
-            </div>
-
-            <h2 className="mb-4 mt-8 text-2xl font-bold">Challenges</h2>
-            <div className="prose max-w-none text-gray-700 dark:text-gray-300">
-              {project.challenges.split('\n').map((paragraph, index) => (
-                <p key={index} className="mb-4">{paragraph.trim()}</p>
-              ))}
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection delay={0.3}>
-            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-4 text-xl font-bold">Project Details</h3>
-
-              <div className="mb-4">
-                <h4 className="font-medium text-gray-600 dark:text-gray-400">Category</h4>
-                <p className="capitalize">
-                  {categoryLabels[project.category]}
-                </p>
-              </div>
-
-              <div className="mb-4">
-                <h4 className="font-medium text-gray-600 dark:text-gray-400">Technologies</h4>
-                <ul className="list-inside list-disc">
-                  {project.technologies.map((tech) => (
-                    <li key={tech}>{tech}</li>
-                  ))}
-                </ul>
-              </div>
-
-              {project.liveUrl && (
-                <div className="mb-4">
-                  <h4 className="font-medium text-gray-600 dark:text-gray-400">Live URL</h4>
-                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline dark:text-blue-400 text-sm break-all">
-                    {project.liveUrl}
-                  </a>
-                </div>
+        <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:items-end">
+          <Reveal delay={0.05} className="lg:col-span-8">
+            <p className="eyebrow mb-6 flex items-center gap-3">
+              <span>{categoryLabels[project.category]}</span>
+              <span className="h-3 w-px bg-line/15" />
+              {project.liveUrl ? (
+                <span className="flex items-center gap-1.5 text-accent">
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent" /> Live
+                </span>
+              ) : (
+                <span>Case study</span>
               )}
-            </div>
-          </AnimatedSection>
+            </p>
+            <h1 className="text-5xl font-semibold leading-[1.02] tracking-tightest text-fg md:text-7xl">{project.title}</h1>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">{project.description}</p>
+          </Reveal>
+
+          <Reveal delay={0.15} className="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
+            {project.liveUrl && (
+              <Button href={project.liveUrl} external size="lg" trailingIcon={<FiArrowUpRight />}>
+                Visit live site
+              </Button>
+            )}
+            {project.githubUrl && (
+              <Button href={project.githubUrl} external variant="outline" size="lg" icon={<FiGithub />}>
+                Source
+              </Button>
+            )}
+          </Reveal>
         </div>
 
-        {/* Related Projects */}
-        <AnimatedSection className="mt-16" delay={0.5}>
-          <h2 className="mb-6 text-2xl font-bold">Related Projects</h2>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {projectsData
-              .filter(p => p.id !== project.id && p.category === project.category)
-              .slice(0, 3)
-              .map((relatedProject) => (
-                <div
-                  key={relatedProject.id}
-                  className="overflow-hidden rounded-lg border border-gray-200 bg-white transition-all hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
-                >
-                  <div className="h-40 bg-gray-200 dark:bg-gray-700" />
-                  <div className="p-4">
-                    <h3 className="mb-2 text-lg font-bold">
-                      <Link href={`/projects/${relatedProject.id}`} className="hover:text-blue-600 dark:hover:text-blue-400">
-                        {relatedProject.title}
-                      </Link>
-                    </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      {relatedProject.description.length > 100
-                        ? `${relatedProject.description.slice(0, 100)}...`
-                        : relatedProject.description}
-                    </p>
-                  </div>
+        {/* Facts */}
+        <Reveal delay={0.2}>
+          <dl className="mt-14 grid grid-cols-2 gap-6 border-y border-line/[0.08] py-6 md:grid-cols-4">
+            <div>
+              <dt className="eyebrow mb-2">Category</dt>
+              <dd className="text-sm text-fg">{categoryLabels[project.category]}</dd>
+            </div>
+            <div>
+              <dt className="eyebrow mb-2">Status</dt>
+              <dd className="text-sm text-fg">{project.liveUrl ? 'Live' : 'Case study'}</dd>
+            </div>
+            <div className="col-span-2">
+              <dt className="eyebrow mb-2">Core stack</dt>
+              <dd className="text-sm text-fg">{project.technologies.slice(0, 5).join(' · ')}</dd>
+            </div>
+          </dl>
+        </Reveal>
+
+        {/* Hero screenshot */}
+        <Reveal delay={0.25} className="mt-14">
+          <div
+            className="overflow-hidden rounded-xl border border-line/[0.08] px-4 pt-6 sm:px-12 sm:pt-12"
+            style={{ background: `radial-gradient(120% 90% at 50% 0%, ${project.tint ?? '#6ee7b7'}40, rgb(var(--surface)) 70%)` }}
+          >
+            <div className="overflow-hidden rounded-t-lg border border-b-0 border-line/10 bg-bg shadow-[0_40px_100px_-20px_rgb(0_0_0/0.8)]">
+              <div className="flex items-center gap-3 border-b border-line/[0.08] px-4 py-2.5">
+                <div className="flex gap-1.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-line/15" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-line/15" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-line/15" />
                 </div>
-              ))}
+                <span className="truncate font-mono text-[11px] text-subtle">
+                  {project.frameUrl ?? (project.liveUrl ? new URL(project.liveUrl).host : project.id)}
+                </span>
+              </div>
+              <Image
+                src={project.image}
+                alt={`${project.title} screenshot`}
+                width={1920}
+                height={800}
+                priority
+                sizes="(min-width: 1280px) 1200px, 100vw"
+                className="h-auto w-full"
+              />
+            </div>
           </div>
-        </AnimatedSection>
+        </Reveal>
+
+        {project.proof && (
+          <Reveal className="mx-auto max-w-3xl py-20 text-center md:py-28">
+            <p className="text-3xl font-medium leading-snug tracking-tight text-fg md:text-4xl">
+              <span className="text-accent">“</span>
+              {project.proof}
+              <span className="text-accent">”</span>
+            </p>
+          </Reveal>
+        )}
+
+        <Section index={++section} label="Overview">
+          <Reveal className="space-y-5 text-xl leading-relaxed text-fg/90 md:text-2xl">
+            {about.intro.map((p) => (
+              <p key={p}>{p}</p>
+            ))}
+            {about.outro.map((p) => (
+              <p key={p} className="text-lg text-muted md:text-xl">
+                {p}
+              </p>
+            ))}
+          </Reveal>
+        </Section>
+
+        {about.bullets.length > 0 && (
+          <Section index={++section} label="What it does">
+            <ul className="grid gap-px overflow-hidden rounded-xl border border-line/[0.08] bg-line/[0.08] md:grid-cols-2">
+              {about.bullets.map((b, i) => (
+                <li key={b} className="flex gap-4 bg-bg p-6">
+                  <span className="font-mono text-xs text-accent">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="text-muted">{b}</span>
+                </li>
+              ))}
+            </ul>
+          </Section>
+        )}
+
+        {arch && (
+          <Section index={++section} label="Architecture">
+            <Reveal>
+              <p className="mb-8 max-w-2xl text-lg leading-relaxed text-muted">{arch.summary}</p>
+              <ArchitectureDiagram arch={arch} />
+            </Reveal>
+          </Section>
+        )}
+
+        {challenges.bullets.length > 0 && (
+          <Section index={++section} label="Engineering challenges">
+            <ol>
+              {challenges.bullets.map((c, i) => (
+                <li key={c} className="group grid grid-cols-[3rem_1fr] gap-4 border-b border-line/[0.08] py-6 first:pt-0">
+                  <span className="font-mono text-sm text-subtle transition-colors group-hover:text-accent">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span className="text-lg leading-relaxed text-fg/90">{c}</span>
+                </li>
+              ))}
+            </ol>
+          </Section>
+        )}
+
+        <Section index={++section} label="Stack">
+          <ul className="flex flex-wrap gap-2">
+            {project.technologies.map((t) => (
+              <li key={t} className="rounded-md border border-line/10 px-3 py-1.5 font-mono text-xs text-muted">
+                {t}
+              </li>
+            ))}
+          </ul>
+        </Section>
       </div>
-    </div>
+
+      {/* Next project */}
+      <Link
+        href={`/projects/${next.id}`}
+        className="group block border-t border-line/[0.08] transition-colors duration-500 hover:bg-surface"
+      >
+        <div className="container flex items-end justify-between gap-6 py-16 md:py-24">
+          <div>
+            <p className="eyebrow mb-4">Next project</p>
+            <p className="text-4xl font-medium tracking-tight text-fg transition-colors duration-500 group-hover:text-accent md:text-7xl">
+              {next.title}
+            </p>
+          </div>
+          <FiArrowUpRight className="h-10 w-10 shrink-0 text-subtle transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:translate-x-2 group-hover:text-accent md:h-16 md:w-16" />
+        </div>
+      </Link>
+    </article>
   );
 }

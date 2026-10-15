@@ -21,6 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
   title: 'Emmanuel W. Wachira | Full-Stack & AI Engineer',
   description: 'Full-Stack and AI Engineer in Nairobi. Production SaaS platforms with CI/CD and payments, and LLM applications with fine-tuning, RAG and agents.',
   keywords: 'full-stack developer, AI engineer, LLM, RAG, LangGraph, DevOps, Next.js, Django, Python, Nairobi',

@@ -1,144 +1,36 @@
-"use client";
+import type { Metadata } from 'next';
+import Reveal from '@/components/ui/reveal';
+import WorkGrid from '@/components/work/work-grid';
+import { projects } from '@/content/projects';
 
-import { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import AnimatedSection from '@/components/ui/animated-section';
-import Button from '@/components/ui/button';
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
-import { projects, categoryLabels } from '@/content/projects';
-
-const categories = [
-  { id: 'all', name: 'All Projects' },
-  ...Object.entries(categoryLabels).map(([id, name]) => ({ id, name })),
-];
+export const metadata: Metadata = {
+  title: 'Work | Emmanuel W. Wachira',
+  description: 'AI applications, multi-tenant SaaS platforms and web systems built and shipped end to end.',
+};
 
 export default function ProjectsPage() {
-  const [activeCategory, setActiveCategory] = useState('all');
-
-  const filteredProjects = activeCategory === 'all'
-    ? projects
-    : projects.filter(project => project.category === activeCategory);
+  const live = projects.filter((p) => p.liveUrl).length;
 
   return (
-    <div className="pt-24">
-      <div className="container mx-auto px-4 py-12">
-        {/* Header */}
-        <AnimatedSection className="mx-auto mb-16 max-w-3xl text-center">
-          <h1 className="mb-4 text-3xl font-bold md:text-4xl">My Projects</h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
-            Browse through my work. Each project showcases different skills and technologies.
-          </p>
-        </AnimatedSection>
-
-        {/* Category Filter */}
-        <AnimatedSection className="mb-12 flex flex-wrap justify-center gap-2" delay={0.1}>
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setActiveCategory(category.id)}
-              className={`rounded-full px-4 py-2 font-medium transition-colors ${
-                activeCategory === category.id
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
-              }`}
-            >
-              {category.name}
-            </button>
-          ))}
-        </AnimatedSection>
-
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {filteredProjects.map((project, index) => (
-            <AnimatedSection
-              key={project.id}
-              delay={0.1 + index * 0.05}
-              className="group overflow-hidden rounded-lg border border-gray-200 bg-white transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800"
-            >
-              <div className="relative h-48 overflow-hidden">
-                                    <Image
-                      src={project.image ?? '/placeholder.svg'}
-                      alt={`${project.title} screenshot`}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.onerror = null;
-                        target.src = '/placeholder.svg';
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-blue-600 bg-opacity-80 opacity-0 transition-opacity group-hover:opacity-100">
-                      <div className="flex h-full items-center justify-center space-x-4">
-                        {project.githubUrl && (
-                          <Button href={project.githubUrl} variant="outline" className="bg-white hover:bg-gray-100" icon={<FaGithub />} external>
-                            Code
-                          </Button>
-                        )}
-                        {project.liveUrl && (
-                          <Button href={project.liveUrl} variant="outline" className="bg-white hover:bg-gray-100" icon={<FaExternalLinkAlt />} external>
-                            Demo
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-              </div>
-
-              <div className="p-5">
-                                  <h3 className="mb-2 text-xl font-bold">
-                    <Link
-                      href={`/projects/${project.id}`}
-                      className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                    >
-                      {project.title}
-                    </Link>
-                  </h3>
-
-                <p className="mb-4 text-gray-600 dark:text-gray-300">{project.description}</p>
-
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.technologies.slice(0, 3).map((tech) => (
-                    <span key={tech} className="rounded-full bg-blue-100 px-3 py-1 text-xs text-blue-800 dark:bg-blue-900 dark:text-blue-100">
-                      {tech}
-                    </span>
-                  ))}
-                  {project.technologies.length > 3 && (
-                    <span className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-800 dark:bg-gray-700 dark:text-gray-300">
-                      +{project.technologies.length - 3} more
-                    </span>
-                  )}
-                </div>
-
-                {(
-                  <div className="flex flex-wrap gap-2">
-                    {project.githubUrl && (
-                      <Button href={project.githubUrl} variant="outline" size="sm" icon={<FaGithub />} external>
-                        Code
-                      </Button>
-                    )}
-                    {project.liveUrl && (
-                      <Button href={project.liveUrl} variant="outline" size="sm" icon={<FaExternalLinkAlt />} external>
-                        Demo
-                      </Button>
-                    )}
-                    <Link href={`/projects/${project.id}`}>
-                      <Button variant="primary" size="sm">Details</Button>
-                    </Link>
-                  </div>
-                )}
-              </div>
-            </AnimatedSection>
-          ))}
-        </div>
-
-        {filteredProjects.length === 0 && (
-          <div className="my-12 text-center">
-            <p className="text-lg text-gray-600 dark:text-gray-300">
-              No projects found in this category. Please try another filter.
+    <div className="pb-24 pt-36 md:pt-44">
+      <div className="container">
+        <Reveal className="mb-16 grid gap-8 md:mb-20 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-8">
+            <p className="eyebrow mb-6 flex items-center gap-2">
+              <span className="h-1.5 w-1.5 bg-accent" />
+              Work · {projects.length} projects · {live} live
             </p>
+            <h1 className="text-5xl font-semibold leading-[1.02] tracking-tightest text-fg md:text-7xl">
+              Everything I&apos;ve built<span className="text-accent">.</span>
+            </h1>
           </div>
-        )}
+          <p className="max-w-md leading-relaxed text-muted lg:col-span-4">
+            From LLM agents to multi-tenant SaaS and smart contracts. Each one has a case study with its
+            architecture, the problems I hit and how I solved them.
+          </p>
+        </Reveal>
+
+        <WorkGrid />
       </div>
     </div>
   );
