@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -40,17 +40,6 @@ export default function Footer() {
               >
                 <FaLinkedin className="h-6 w-6" />
                 <span className="sr-only">LinkedIn</span>
-              </motion.a>
-              <motion.a
-                href="https://x.com/nationalist_ke"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <FaTwitter className="h-6 w-6" />
-                <span className="sr-only">Twitter</span>
               </motion.a>
             </div>
           </div>

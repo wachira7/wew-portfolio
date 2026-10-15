@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import Button from '@/components/ui/button';
-import { FaArrowRight, FaGithub, FaLinkedin, FaTwitter, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaArrowRight, FaGithub, FaLinkedin, FaExternalLinkAlt } from 'react-icons/fa';
 import PageTransition from '@/components/ui/page-transition';
 import FloatingTechStack from '@/components/interactive/floating-tech-stack';
 import dynamic from 'next/dynamic';
@@ -103,7 +103,6 @@ export default function Home() {
                   {[
                     { href: 'https://github.com/wachira7', icon: <FaGithub className="h-6 w-6" />, label: 'GitHub' },
                     { href: 'https://www.linkedin.com/in/emmanuelwaruts77/', icon: <FaLinkedin className="h-6 w-6" />, label: 'LinkedIn' },
-                    { href: 'https://x.com/nationalist_ke', icon: <FaTwitter className="h-6 w-6" />, label: 'Twitter' },
                   ].map(({ href, icon, label }) => (
                     <motion.a
                       key={label}
