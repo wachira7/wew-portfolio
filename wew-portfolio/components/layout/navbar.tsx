@@ -40,7 +40,12 @@ export default function Navbar() {
     setHidden(y > 160 && y > previous && !menuOpen);
   });
 
-  useEffect(() => setMenuOpen(false), [pathname]);
+  // Close the mobile menu when the route changes.
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
+    setMenuOpen(false);
+  }
 
   useEffect(() => {
     const lenis = getLenis();

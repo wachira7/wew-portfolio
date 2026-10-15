@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState, useSyncExternalStore } from 'react';
 import dynamic from 'next/dynamic';
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { FiArrowDown, FiArrowUpRight, FiGithub, FiGlobe, FiLinkedin } from 'react-icons/fi';
@@ -8,7 +8,7 @@ import Button from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ease } from '@/lib/motion';
 import { site } from '@/lib/site';
-import { hasWebGL } from '@/lib/webgl';
+import { hasWebGL, subscribeWebGL } from '@/lib/webgl';
 import StackFallback from './stack-fallback';
 
 const CircuitStack = dynamic(() => import('./circuit-stack'), { ssr: false });
@@ -23,10 +23,9 @@ export default function Hero() {
   const section = useRef<HTMLElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion() ?? false;
-  const [webgl, setWebgl] = useState<boolean | null>(null);
+  // null on the server, so the first client render matches the HTML.
+  const webgl = useSyncExternalStore(subscribeWebGL, hasWebGL, () => null);
   const [ready, setReady] = useState(false);
-
-  useEffect(() => setWebgl(hasWebGL()), []);
   const onReady = useCallback(() => setReady(true), []);
 
   // 0 → 1 across the hero's scroll range; the stack spreads apart in the first part.
