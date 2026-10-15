@@ -144,6 +144,24 @@ const commands: Record<string, { description: string; run: Run }> = {
       <div className="grid gap-x-6 gap-y-0.5 sm:grid-cols-[6rem_1fr]">
         <Dim>email</Dim>
         <a href={`mailto:${site.email}`} className="text-fg hover:text-accent">{site.email}</a>
+        <Dim>phone</Dim>
+        <span>
+          {site.phones.map((phone, i) => (
+            <span key={phone.tel}>
+              {i > 0 && <Dim> · </Dim>}
+              <a href={`tel:${phone.tel}`} className="text-fg hover:text-accent">{phone.display}</a>
+            </span>
+          ))}
+        </span>
+        <Dim>whatsapp</Dim>
+        <span>
+          {site.phones.map((phone, i) => (
+            <span key={phone.tel}>
+              {i > 0 && <Dim> · </Dim>}
+              {ext(phone.whatsapp, phone.display)}
+            </span>
+          ))}
+        </span>
         <Dim>github</Dim>
         {ext(site.github, 'github.com/wachira7')}
         <Dim>linkedin</Dim>

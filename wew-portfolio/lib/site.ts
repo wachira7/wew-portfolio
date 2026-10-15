@@ -8,6 +8,11 @@ export const site = {
   github: 'https://github.com/wachira7',
   linkedin: 'https://www.linkedin.com/in/emmanuelwaruts77/',
   resume: '/resume.pdf',
+  /** Both numbers take calls, texts and WhatsApp. */
+  phones: [
+    { display: '+254 705 274 244', tel: '+254705274244', whatsapp: 'https://wa.me/254705274244' },
+    { display: '+254 756 126 336', tel: '+254756126336', whatsapp: 'https://wa.me/254756126336' },
+  ],
 };
 
 export const navItems = [

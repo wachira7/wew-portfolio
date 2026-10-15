@@ -46,7 +46,7 @@ export default function Footer() {
               Good things start with a <span className="text-accent">conversation.</span>
             </h2>
           </div>
-          <div className="flex flex-col items-start gap-4 md:items-end">
+          <div className="flex flex-col items-start gap-3 md:items-end">
             <Link
               href="/contact"
               className="group inline-flex items-center gap-2 rounded-md bg-accent px-6 py-3.5 font-medium text-accent-fg transition-[filter] hover:brightness-110"
@@ -60,6 +60,15 @@ export default function Footer() {
             >
               {site.email}
             </a>
+            {site.phones.map((phone) => (
+              <a
+                key={phone.tel}
+                href={`tel:${phone.tel}`}
+                className="font-mono text-sm tabular-nums text-muted transition-colors hover:text-fg"
+              >
+                {phone.display}
+              </a>
+            ))}
           </div>
         </div>
 
