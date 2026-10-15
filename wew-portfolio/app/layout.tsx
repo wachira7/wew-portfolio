@@ -17,9 +17,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'My Portfolio | Web & Mobile Developer',
-  description: 'Professional portfolio showcasing web development and design projects',
-  keywords: 'web developer, frontend, portfolio, projects, react, nextjs',
+  title: 'Emmanuel W. Wachira | Full-Stack & AI Engineer',
+  description: 'Full-Stack and AI Engineer in Nairobi. Production SaaS platforms with CI/CD and payments, and LLM applications with fine-tuning, RAG and agents.',
+  keywords: 'full-stack developer, AI engineer, LLM, RAG, LangGraph, DevOps, Next.js, Django, Python, Nairobi',
 };
 
 export default function RootLayout({

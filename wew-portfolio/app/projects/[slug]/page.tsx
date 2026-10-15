@@ -11,6 +11,38 @@ import Link from 'next/link';
 
 const projectsData = [
   {
+    id: 'the-pour-is-right',
+    title: 'The Pour Is Right',
+    description: 'An LLM application that prices wine from its review, and agents that hunt for real wine deals and send Telegram alerts.',
+    longDescription: `
+      My capstone for Ed Donner's AI Engineer Core Track, applied to wine instead of the course's Amazon products.
+      Models predict the price of a bottle from its review, and an agent system finds live wine deals and messages me about the best one.
+
+      What it does:
+      - Curated 280,000 wine reviews into a 22,000-item dataset, and rewrote every review into a standard summary with an LLM through the Groq Batch API, for about $1
+      - Benchmarked traditional ML, neural networks and frontier models (Claude, GPT, Qwen) on the same 200 test wines
+      - Fine-tuned Qwen 3 4B with QLoRA on a free Colab T4, cutting its error from $23.15 to $10.10, level with Claude Sonnet 5
+      - Served the fine-tuned model as a GPU service on Modal
+      - Added RAG with a Qdrant vector store, and combined Claude, the fine-tuned model and a PyTorch network into an ensemble: average error $7.96, 63% below the baseline
+      - Built agents that read live deals from WTSO, Last Bottle and HotUKDeals, price them with the ensemble, and send the best to Telegram
+      - Wrote the planner as a LangGraph graph with parallel fan-out, conditional routing and human-in-the-loop approval, and wrapped it all in a Gradio app
+    `,
+    challenges: `
+      Engineering challenges along the way:
+      - Removing price hints from the review text, so the models judged the wine instead of reading the answer
+      - Training on a free T4: bfloat16 ran at 0.08 steps per second, and switching to float16 with float32 adapters made it six times faster
+      - Working around a gated base model (Llama) by moving to Qwen, whose tokenizer writes prices one digit at a time
+      - Keeping the scanner's descriptions factual: the first version invented tasting notes and let UK deals crowd out the US ones
+      - Pricing deals one at a time, because parallel calls made Modal start a new GPU container for each request
+    `,
+    technologies: ['Python', 'PyTorch', 'Hugging Face Transformers', 'PEFT / QLoRA', 'TRL', 'Qdrant', 'LangGraph', 'OpenAI', 'Claude', 'Groq', 'Modal', 'Gradio', 'scikit-learn', 'XGBoost'],
+    category: 'ai',
+    image: '/images/projects/wine-pricer.jpg',
+    githubUrl: null,
+    liveUrl: null,
+    screenshots: [],
+  },
+  {
     id: 'logiflow',
     title: 'LogiFlow',
     description: 'Multi-tenant logistics SaaS platform with inventory, warehousing, production, distribution, billing, and platform admin modules.',
@@ -43,7 +75,7 @@ const projectsData = [
     `,
     technologies: ['Django', 'Django REST Framework', 'Next.js', 'TypeScript', 'PostgreSQL', 'Redis', 'Celery', 'Docker', 'Stripe', 'M-Pesa', 'NOWPayments', 'Leaflet.js', 'Prometheus', 'Grafana'],
     category: 'saas',
-    image: '/images/projects/logistics-app.jpg',
+    image: '/images/projects/logiflow-app.png',
     githubUrl: 'https://github.com/wachira7/LogiFlow',
     liveUrl: 'https://logi-flow-three.vercel.app/',
     screenshots: [],
@@ -83,7 +115,7 @@ const projectsData = [
     `,
     technologies: ['Node.js', 'Express', 'Next.js', 'TypeScript', 'PostgreSQL', 'MongoDB', 'Redis', 'BullMQ', 'Stripe', 'M-Pesa', 'NOWPayments', 'AWS S3', 'Socket.io', 'Prometheus', 'Grafana', 'Docker'],
     category: 'saas',
-    image: '/images/projects/3d-portfolio.jpg',
+    image: '/images/projects/flix-video.png',
     githubUrl: 'https://github.com/wachira7/Flix-video',
     liveUrl: 'https://flix-video-ten.vercel.app/',
     screenshots: [],
@@ -250,7 +282,8 @@ export default function ProjectPage() {
               <div className="mb-4">
                 <h4 className="font-medium text-gray-600 dark:text-gray-400">Category</h4>
                 <p className="capitalize">
-                  {project.category === 'saas' ? 'SaaS Platform' :
+                  {project.category === 'ai' ? 'AI & LLM' :
+                   project.category === 'saas' ? 'SaaS Platform' :
                    project.category === 'web' ? 'Web Development' :
                    project.category === 'blockchain' ? 'Blockchain' : project.category}
                 </p>

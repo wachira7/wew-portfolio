@@ -3,27 +3,86 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import AnimatedSection from '@/components/ui/animated-section';
-import { FaStar, FaReact, FaNodeJs, FaDocker, FaAws, FaGit, FaCloud } from 'react-icons/fa';
+import { FaStar, FaReact, FaNodeJs, FaDocker, FaAws, FaGit, FaCloud, FaDatabase } from 'react-icons/fa';
 import {
   SiTypescript, SiTailwindcss, SiFramer, SiExpress,
   SiMongodb, SiPostgresql, SiGithubactions, SiSolidity, SiPython,
   SiDjango, SiKubernetes, SiTerraform, SiGrafana, SiPrometheus,
   SiSqlite, SiRedis, SiCelery, SiStripe, SiCloudinary, SiSentry,
-  SiYarn,
+  SiYarn, SiOpenai, SiLangchain, SiHuggingface, SiPytorch, SiScikitlearn, SiModal,
 } from 'react-icons/si';
 
 const techCategories = [
   { id: 'all', name: 'All Technologies' },
+  { id: 'ai', name: 'AI & LLM' },
   { id: 'frontend', name: 'Frontend' },
   { id: 'backend', name: 'Backend' },
   { id: 'database', name: 'Databases' },
   { id: 'devops', name: 'DevOps' },
-  { id: 'storage', name: 'For storage' },
-  { id: 'payments', name: 'Payments & Storage' },
+  { id: 'storage', name: 'Storage' },
+  { id: 'payments', name: 'Payments' },
   { id: 'tools', name: 'Tools' },
 ];
 
 const technologies = [
+  // ── AI & LLM ───────────────────────────────────────────
+  {
+    name: 'LLM APIs',
+    description: 'OpenAI, Anthropic Claude, Groq and Hugging Face: prompting, structured outputs, tool calling and batch jobs. Used in The Pour Is Right and FlixVideo.',
+    category: 'ai',
+    proficiency: 3,
+    yearsOfExperience: 0.5,
+    icon: <SiOpenai className="h-7 w-7" />,
+  },
+  {
+    name: 'RAG & Vector Databases',
+    description: 'Retrieval-augmented generation with Qdrant and Chroma and sentence-transformer embeddings, including filtered search.',
+    category: 'ai',
+    proficiency: 3,
+    yearsOfExperience: 0.5,
+    icon: <FaDatabase className="h-7 w-7 text-[#DC244C]" />,
+  },
+  {
+    name: 'LangChain / LangGraph',
+    description: 'Agent workflows with typed state, conditional routing, parallel fan-out and human-in-the-loop approval.',
+    category: 'ai',
+    proficiency: 2.5,
+    yearsOfExperience: 0.5,
+    icon: <SiLangchain className="h-7 w-7" />,
+  },
+  {
+    name: 'Fine-tuning (QLoRA)',
+    description: 'Fine-tuned Qwen 3 4B with Hugging Face Transformers, PEFT, TRL and bitsandbytes on a free Colab T4.',
+    category: 'ai',
+    proficiency: 2.5,
+    yearsOfExperience: 0.5,
+    icon: <SiHuggingface className="h-7 w-7 text-[#FFD21E]" />,
+  },
+  {
+    name: 'PyTorch',
+    description: 'Trained neural networks for price prediction, including a residual network with a log-price target.',
+    category: 'ai',
+    proficiency: 2.5,
+    yearsOfExperience: 0.5,
+    icon: <SiPytorch className="h-7 w-7 text-[#EE4C2C]" />,
+  },
+  {
+    name: 'scikit-learn / XGBoost',
+    description: 'Baselines and traditional ML: linear regression, bag-of-words models, random forests and gradient boosting.',
+    category: 'ai',
+    proficiency: 3,
+    yearsOfExperience: 0.5,
+    icon: <SiScikitlearn className="h-7 w-7 text-[#F7931E]" />,
+  },
+  {
+    name: 'Modal',
+    description: 'Serverless GPU deployment of a fine-tuned model, with cached weights and scale-to-zero.',
+    category: 'ai',
+    proficiency: 2.5,
+    yearsOfExperience: 0.5,
+    icon: <SiModal className="h-7 w-7" />,
+  },
+
   // ── Frontend ───────────────────────────────────────────
   {
     name: 'React / Next.js',
@@ -330,7 +389,7 @@ export default function TechStackPage() {
                   <div>
                     <h3 className="text-xl font-bold">{tech.name}</h3>
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {tech.yearsOfExperience} {tech.yearsOfExperience === 1 ? 'year' : 'years'}
+                      {tech.yearsOfExperience < 1 ? 'Under 1 year' : `${tech.yearsOfExperience} ${tech.yearsOfExperience === 1 ? 'year' : 'years'}`}
                     </p>
                   </div>
                 </div>

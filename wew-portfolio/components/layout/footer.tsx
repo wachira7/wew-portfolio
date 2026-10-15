@@ -16,7 +16,7 @@ export default function Footer() {
           <div>
             <h3 className="mb-4 text-xl font-bold">My Portfolio</h3>
             <p className="mb-4 text-gray-600 dark:text-gray-300">
-              A showcase of my web development projects and skills.
+              Full-Stack &amp; AI Engineer based in Nairobi, Kenya.
             </p>
             <div className="flex space-x-4">
               <motion.a

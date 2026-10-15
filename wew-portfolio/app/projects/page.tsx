@@ -9,6 +9,16 @@ import { FaGithub, FaExternalLinkAlt, FaClock } from 'react-icons/fa';
 
 const projects = [
   {
+    id: 'the-pour-is-right',
+    title: 'The Pour Is Right',
+    description: 'LLM wine pricer and deal-hunting agents: QLoRA fine-tuning, RAG with Qdrant, an ensemble, and LangGraph agents that send Telegram alerts.',
+    technologies: ['Python', 'PyTorch', 'Hugging Face', 'QLoRA', 'Qdrant', 'LangGraph', 'Modal', 'Claude', 'Gradio'],
+    category: 'ai',
+    image: '/images/projects/wine-pricer.jpg',
+    githubUrl: null,
+    liveUrl: null,
+  },
+  {
     id: 'logiflow',
     title: 'LogiFlow',
     description: 'Multi-tenant logistics SaaS platform with inventory, warehousing, production, distribution, billing, and platform admin modules.',
@@ -16,7 +26,7 @@ const projects = [
     category: 'saas',
     image: '/images/projects/logiflow-app.png',
     githubUrl: 'https://github.com/wachira7/LogiFlow',
-    liveUrl: null,
+    liveUrl: 'https://logi-flow-three.vercel.app/',
   },
   {
     id: 'flixvideo',
@@ -26,7 +36,7 @@ const projects = [
     category: 'saas',
     image: '/images/projects/flix-video.png',
     githubUrl: 'https://github.com/wachira7/Flix-video',
-    liveUrl: null,
+    liveUrl: 'https://flix-video-ten.vercel.app/',
   },
   {
     id: 'logistics-app',
@@ -48,32 +58,14 @@ const projects = [
     githubUrl: 'https://github.com/wachira7/vehicle-shield-insurance',
     liveUrl: 'https://vsi-app.vercel.app/',
   },
-  {
-    id: 'tourism-wildlife-app',
-    title: 'Tourism & Wildlife App',
-    description: 'Upcoming project: An application to showcase wildlife attractions and facilitate tourism bookings.',
-    technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Google Maps API'],
-    category: 'upcoming',
-    githubUrl: null,
-    liveUrl: null,
-  },
-  {
-    id: 'charity-nest',
-    title: 'Charity Nest',
-    description: 'Upcoming project: A platform for managing and promoting charitable initiatives.',
-    technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Solidity', 'AI Integration', 'Stripe', 'M-Pesa', 'Web3.js'],
-    category: 'upcoming',
-    githubUrl: null,
-    liveUrl: null,
-  },
 ];
 
 const categories = [
   { id: 'all', name: 'All Projects' },
+  { id: 'ai', name: 'AI & LLM' },
   { id: 'saas', name: 'SaaS Platforms' },
   { id: 'web', name: 'Web Development' },
   { id: 'blockchain', name: 'Blockchain' },
-  { id: 'upcoming', name: 'Upcoming' },
 ];
 
 export default function ProjectsPage() {
@@ -90,7 +82,7 @@ export default function ProjectsPage() {
         <AnimatedSection className="mx-auto mb-16 max-w-3xl text-center">
           <h1 className="mb-4 text-3xl font-bold md:text-4xl">My Projects</h1>
           <p className="text-lg text-gray-600 dark:text-gray-300">
-            Browse through my work and upcoming projects. Each project showcases different skills and technologies.
+            Browse through my work. Each project showcases different skills and technologies.
           </p>
         </AnimatedSection>
 
