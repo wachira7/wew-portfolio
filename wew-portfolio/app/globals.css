@@ -2,76 +2,126 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Design tokens — space-separated RGB so Tailwind can apply alpha (e.g. bg-accent/10). */
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-  --primary: 37, 99, 235;
-  --primary-foreground: 255, 255, 255;
-  --secondary: 111, 114, 185;
-  --secondary-foreground: 255, 255, 255;
-  --accent: 245, 158, 11;
-  --accent-foreground: 255, 255, 255;
-}
+  --bg: 9 12 11;            /* near-black canvas */
+  --surface: 15 20 19;      /* cards, panels */
+  --surface-2: 21 27 26;    /* raised / hover */
+  --line: 255 255 255;      /* used at low alpha for hairlines */
+  --fg: 236 240 238;        /* primary text */
+  --muted: 160 170 166;     /* body copy */
+  --subtle: 125 135 131;    /* mono labels — still AA on --bg */
+  --accent: 110 231 183;    /* mint */
+  --accent-fg: 4 30 20;     /* text on accent */
 
-.dark {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
-  --primary: 59, 130, 246;
-  --primary-foreground: 255, 255, 255;
-  --secondary: 139, 143, 219;
-  --secondary-foreground: 255, 255, 255;
-  --accent: 245, 158, 11;
-  --accent-foreground: 255, 255, 255;
+  /* Legacy names still used by older pages. */
+  --primary: var(--accent);
+  --secondary: 94 234 212;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  color-scheme: dark;
 }
 
 @layer base {
+  html {
+    /* Motion measures scroll offsets relative to this; it must not be static. */
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
   body {
-    @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100;
+    @apply bg-bg font-sans text-fg;
+  }
+
+  ::selection {
+    background: rgb(var(--accent) / 0.3);
+    color: rgb(var(--fg));
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 }
 
 @layer components {
-  .text-gradient {
-    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
-  }
-  
-  .section-padding {
-    @apply py-16 md:py-24;
-  }
-  
   .container {
-    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12;
+  }
+
+  .section-padding {
+    @apply py-20 md:py-32;
+  }
+
+  /* Small uppercase mono label: "● SELECTED WORK" */
+  .eyebrow {
+    @apply font-mono text-[11px] uppercase tracking-[0.2em] text-subtle;
+  }
+
+  .text-gradient {
+    @apply text-accent;
+  }
+
+  .hairline {
+    @apply border-line/[0.08];
+  }
+
+  /* Faint engineering grid, fades out towards the edges. */
+  .bg-grid {
+    background-image:
+      linear-gradient(rgb(var(--line) / 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--line) / 0.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  }
+
+  .noise::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }
 
-/* Custom animations */
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
 @keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
-
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
 
-/* For custom cursor effect */
-.cursor-dot {
-  width: 8px;
-  height: 8px;
-  background-color: rgb(var(--primary));
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.animate-blink {
+  animation: blink 1.1s steps(1) infinite;
 }
 
-.cursor-outline {
-  width: 40px;
-  height: 40px;
-  border: 2px solid rgba(var(--primary), 0.5);
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

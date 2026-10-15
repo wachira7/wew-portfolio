@@ -1,20 +1,6 @@
-"use client";
+import { redirect } from 'next/navigation';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-
+// No posts yet; send any post URL to the writing page.
 export default function BlogPostPage() {
-  const router = useRouter();
-  
-  // Redirect to the main blog page
-  useEffect(() => {
-    router.push('/blog');
-  }, [router]);
-  
-  // Show loading spinner while redirecting
-  return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"></div>
-    </div>
-  );
+  redirect('/blog');
 }

@@ -1,9 +1,8 @@
 // components/ui/button.tsx
 import React from 'react';
-import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
-// Add 'link' to the ButtonVariant type
 type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'link' | 'white';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
@@ -12,9 +11,26 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSize;
   fullWidth?: boolean;
   icon?: React.ReactNode;
+  /** Icon shown after the label, e.g. an arrow that nudges on hover. */
+  trailingIcon?: React.ReactNode;
   href?: string;
   external?: boolean;
 }
+
+const variantStyles: Record<ButtonVariant, string> = {
+  primary: 'bg-accent text-accent-fg hover:brightness-110',
+  secondary: 'bg-surface-2 text-fg hover:bg-surface-2/70',
+  outline: 'border border-line/15 bg-transparent text-fg hover:border-line/30 hover:bg-line/[0.03]',
+  ghost: 'bg-transparent text-muted hover:bg-line/[0.04] hover:text-fg',
+  link: 'bg-transparent p-0 text-accent hover:underline underline-offset-4',
+  white: 'bg-fg text-bg hover:bg-fg/90',
+};
+
+const sizeStyles: Record<ButtonSize, string> = {
+  sm: 'gap-1.5 px-3 py-1.5 text-xs',
+  md: 'gap-2 px-4 py-2.5 text-sm',
+  lg: 'gap-2.5 px-6 py-3.5 text-sm',
+};
 
 export default function Button({
   children,
@@ -22,82 +38,50 @@ export default function Button({
   size = 'md',
   fullWidth = false,
   icon,
+  trailingIcon,
   href,
   external = false,
   className = '',
   ...props
 }: ButtonProps) {
-  const baseStyles = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
-  
-  const variantStyles = {
-    primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
-    secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700',
-    outline: 'border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-50 focus:ring-gray-500 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800',
-    ghost: 'bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-500 dark:text-gray-300 dark:hover:bg-gray-800',
-    link: 'bg-transparent text-blue-600 hover:text-blue-800 hover:underline p-0 h-auto focus:ring-blue-500 dark:text-blue-400 dark:hover:text-blue-300',
-    white: 'bg-white text-gray-900 hover:bg-gray-50 focus:ring-gray-500 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700',
-  };
-  
-  const sizeStyles = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2 text-base',
-    lg: 'px-6 py-3 text-lg',
-  };
-  
-  const widthStyles = fullWidth ? 'w-full' : '';
-  
-  const buttonContent = (
+  const classes = cn(
+    'group inline-flex items-center justify-center rounded-md font-medium transition-all duration-300 ease-out active:scale-[0.98]',
+    variantStyles[variant],
+    variant !== 'link' && sizeStyles[size],
+    fullWidth && 'w-full',
+    className
+  );
+
+  const content = (
     <>
-      {icon && <span className="mr-2">{icon}</span>}
+      {icon && <span className="shrink-0">{icon}</span>}
       {children}
+      {trailingIcon && (
+        <span className="shrink-0 transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+          {trailingIcon}
+        </span>
+      )}
     </>
   );
 
-  // Special case for link variant - remove padding if it's a link style
-  const finalSizeStyle = variant === 'link' ? '' : sizeStyles[size];
-  const buttonStyles = `${baseStyles} ${variantStyles[variant]} ${finalSizeStyle} ${widthStyles} ${className}`;
-
-  // If href is provided, render as a link
   if (href) {
     if (external) {
       return (
-        <motion.a
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={buttonStyles}
-          whileHover={{ scale: variant === 'link' ? 1 : 1.02 }}
-          whileTap={{ scale: variant === 'link' ? 1 : 0.98 }}
-        >
-          {buttonContent}
-        </motion.a>
+        <a href={href} target="_blank" rel="noopener noreferrer" className={classes}>
+          {content}
+        </a>
       );
     }
-    
     return (
-      <Link href={href} passHref>
-        <motion.span
-          className={buttonStyles}
-          whileHover={{ scale: variant === 'link' ? 1 : 1.02 }}
-          whileTap={{ scale: variant === 'link' ? 1 : 0.98 }}
-        >
-          {buttonContent}
-        </motion.span>
+      <Link href={href} className={classes}>
+        {content}
       </Link>
     );
   }
 
-  // Otherwise render as a button
   return (
-    <motion.button
-      className={buttonStyles}
-      whileHover={{ scale: variant === 'link' ? 1 : 1.02 }}
-      whileTap={{ scale: variant === 'link' ? 1 : 0.98 }}
-      onClick={props.onClick}
-      onMouseDown={props.onMouseDown}
-      onMouseUp={props.onMouseUp}
-    >
-      {buttonContent}
-    </motion.button>
+    <button className={classes} {...props}>
+      {content}
+    </button>
   );
 }

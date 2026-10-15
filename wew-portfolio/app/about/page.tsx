@@ -1,321 +1,217 @@
-"use client";
-
-import { motion } from 'framer-motion';
-import Button from '@/components/ui/button';
-import { FaDownload, FaGraduationCap, FaBriefcase, FaCertificate } from 'react-icons/fa';
+import type { Metadata } from 'next';
 import Image from 'next/image';
+import { FiArrowUpRight, FiCloud, FiCode, FiCpu, FiDownload } from 'react-icons/fi';
+import Reveal from '@/components/ui/reveal';
+import Button from '@/components/ui/button';
+import Journey from '@/components/about/journey';
+import { site } from '@/lib/site';
+import { featuredProjects } from '@/content/projects';
+import { certifications } from '@/content/experience';
 
-const timelineData = [
+export const metadata: Metadata = {
+  title: 'About | Emmanuel W. Wachira',
+  description:
+    'Full-Stack and AI Engineer in Nairobi: from six years of field operations at KOKO Networks to shipping production SaaS and LLM systems.',
+};
+
+const pillars = [
   {
-    id: 9,
-    year: "2026",
-    month: "Sep",
-    title: "AI Engineer Core Track: LLM Engineering, RAG, QLoRA, Agents",
-    subtitle: "Udemy — Ed Donner",
-    type: "certification",
-    description: "Completed an 8-week AI engineering course covering LLM APIs, RAG, fine-tuning and agents. Built The Pour Is Right as my capstone: a QLoRA fine-tuned Qwen model served on Modal, RAG with Qdrant, an ensemble, and LangGraph agents that send Telegram alerts.",
-    icon: FaCertificate,
-    technologies: ["Python", "PyTorch", "Hugging Face", "QLoRA", "RAG", "Qdrant", "LangChain", "LangGraph", "Modal"]
+    icon: FiCode,
+    title: 'Full-stack',
+    body: 'Interfaces, APIs and the data models underneath them, built to handle real users and real money.',
+    skills: ['Next.js', 'TypeScript', 'Django REST', 'Node / Express', 'PostgreSQL', 'MongoDB', 'Redis'],
   },
   {
-    id: 1,
-    year: "2025 - Present",
-    month: "",
-    title: "Full-Stack Developer",
-    subtitle: "WaruTech",
-    type: "project",
-    description: "Building production-grade SaaS platforms and DevOps portfolio projects. Developed LogiFlow (multi-tenant logistics SaaS) and FlixVideo (AI-powered streaming platform), both deployed to production with CI/CD pipelines, monitoring, and multi-gateway payment integrations.",
-    icon: FaBriefcase,
-    technologies: ["Django", "Next.js", "Node.js", "TypeScript", "PostgreSQL", "Redis", "Docker", "Celery", "BullMQ", "Stripe", "M-Pesa", "Prometheus", "Grafana"]
+    icon: FiCloud,
+    title: 'Cloud & DevOps',
+    body: 'Containers, CI/CD and monitoring, so what I ship stays up and I find out first when it does not.',
+    skills: ['Docker', 'GitHub Actions', 'AWS (certified)', 'Prometheus / Grafana', 'Kubernetes', 'Terraform'],
   },
   {
-    id: 2,
-    year: "2025",
-    month: "Nov",
-    title: "DevOps Certification",
-    subtitle: "Nairobi DevOps Community",
-    type: "certification",
-    description: "Completed DevOps certification covering containerization, CI/CD pipelines, cloud infrastructure, and monitoring. Applied skills immediately in production deployments of LogiFlow and FlixVideo.",
-    icon: FaCertificate,
-    technologies: ["Docker", "CI/CD", "GitHub Actions", "Prometheus", "Grafana", "Linux"]
-  },
-  {
-    id: 3,
-    year: "2025",
-    month: "Jul",
-    title: "AWS Academy Graduate — Cloud Architecting",
-    subtitle: "Amazon Web Services (AWS)",
-    type: "certification",
-    description: "Completed AWS Academy Cloud Architecting program, covering advanced cloud architecture patterns, high availability, fault tolerance, and cost optimization across AWS services.",
-    icon: FaCertificate,
-    technologies: ["AWS", "EC2", "S3", "RDS", "VPC", "IAM", "CloudFormation", "Lambda"]
-  },
-  {
-    id: 4,
-    year: "2025",
-    month: "Jun",
-    title: "AWS Academy Graduate — Cloud Foundations",
-    subtitle: "Amazon Web Services (AWS)",
-    type: "certification",
-    description: "Completed AWS Academy Cloud Foundations program, gaining solid understanding of AWS core services, global infrastructure, security, and the Well-Architected Framework.",
-    icon: FaCertificate,
-    technologies: ["AWS", "Cloud Computing", "Security", "Well-Architected Framework"]
-  },
-  {
-    id: 5,
-    year: "2025",
-    month: "Mar",
-    title: "Blockchain & Smart Contract Development",
-    subtitle: "3-Month Intensive Program",
-    type: "certification",
-    description: "Completed comprehensive blockchain development program covering smart contract development, decentralized applications, and Web3 technologies. Built Vehicle Shield Insurance DApp as capstone project.",
-    icon: FaCertificate,
-    technologies: ["Solidity", "Next.js", "Ether.js", "Web3.js", "Hardhat", "Smart Contracts"]
-  },
-  {
-    id: 6,
-    year: "2024",
-    month: "Nov",
-    title: "Software Engineering Certification",
-    subtitle: "Moringa School",
-    type: "education",
-    description: "Completed intensive software engineering bootcamp focused on full-stack web development, covering modern technologies and best practices in software development.",
-    icon: FaGraduationCap,
-    technologies: ["Full-Stack Development", "React", "Python", "PostgreSQL", "REST APIs"]
-  },
-  {
-    id: 7,
-    year: "2020 - 2026",
-    month: "",
-    title: "Service Engineer",
-    subtitle: "KOKO Networks",
-    type: "project",
-    description: "Managed deployment and maintenance of smart energy infrastructure across Nairobi. Coordinated field operations, troubleshot hardware/software issues, and ensured reliable service delivery for thousands of customers.",
-    icon: FaBriefcase,
-    technologies: ["Field Operations", "IoT Devices", "Infrastructure Management", "Customer Support"]
-  },
-  {
-    id: 8,
-    year: "2022",
-    month: "Aug",
-    title: "Google Project Management Certificate",
-    subtitle: "Coursera / Google",
-    type: "certification",
-    description: "Completed Google's Project Management Certificate program covering project planning, risk management, stakeholder communication, agile methodologies, and Scrum frameworks.",
-    icon: FaCertificate,
-    technologies: ["Project Management", "Agile", "Scrum", "Risk Management", "Stakeholder Communication"]
+    icon: FiCpu,
+    title: 'AI engineering',
+    body: 'Fine-tuning, retrieval, ensembles and agents, measured against baselines rather than vibes.',
+    skills: ['PyTorch', 'Hugging Face', 'QLoRA', 'RAG / Qdrant', 'LangGraph', 'Claude & OpenAI', 'Modal'],
   },
 ];
 
-export default function AboutPage() {
-  const getTypeColor = (type: string) => {
-    switch (type) {
-      case 'project': return 'bg-blue-600';
-      case 'education': return 'bg-green-600';
-      case 'certification': return 'bg-purple-600';
-      default: return 'bg-blue-600';
-    }
-  };
-
+/** A small "source file" about me, syntax-coloured by hand. */
+function CodeCard() {
+  const k = 'text-[rgb(196_181_253)]'; // keys
+  const s = 'text-accent'; // strings
+  const p = 'text-subtle'; // punctuation
   return (
-    <div className="pt-24">
-      <div className="container mx-auto px-4 py-12">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mx-auto mb-16 max-w-3xl text-center"
-        >
-          <h1 className="mb-4 text-3xl font-bold md:text-4xl">About Me</h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
-            Learn more about my background, skills, and experience.
-          </p>
-        </motion.div>
+    <div className="overflow-hidden rounded-xl border border-line/10 bg-surface">
+      <div className="flex items-center gap-3 border-b border-line/[0.08] px-4 py-2.5">
+        <div className="flex gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full bg-line/15" />
+          <span className="h-2.5 w-2.5 rounded-full bg-line/15" />
+          <span className="h-2.5 w-2.5 rounded-full bg-line/15" />
+        </div>
+        <span className="font-mono text-[11px] text-subtle">emmanuel.ts</span>
+      </div>
+      <pre className="overflow-x-auto p-5 font-mono text-[13px] leading-relaxed text-fg">
+        <code>
+          <span className={k}>const</span> emmanuel <span className={p}>=</span> <span className={p}>{'{'}</span>
+          {'\n  '}
+          <span className={k}>based</span>
+          <span className={p}>:</span> <span className={s}>&quot;Nairobi, KE&quot;</span>
+          <span className={p}>,</span>
+          {'\n  '}
+          <span className={k}>focus</span>
+          <span className={p}>: [</span>
+          <span className={s}>&quot;full-stack&quot;</span>
+          <span className={p}>, </span>
+          <span className={s}>&quot;AI&quot;</span>
+          <span className={p}>, </span>
+          <span className={s}>&quot;DevOps&quot;</span>
+          <span className={p}>],</span>
+          {'\n  '}
+          <span className={k}>shipped</span>
+          <span className={p}>: [</span>
+          {featuredProjects.map((proj, i) => (
+            <span key={proj.id}>
+              {'\n    '}
+              <span className={s}>&quot;{proj.title}&quot;</span>
+              <span className={p}>{i < featuredProjects.length - 1 ? ',' : ''}</span>
+            </span>
+          ))}
+          {'\n  '}
+          <span className={p}>],</span>
+          {'\n  '}
+          <span className={k}>certifications</span>
+          <span className={p}>:</span> <span className="text-[rgb(252_211_77)]">{certifications.length}</span>
+          <span className={p}>,</span>
+          {'\n  '}
+          <span className={k}>always</span>
+          <span className={p}>:</span> <span className={s}>&quot;learning&quot;</span>
+          <span className={p}>,</span>
+          {'\n'}
+          <span className={p}>{'};'}</span>
+        </code>
+      </pre>
+    </div>
+  );
+}
 
-        {/* About Content */}
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
-          {/* Image */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex justify-center"
-          >
-            <div className="relative h-80 w-80 overflow-hidden rounded-lg bg-white p-2 shadow-lg dark:bg-gray-800">
-              <Image
-                src="/images/profile/cape.jpg"
-                alt="Emmanuel W. Wachira"
-                width={300}
-                height={300}
-                className="h-full w-full object-cover rounded"
-                sizes="(max-width: 768px) 100vw, 320px"
-                priority
-              />
-            </div>
-          </motion.div>
+export default function AboutPage() {
+  return (
+    <div className="pb-24 pt-36 md:pt-44">
+      <div className="container">
+        {/* Intro */}
+        <div className="grid gap-16 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <Reveal>
+              <p className="eyebrow mb-6 flex items-center gap-2">
+                <span className="h-1.5 w-1.5 bg-accent" />
+                About
+              </p>
+              <h1 className="text-5xl font-semibold leading-[1.02] tracking-tightest text-fg md:text-7xl">
+                From field operations to production systems<span className="text-accent">.</span>
+              </h1>
+            </Reveal>
 
-          {/* Bio */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <h2 className="mb-4 text-2xl font-bold">Hi, I am Emmanuel W. Wachira</h2>
-            <p className="mb-4 text-lg text-gray-600 dark:text-gray-300">
-              I am a Full-Stack and AI Engineer who builds and ships production systems end to end. With a
-              background in field operations at KOKO Networks and formal training from Moringa School, I bring
-              both technical depth and real-world deployment experience.
-            </p>
-            <p className="mb-4 text-lg text-gray-600 dark:text-gray-300">
-              I recently shipped two full-scale platforms: <strong>LogiFlow</strong> — a multi-tenant logistics SaaS
-              built with Django and Next.js — and <strong>FlixVideo</strong> — an AI-powered streaming and movie
-              discovery platform built with Node.js and Next.js. Both are in production with CI/CD pipelines,
-              Prometheus + Grafana monitoring, and multi-gateway payment integrations (Stripe, M-Pesa, crypto).
-              Most recently I built <strong>The Pour Is Right</strong>, an LLM application that prices wine with a
-              fine-tuned open-source model, RAG and an ensemble, with LangGraph agents that hunt for real deals.
-            </p>
-            <p className="mb-6 text-lg text-gray-600 dark:text-gray-300">
-              I completed Ed Donner&apos;s AI Engineer Core Track, and hold AWS Cloud Architecting and Cloud
-              Foundations certifications, a Google Project Management Certificate, and a DevOps certification
-              from the Nairobi DevOps Community. I am open to full-stack, DevOps and AI engineering roles.
-            </p>
-            <Button href="/resume.pdf" variant="primary" icon={<FaDownload />} external>
-              Download Resume
-            </Button>
-          </motion.div>
+            <Reveal delay={0.1} className="mt-10 max-w-2xl space-y-5 text-lg leading-relaxed text-muted">
+              <p>
+                I&apos;m <span className="text-fg">{site.name}</span>, a full-stack and AI engineer in Nairobi. I spent six
+                years as a service engineer at KOKO Networks, keeping smart energy infrastructure running for thousands of
+                customers across the city. That is where I learned that software only matters when it works in the field.
+              </p>
+              <p>
+                Since training at Moringa School I&apos;ve shipped two full-scale platforms:{' '}
+                <span className="text-fg">LogiFlow</span>, a multi-tenant logistics SaaS on Django and Next.js, and{' '}
+                <span className="text-fg">FlixVideo</span>, an AI-powered streaming and discovery platform on Node.js and
+                Next.js. Both run with CI/CD, Prometheus and Grafana monitoring, and Stripe, M-Pesa and crypto payments.
+              </p>
+              <p>
+                Most recently I built <span className="text-fg">The Pour Is Right</span>: a fine-tuned open-source model,
+                RAG and an ensemble that price wine, with LangGraph agents that hunt for real deals. I&apos;m open to
+                full-stack, DevOps and AI engineering roles.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.2} className="mt-10 flex flex-wrap gap-3">
+              <Button href={site.resume} external size="lg" icon={<FiDownload />}>
+                Download résumé
+              </Button>
+              <Button href="/contact" variant="outline" size="lg" trailingIcon={<FiArrowUpRight />}>
+                Let&apos;s talk
+              </Button>
+            </Reveal>
+          </div>
+
+          <div className="space-y-6 lg:col-span-5">
+            <Reveal delay={0.15}>
+              <figure className="group relative overflow-hidden rounded-xl border border-line/10 bg-surface">
+                <div className="relative aspect-[4/5]">
+                  <Image
+                    src="/images/profile/cape.jpg"
+                    alt={site.name}
+                    fill
+                    priority
+                    sizes="(min-width: 1024px) 40vw, 100vw"
+                    className="object-cover object-[50%_15%] grayscale contrast-[1.15] transition-[filter] duration-700 group-hover:grayscale-0 group-hover:contrast-100"
+                  />
+                  {/* Mint duotone; lifts off on hover to show the original photo. */}
+                  <div className="absolute inset-0 bg-[rgb(46_120_95)] mix-blend-multiply transition-opacity duration-700 group-hover:opacity-0" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/10 to-transparent" />
+                </div>
+                <figcaption className="absolute inset-x-0 bottom-0 flex items-center justify-between p-5 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
+                  <span>{site.location}</span>
+                  <span className="text-accent">● Available</span>
+                </figcaption>
+              </figure>
+            </Reveal>
+            <Reveal delay={0.25}>
+              <CodeCard />
+            </Reveal>
+          </div>
         </div>
 
-        {/* Timeline */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="mt-24"
-        >
-          <h2 className="mb-8 text-center text-3xl font-bold">Experience & Education</h2>
-          <p className="mb-12 text-center text-gray-600 dark:text-gray-300">
-            My journey through projects, certifications, and professional experience
-          </p>
-
-          <div className="relative mx-auto max-w-4xl">
-            <div className="absolute left-8 top-0 h-full w-px bg-gray-200 dark:bg-gray-700 md:left-1/2 md:-ml-px"></div>
-
-            <div className="space-y-12">
-              {timelineData.map((item, index) => (
-                <div key={item.id} className="relative md:flex md:items-start md:justify-between">
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className={`mb-8 md:mb-0 md:w-5/12 ${index % 2 === 0 ? 'md:pr-8 md:text-right' : 'md:pl-8 md:order-2'}`}
-                  >
-                    <div className="mb-2 flex items-center gap-2 md:justify-end">
-                      <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
-                        {item.month} {item.year}
-                      </span>
-                      <span className={`rounded-full px-2 py-1 text-xs ${
-                        item.type === 'project' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100' :
-                        item.type === 'education' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100' :
-                        'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100'
-                      }`}>
-                        {item.type}
-                      </span>
-                    </div>
-                    <h3 className="text-xl font-bold">{item.title}</h3>
-                    <p className="text-blue-600 dark:text-blue-400 font-medium">{item.subtitle}</p>
-                  </motion.div>
-
-                  <div className={`absolute left-8 top-2 z-10 flex h-12 w-12 -translate-x-6 items-center justify-center rounded-full text-white md:left-1/2 md:-translate-x-6 ${getTypeColor(item.type)}`}>
-                    <item.icon className="h-5 w-5" />
-                  </div>
-
-                  <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className={`md:w-5/12 ${index % 2 === 0 ? 'md:pl-8' : 'md:pr-8 md:text-right'}`}
-                  >
-                    <p className="mb-4 text-gray-600 dark:text-gray-300">{item.description}</p>
-                    {item.technologies && (
-                      <div className={`flex flex-wrap gap-2 ${index % 2 === 0 ? '' : 'md:justify-end'}`}>
-                        {item.technologies.map((tech, techIndex) => (
-                          <span key={techIndex} className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-300">
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </motion.div>
-                </div>
-              ))}
-            </div>
+        {/* Pillars */}
+        <section className="mt-28 md:mt-36">
+          <Reveal>
+            <p className="eyebrow mb-10 flex items-center gap-2">
+              <span className="h-1.5 w-1.5 bg-accent" />
+              What I do
+            </p>
+          </Reveal>
+          <div className="grid gap-px overflow-hidden rounded-xl border border-line/[0.08] bg-line/[0.08] md:grid-cols-3">
+            {pillars.map((p, i) => (
+              <Reveal key={p.title} delay={i * 0.08} className="group flex flex-col bg-bg p-8 transition-colors duration-500 hover:bg-surface">
+                <p.icon className="h-6 w-6 text-accent" />
+                <h2 className="mt-8 text-2xl font-medium text-fg">{p.title}</h2>
+                <p className="mt-3 leading-relaxed text-muted">{p.body}</p>
+                <ul className="mt-6 flex flex-wrap gap-1.5">
+                  {p.skills.map((sk) => (
+                    <li key={sk} className="rounded border border-line/10 px-2 py-0.5 font-mono text-[11px] text-subtle">
+                      {sk}
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            ))}
           </div>
-        </motion.div>
+        </section>
 
-        {/* Skills Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="mt-24"
-        >
-          <h2 className="mb-8 text-center text-3xl font-bold">Skills & Technologies</h2>
-
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
-            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-4 text-xl font-bold">Frontend</h3>
-              <ul className="space-y-2">
-                {['React / Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'React Native'].map(skill => (
-                  <li key={skill} className="flex items-center">
-                    <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                    <span>{skill}</span>
-                  </li>
-                ))}
-              </ul>
+        {/* Journey */}
+        <section className="mt-28 md:mt-36">
+          <Reveal className="mb-16 grid gap-6 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-7">
+              <p className="eyebrow mb-6 flex items-center gap-2">
+                <span className="h-1.5 w-1.5 bg-accent" />
+                Journey
+              </p>
+              <h2 className="text-4xl font-medium tracking-tight text-fg md:text-6xl">
+                The path so far<span className="text-accent">.</span>
+              </h2>
             </div>
-
-            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-4 text-xl font-bold">Backend</h3>
-              <ul className="space-y-2">
-                {['Django REST Framework', 'Node.js / Express', 'Python', 'PostgreSQL', 'MongoDB', 'Redis / BullMQ', 'Celery'].map(skill => (
-                  <li key={skill} className="flex items-center">
-                    <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                    <span>{skill}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-4 text-xl font-bold">DevOps & Cloud</h3>
-              <ul className="space-y-2">
-                {['Docker', 'GitHub Actions', 'AWS (Certified)', 'Prometheus / Grafana', 'Kubernetes', 'Terraform', 'Linux / Bash'].map(skill => (
-                  <li key={skill} className="flex items-center">
-                    <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                    <span>{skill}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800">
-              <h3 className="mb-4 text-xl font-bold">Payments & Other</h3>
-              <ul className="space-y-2">
-                {['Stripe', 'M-Pesa (Daraja API)', 'NOWPayments (Crypto)', 'Solidity / Web3.js', 'Cloudinary / AWS S3', 'Sentry', 'Git / GitHub'].map(skill => (
-                  <li key={skill} className="flex items-center">
-                    <div className="mr-2 h-2 w-2 rounded-full bg-blue-600"></div>
-                    <span>{skill}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </motion.div>
+            <p className="max-w-md leading-relaxed text-muted lg:col-span-5">
+              Work, education and {certifications.length} certifications, from AWS cloud architecture to LLM engineering.
+            </p>
+          </Reveal>
+          <Journey />
+        </section>
       </div>
     </div>
   );
