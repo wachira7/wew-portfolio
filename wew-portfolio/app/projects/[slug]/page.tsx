@@ -181,6 +181,45 @@ export default async function ProjectPage({ params }: Params) {
           </Reveal>
         </Section>
 
+        {project.evaluation && (
+          <Section index={++section} label="How it's measured">
+            <Reveal className="space-y-6">
+              <p className="text-lg leading-relaxed text-muted">{project.evaluation.method}</p>
+              <p className="text-lg leading-relaxed text-muted">{project.evaluation.baseline}</p>
+              <div className="overflow-hidden rounded-xl border border-line/[0.08]">
+                <table className="w-full text-left text-sm">
+                  <thead className="bg-line/[0.04] font-mono text-xs uppercase tracking-wider text-muted">
+                    <tr>
+                      <th className="px-5 py-3 font-normal">Model</th>
+                      <th className="px-5 py-3 text-right font-normal">Avg. error</th>
+                      <th className="px-5 py-3 text-right font-normal">vs. baseline</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-line/[0.08]">
+                    <tr>
+                      <td className="px-5 py-3 text-muted">Baseline: always predict the average</td>
+                      <td className="px-5 py-3 text-right font-mono">${project.evaluation.baselineError.toFixed(2)}</td>
+                      <td className="px-5 py-3 text-right font-mono text-muted">—</td>
+                    </tr>
+                    {project.evaluation.results.map((r) => {
+                      const change = Math.round(((project.evaluation!.baselineError - r.error) / project.evaluation!.baselineError) * 100);
+                      return (
+                        <tr key={r.label}>
+                          <td className="px-5 py-3">{r.label}</td>
+                          <td className="px-5 py-3 text-right font-mono">${r.error.toFixed(2)}</td>
+                          <td className="px-5 py-3 text-right font-mono text-accent">
+                            {change > 0 ? `${change}% lower` : `${-change}% higher`}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </Reveal>
+          </Section>
+        )}
+
         {about.bullets.length > 0 && (
           <Section index={++section} label="What it does">
             <ul className="grid gap-px overflow-hidden rounded-xl border border-line/[0.08] bg-line/[0.08] md:grid-cols-2">

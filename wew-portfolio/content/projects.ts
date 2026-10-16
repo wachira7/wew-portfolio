@@ -20,6 +20,13 @@ export interface Project {
   tint?: string;
   /** Address shown in the card's browser-frame bar. */
   frameUrl?: string;
+  /** How results were measured, shown as its own section on the case study. */
+  evaluation?: {
+    method: string;
+    baseline: string;
+    baselineError: number;
+    results: { label: string; error: number }[];
+  };
 }
 
 export const categoryLabels: Record<ProjectCategory, string> = {
@@ -65,6 +72,18 @@ export const projects: Project[] = [
     image: '/images/projects/wine-pricer.jpg',
     githubUrl: null,
     liveUrl: null,
+    evaluation: {
+      method: 'Every model prices the same 200 held-out test wines (median price $33). The score is the mean absolute error: the average gap, in dollars, between the predicted and the real price. Lower is better.',
+      baseline: 'The baseline is the simplest possible model: always predict the average price of the training wines ($41.72). It is off by $21.71 on average, and every percentage on this page is measured against it.',
+      baselineError: 21.71,
+      results: [
+        { label: 'Qwen 3 4B before fine-tuning', error: 23.15 },
+        { label: 'Qwen 3 4B fine-tuned with QLoRA', error: 10.1 },
+        { label: 'Claude Sonnet 5, no examples', error: 9.06 },
+        { label: 'Claude Sonnet 5 with RAG', error: 8.25 },
+        { label: 'Ensemble', error: 7.96 },
+      ],
+    },
   },
   {
     id: 'logiflow',
