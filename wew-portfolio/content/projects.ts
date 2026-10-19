@@ -73,7 +73,7 @@ export const projects: Project[] = [
     githubUrl: null,
     liveUrl: null,
     evaluation: {
-      method: 'Every model prices the same 200 held-out test wines (median price $33). The score is the mean absolute error: the average gap, in dollars, between the predicted and the real price. Lower is better.',
+      method: 'Every model prices the same 200 held-out test wines (median price $28). The score is the mean absolute error: the average gap, in dollars, between the predicted and the real price. Lower is better.',
       baseline: 'The baseline is the simplest possible model: always predict the average price of the training wines ($41.72). It is off by $21.71 on average, and every percentage on this page is measured against it.',
       baselineError: 21.71,
       results: [
