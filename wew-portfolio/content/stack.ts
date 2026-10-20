@@ -176,7 +176,7 @@ export const technologies: Technology[] = [
   },
   {
     name: 'Celery',
-    description: 'Used in LogiFlow for automated billing — trial expiration, recurring billing, email reminders.',
+    description: 'Used in LogiFlow for billing (trials, renewals, reminders), late-delivery checks and cleaning up demo sandboxes.',
     category: 'backend',
     proficiency: 3,
     yearsOfExperience: 1,

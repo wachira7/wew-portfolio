@@ -97,8 +97,13 @@ export default async function ProjectPage({ params }: Params) {
           </Reveal>
 
           <Reveal delay={0.15} className="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
+            {project.demoUrl && (
+              <Button href={project.demoUrl} external size="lg" trailingIcon={<FiArrowUpRight />}>
+                Try the live demo
+              </Button>
+            )}
             {project.liveUrl && (
-              <Button href={project.liveUrl} external size="lg" trailingIcon={<FiArrowUpRight />}>
+              <Button href={project.liveUrl} external variant={project.demoUrl ? 'outline' : undefined} size="lg" trailingIcon={<FiArrowUpRight />}>
                 Visit live site
               </Button>
             )}
@@ -180,6 +185,29 @@ export default async function ProjectPage({ params }: Params) {
             ))}
           </Reveal>
         </Section>
+
+        {project.demoUrl && (
+          <Section index={++section} label="Try it yourself">
+            <Reveal className="space-y-6">
+              <p className="text-lg leading-relaxed text-muted">
+                No sign-up: the demo gives you a private company full of sample data, just for you, and deletes it after a day.
+              </p>
+              {project.demoGuide && (
+                <ol className="grid gap-px overflow-hidden rounded-xl border border-line/[0.08] bg-line/[0.08] md:grid-cols-2">
+                  {project.demoGuide.map((step, i) => (
+                    <li key={step} className="flex gap-4 bg-bg p-5">
+                      <span className="font-mono text-xs text-accent">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="text-muted">{step}</span>
+                    </li>
+                  ))}
+                </ol>
+              )}
+              <Button href={project.demoUrl} external size="lg" trailingIcon={<FiArrowUpRight />}>
+                Open the live demo
+              </Button>
+            </Reveal>
+          </Section>
+        )}
 
         {project.evaluation && (
           <Section index={++section} label="How it's measured">

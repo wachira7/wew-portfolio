@@ -20,6 +20,10 @@ export interface Project {
   tint?: string;
   /** Address shown in the card's browser-frame bar. */
   frameUrl?: string;
+  /** One-click, no-sign-up demo of the product, if it has one. */
+  demoUrl?: string;
+  /** Short "what to try" steps shown next to the demo button. */
+  demoGuide?: string[];
   /** How results were measured, shown as its own section on the case study. */
   evaluation?: {
     method: string;
@@ -88,44 +92,56 @@ export const projects: Project[] = [
   {
     id: 'logiflow',
     featured: true,
-    proof: 'Multi-tenant SaaS · Stripe, M-Pesa & crypto billing',
-    tint: '#c2410c',
+    proof: 'Multi-tenant SaaS · live ops board, realtime driver tracking, one-click demo',
+    tint: '#0e7c86',
     frameUrl: 'logi-flow-three.vercel.app',
-    highlights: ['Django', 'Next.js', 'PostgreSQL', 'Docker'],
+    highlights: ['Django', 'Next.js', 'PostgreSQL', 'WebSockets'],
     title: 'LogiFlow',
-    description: 'Multi-tenant logistics SaaS platform with inventory, warehousing, production, distribution, billing, and platform admin modules.',
+    description: 'Multi-tenant logistics SaaS: inventory, warehousing, production, distribution and billing, with a live operations board, realtime driver tracking and a driver app. Try it in one click, no sign-up.',
     longDescription: `
-      LogiFlow is a production-grade multi-tenant logistics SaaS platform built to serve companies of varying scales.
-      Each tenant gets isolated data, custom branding, and role-based access for their teams.
+      LogiFlow is a multi-tenant logistics platform for companies that buy, store, make and deliver goods.
+      Every company's data is isolated, and all modules share one stock ledger, so a shipment leaving a
+      warehouse, a production run using materials or a transfer between depots each moves stock exactly once.
 
       Key features include:
-      - Multi-tenant architecture with full data isolation per company
-      - Inventory management with stock tracking, reorder points, and transaction history
-      - Warehousing module with stock transfers and approval workflows
-      - Production module with orders, steps, and materials tracking
-      - Distribution module with real-time route tracking via Leaflet.js and geocoding
-      - Billing system with automated trial expiration and recurring billing via Celery
-      - Platform Admin module for managing tenants, subscriptions, and system health
-      - Prometheus and Grafana monitoring stack
+      - Operations board: every shipment in flight by stage, today's numbers, running routes and an activity feed, updating live over WebSockets
+      - Exceptions: late deliveries and failed stops raise exceptions automatically, and each one gets an owner until it's resolved
+      - Driver app for phones: start a route, share GPS, navigate and call, capture a signature and photo as proof of delivery, report failed drops
+      - Customer tracking page: live ETA and approximate position, without exposing the driver or the full address
+      - Fleet: vehicles on a live OpenStreetMap map, with each route's GPS trail
+      - Inventory, warehousing and production on one ledger: receiving, stock counts, transfers and material use, with a stock report and reorder list
+      - Billing with Stripe, M-Pesa and NOWPayments crypto, with verified callbacks and idempotent payment records
+      - Command palette (Ctrl+K) to jump to any record or start a task, and a live overview of the whole business
+      - One-click live demo: each visitor gets a private, pre-filled company that's deleted after a day
 
-      The backend is built with Django REST Framework and the frontend with Next.js and TypeScript,
-      using a services + hooks state management pattern without Redux or Zustand.
+      The backend is Django REST Framework with Django Channels (daphne) and Celery on Redis; the frontend is
+      Next.js and TypeScript. GitHub Actions runs the tests on PostgreSQL before every merge and deploys to
+      Northflank and Vercel.
     `,
     challenges: `
-      Building LogiFlow presented several interesting engineering challenges:
-      - Designing a clean multi-tenant architecture that scales without data leakage between tenants
-      - Implementing a centralized auth guard architecture using layout.tsx to avoid repetition across pages
-      - Fixing a critical auth bug where verifyAuth() hardcoded all role fields to false on token refresh
-      - Replacing mock SVG maps with real Leaflet.js maps using dynamic imports to avoid SSR issues
-      - Handling HTTP 204 empty responses that caused JSON parse errors in the API layer
-      - Building automated billing workflows with Celery including trial expiration and payment reminders
-      - Integrating Stripe, M-Pesa, and NOWPayments crypto into a unified billing experience
+      The interesting problems were mostly about correctness under real use:
+      - Making stock move exactly once: every movement goes through one service layer with row locks and an append-only ledger, so double clicks, retries and concurrent users can't double-count
+      - Catching database-specific bugs before production: a SELECT … FOR UPDATE across an optional join passed every SQLite test but fails on PostgreSQL, so tests now run on PostgreSQL locally and in CI
+      - Live updates that survive real networks: WebSockets authenticate with their first message (tokens never sit in URLs), check the frontend's origin, reconnect with backoff, and fall back to polling
+      - Driver GPS on flaky mobile data: positions are buffered on the phone and sent in batches, and only fresh positions ever appear on the public tracking page
+      - Payments that can't be faked or repeated: M-Pesa and crypto callbacks are verified and payments are recorded idempotently, so a replayed callback can't grant a free upgrade
+      - A safe public demo: per-visitor sandboxes seeded through the real services, sandbox rules enforced in the auth layer, and hourly cleanup that respects protected stock history
+      - Shipping a 12-PR overhaul safely: stacked pull requests merged one at a time behind CI gates, with each production deploy and migration watched
     `,
-    technologies: ['Django', 'Django REST Framework', 'Next.js', 'TypeScript', 'PostgreSQL', 'Redis', 'Celery', 'Docker', 'Stripe', 'M-Pesa', 'NOWPayments', 'Leaflet.js', 'Prometheus', 'Grafana'],
+    technologies: ['Django', 'Django REST Framework', 'Django Channels', 'Next.js', 'TypeScript', 'PostgreSQL', 'Redis', 'Celery', 'WebSockets', 'Docker', 'GitHub Actions', 'Stripe', 'M-Pesa', 'NOWPayments', 'Leaflet.js', 'OpenStreetMap', 'Framer Motion', 'Playwright'],
     category: 'saas',
     image: '/images/projects/logiflow-app.png',
     githubUrl: 'https://github.com/wachira7/LogiFlow',
     liveUrl: 'https://logi-flow-three.vercel.app/',
+    demoUrl: 'https://logi-flow-three.vercel.app/demo',
+    demoGuide: [
+      'Open the Ops board to see every shipment by stage; it updates live',
+      'Visit Fleet: the demo van moves along its route every minute',
+      'Pick up the late delivery under Exceptions and resolve it',
+      'Switch to the driver view and deliver a stop with a signature',
+      'Open a shipment and its customer tracking link',
+      'Press Ctrl+K to search for anything',
+    ],
   },
   {
     id: 'flixvideo',
