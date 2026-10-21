@@ -190,7 +190,7 @@ export default async function ProjectPage({ params }: Params) {
           <Section index={++section} label="Try it yourself">
             <Reveal className="space-y-6">
               <p className="text-lg leading-relaxed text-muted">
-                No sign-up: the demo gives you a private company full of sample data, just for you, and deletes it after a day.
+                {project.demoIntro ?? 'No sign-up: the demo gives you a private account full of sample data, just for you, and deletes it after a day.'}
               </p>
               {project.demoGuide && (
                 <ol className="grid gap-px overflow-hidden rounded-xl border border-line/[0.08] bg-line/[0.08] md:grid-cols-2">

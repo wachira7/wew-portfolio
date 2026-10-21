@@ -87,18 +87,18 @@ export const architectures: Record<string, Architecture> = {
   flixvideo: {
     title: 'Streaming discovery platform',
     summary:
-      'An Express API backed by PostgreSQL and MongoDB, with Redis caching, BullMQ jobs, WebSocket watch parties and AI recommendations.',
+      'An Express API backed by PostgreSQL and MongoDB, with Redis caching, one BullMQ queue for background jobs, Socket.io watch parties and AI picks with daily allowances.',
     columns: ['Client', 'API & realtime', 'Data & jobs', 'Services'],
     nodes: [
       { id: 'web', label: 'Next.js app', detail: 'TypeScript, deployed on Vercel', kind: 'client', col: 0, row: 1.5 },
-      { id: 'api', label: 'Node / Express API', detail: 'Subscriptions, search, social features, admin; on Render', kind: 'service', col: 1, row: 1 },
-      { id: 'ws', label: 'Socket.io', detail: 'Synchronised watch-party playback and live chat', kind: 'service', col: 1, row: 2.2 },
-      { id: 'pg', label: 'PostgreSQL', detail: 'Users, subscriptions, usage tracking', kind: 'data', col: 2, row: 0 },
-      { id: 'mongo', label: 'MongoDB', detail: 'Reviews, lists and nested comments', kind: 'data', col: 2, row: 1 },
-      { id: 'redis', label: 'Redis + BullMQ', detail: 'Search cache and background jobs on shared connections', kind: 'data', col: 2, row: 2 },
-      { id: 'ai', label: 'Claude / OpenAI', detail: 'Movie and TV recommendations', kind: 'ai', col: 3, row: 0 },
+      { id: 'api', label: 'Node / Express API', detail: 'Plans, payments, search, social, admin and the one-click demo; on Render', kind: 'service', col: 1, row: 1 },
+      { id: 'ws', label: 'Socket.io', detail: 'Watch parties: trailers in sync, with live chat', kind: 'service', col: 1, row: 2.2 },
+      { id: 'pg', label: 'PostgreSQL', detail: 'Users, plans, payments, lists, ratings and reviews', kind: 'data', col: 2, row: 0 },
+      { id: 'mongo', label: 'MongoDB', detail: 'AI chats, watch history and notifications', kind: 'data', col: 2, row: 1 },
+      { id: 'redis', label: 'Redis + BullMQ', detail: 'Search cache, AI allowances, and every job on one queue', kind: 'data', col: 2, row: 2 },
+      { id: 'ai', label: 'Claude / OpenAI', detail: 'Picks with reasons, within a daily allowance per plan', kind: 'ai', col: 3, row: 0 },
       { id: 'tmdb', label: 'TMDB', detail: 'Real-time movie and TV data', kind: 'external', col: 3, row: 0.95 },
-      { id: 'pay', label: 'Payments', detail: 'Stripe, M-Pesa and NOWPayments crypto', kind: 'external', col: 3, row: 1.9 },
+      { id: 'pay', label: 'Payments', detail: 'NOWPayments crypto live; Stripe and M-Pesa switch on with live keys', kind: 'external', col: 3, row: 1.9 },
       { id: 's3', label: 'AWS S3', detail: 'Avatar storage with presigned URLs', kind: 'data', col: 3, row: 2.85 },
     ],
     edges: [
