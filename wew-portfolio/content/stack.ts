@@ -168,7 +168,7 @@ export const technologies: Technology[] = [
   },
   {
     name: 'Node.js / Express',
-    description: 'Used to build FlixVideo\'s full backend with 100+ REST API endpoints.',
+    description: 'Used to build FlixVideo\'s full backend: 160 REST endpoints across plans, payments, AI, social and admin.',
     category: 'backend',
     proficiency: 3.5,
     yearsOfExperience: 1.5,
@@ -184,7 +184,7 @@ export const technologies: Technology[] = [
   },
   {
     name: 'BullMQ',
-    description: 'Used in FlixVideo for background job processing. Fixed production Redis connection limit issues.',
+    description: 'Used in FlixVideo for background jobs. Moved six workers onto one queue to cut Redis connections from 9 to 3 per server.',
     category: 'backend',
     proficiency: 3,
     yearsOfExperience: 1,
@@ -210,7 +210,7 @@ export const technologies: Technology[] = [
   },
   {
     name: 'MongoDB',
-    description: 'Used in FlixVideo alongside PostgreSQL for flexible document storage.',
+    description: 'Used in FlixVideo alongside PostgreSQL for AI conversations, watch history and notifications.',
     category: 'database',
     proficiency: 3,
     yearsOfExperience: 1.5,

@@ -24,6 +24,8 @@ export interface Project {
   demoUrl?: string;
   /** Short "what to try" steps shown next to the demo button. */
   demoGuide?: string[];
+  /** One line above the demo guide; defaults to a generic sample-account line. */
+  demoIntro?: string;
   /** How results were measured, shown as its own section on the case study. */
   evaluation?: {
     method: string;
@@ -134,6 +136,7 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/wachira7/LogiFlow',
     liveUrl: 'https://logi-flow-three.vercel.app/',
     demoUrl: 'https://logi-flow-three.vercel.app/demo',
+    demoIntro: 'No sign-up: the demo gives you a private company full of sample data, just for you, and deletes it after a day.',
     demoGuide: [
       'Open the Ops board to see every shipment by stage; it updates live',
       'Visit Fleet: the demo van moves along its route every minute',
@@ -146,46 +149,60 @@ export const projects: Project[] = [
   {
     id: 'flixvideo',
     featured: true,
-    proof: 'Watch parties, AI recommendations, 3 payment gateways',
-    tint: '#9333ea',
+    proof: 'One-click demo · per-plan AI allowances · payments that grant a plan exactly once',
+    tint: '#e8a33d',
     frameUrl: 'flix-video-ten.vercel.app',
-    highlights: ['Node.js', 'Next.js', 'Redis', 'BullMQ'],
+    highlights: ['Node.js', 'Next.js', 'PostgreSQL', 'Redis'],
     title: 'FlixVideo',
-    description: 'AI-powered movie and TV discovery platform with subscriptions, watch parties, real-time search, and multi-gateway payments.',
+    description: 'Film and TV discovery that explains itself: AI picks with reasons, where to watch in your country, trailer watch parties and paid plans. Try it in one click, no sign-up.',
     longDescription: `
-      FlixVideo is a full-featured AI-powered streaming and movie discovery platform. It combines
-      real-time content data from TMDB with AI recommendations and a rich social experience.
+      FlixVideo helps people decide what to watch tonight. Every recommendation says why it fits, and every
+      title shows where it's streaming, for rent or to buy in your country. It doesn't host films: trailers play
+      in the app, and it sends you to the service that has the title.
 
       Key features include:
-      - AI-powered movie and TV recommendations using Claude AI/OpenAI
-      - Real-time search with autocomplete and Redis caching
-      - Watch party system with WebSocket-based synchronized playback and live chat
-      - Subscription tiers (Free, Basic, Premium) with usage-based feature gating
-      - Multi-gateway payment support: Stripe (card), M-Pesa (mobile money), and NOWPayments (crypto)
-      - Social features: following, lists, ratings, and reviews with nested comments
-      - Admin dashboard with moderation tools, analytics, and user management
-      - Background job processing with BullMQ and Redis for async tasks
-      - Avatar storage on AWS S3 with presigned URLs
-      - Prometheus and Grafana monitoring deployed on Oracle Cloud Free Tier
+      - FlixVideo AI: ask for a mood, a runtime or an actor in plain words, and get picks with reasons that link to each title
+      - Daily AI allowances by plan (Free 3, Basic 15, Premium 40), resetting at midnight Nairobi time
+      - Where to watch: streaming, rental and purchase options by country, from TMDB, with a region setting
+      - Watch parties: trailers in sync over Socket.io with live chat and private invite codes
+      - Library: watchlist, favourites, ranked lists, ratings and continue watching
+      - Plans paid by crypto through NOWPayments, with Stripe and M-Pesa built in and switched on by configuration once they go live
+      - Account controls: signed-in devices with per-device sign-out, data export, account deletion, and Privacy and Terms pages
+      - Admin dashboard for moderation, users and revenue
+      - A cinematic Next.js 16 frontend: Bodoni display type, amber on near-black and scroll-driven motion
+      - One-click live demo: each visitor gets a private, pre-filled account that's deleted after a day
 
-      The backend is Node.js/Express with a PostgreSQL + MongoDB hybrid database architecture.
-      The frontend is Next.js with TypeScript deployed on Vercel, backend on Render.
+      The API is Node.js and Express on Render, with PostgreSQL for accounts, payments and social data,
+      MongoDB for AI chats and watch history, and Redis with BullMQ for caching and background jobs. GitHub
+      Actions runs the database migrations and then deploys. The frontend is Next.js and TypeScript on Vercel.
     `,
     challenges: `
-      FlixVideo was built iteratively over several months with many interesting challenges:
-      - Migrating from Upstash Redis to Redis Cloud after hitting command limits in production
-      - Fixing ERR max number of clients reached by refactoring BullMQ to use two shared IORedis connections
-      - Resolving avatar hydration errors using a custom AvatarEventEmitter pattern
-      - Fixing PostgreSQL date timezone shifts using ::text and ::date casts
-      - Building a complete subscription system with real-time usage tracking across three payment providers
-      - Implementing watch party synchronization so all participants stay in sync during playback
-      - Setting up Prometheus metrics collection and Grafana dashboards on Oracle Cloud Free Tier VM
+      The hardest problems were about money, limits and correctness in production:
+      - Payments that granted nothing: no success path created a subscription, and the plan lookup read a column that didn't exist, so every user counted as Free. Plans are now granted once per payment, in a transaction with the payment row locked and a unique link, so a repeated callback can't grant twice
+      - Test payments that could unlock real plans: M-Pesa sandbox and Stripe test payments "succeed" without money moving. Each method is now checked for live keys, test-mode payments never grant, and checkout shows them as coming soon. Going live is a configuration change
+      - An M-Pesa callback that answered "Failed" to every successful payment, because of an undefined variable, and sent a "payment failed" email after successes too
+      - Errors after success: adding to the watchlist saved, then a Prometheus label mismatch threw and the user saw an error. Watch parties had the same bug
+      - Redis Cloud at 90% of its connection limit: six BullMQ workers each held a blocking connection. Moving every job onto one queue and one worker cut each instance from 9 connections to 3
+      - Keeping AI costs predictable: daily allowances sized from the per-message cost, counted only after the AI replies, plus a per-user burst limit
+      - A safe public demo: real seeded accounts with sandbox rules enforced in the auth layer, demo emails on the reserved .invalid domain so nothing is ever sent, rate limits and a capacity cap, and hourly cleanup that clears MongoDB before PostgreSQL so no orphaned data is left behind
+      - Watch parties that couldn't be created on a fresh database: the status default broke the table's own CHECK constraint
+      - Shipping safely: 15 pull requests merged into one release branch, integration-tested against throwaway PostgreSQL, Redis and MongoDB, then deployed once with migrations watched
     `,
-    technologies: ['Node.js', 'Express', 'Next.js', 'TypeScript', 'PostgreSQL', 'MongoDB', 'Redis', 'BullMQ', 'Stripe', 'M-Pesa', 'NOWPayments', 'AWS S3', 'Socket.io', 'Prometheus', 'Grafana', 'Docker'],
+    technologies: ['Node.js', 'Express', 'Next.js', 'TypeScript', 'PostgreSQL', 'MongoDB', 'Redis', 'BullMQ', 'Socket.io', 'Claude API', 'OpenAI', 'TMDB API', 'NOWPayments', 'Stripe', 'M-Pesa', 'AWS S3', 'Tailwind CSS', 'Framer Motion', 'Prometheus', 'Grafana', 'Docker', 'GitHub Actions'],
     category: 'saas',
     image: '/images/projects/flix-video.png',
     githubUrl: 'https://github.com/wachira7/Flix-video',
     liveUrl: 'https://flix-video-ten.vercel.app/',
+    demoUrl: 'https://flix-video-ten.vercel.app/demo',
+    demoIntro: 'No sign-up: the demo gives you a private account with a watchlist, lists, an AI chat and a watch party ready, and deletes it after a day.',
+    demoGuide: [
+      'Ask FlixVideo AI for a mood, like "something hopeful under two hours" (3 messages)',
+      'Open Library: a watchlist, favourites and two lists are ready',
+      'Pick up Dune: Part Two from Continue watching on Home',
+      'Open any title to see where it\'s streaming in Kenya',
+      'Find the waiting watch party under Watch parties',
+      'Watch a trailer from the home screen\'s hero',
+    ],
   },
   {
     id: 'logistics-app',
