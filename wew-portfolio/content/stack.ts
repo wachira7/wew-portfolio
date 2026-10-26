@@ -29,6 +29,7 @@ import {
   SiTypescript,
   SiYarn,
   SiLeetcode,
+  SiRust,
 } from 'react-icons/si';
 
 export type StackCategory = 'ai' | 'frontend' | 'backend' | 'database' | 'devops' | 'storage' | 'payments' | 'tools';
@@ -371,7 +372,7 @@ export const technologies: Technology[] = [
 
 export const learning: { name: string; description: string; icon: IconType }[] = [
   {
-    name: 'Kubernetes (Advanced)',
+    name: 'Kubernetes',
     description: 'Deepening K8s knowledge through Andela\'s program — multi-cluster deployments, RBAC, Helm charts, and production-grade orchestration.',
     icon: SiKubernetes,
   },
@@ -381,8 +382,8 @@ export const learning: { name: string; description: string; icon: IconType }[] =
     icon: FaReact,
   },
   {
-    name: 'LeetCode / DSA',
-    description: 'Practicing data structures and algorithms in preparation for software engineering job applications.',
-    icon: SiLeetcode,
+    name: 'Rust',
+    description: 'Learning systems programming with Rust for performance-critical applications.',
+    icon: SiRust,
   },
 ];
